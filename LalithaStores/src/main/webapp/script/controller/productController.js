@@ -1,6 +1,7 @@
 ﻿app.controller("productController", function($scope, $rootScope) {
 
-	$scope.productBlock=false;
+	$scope.productBlock = false;
+	$scope.addBtnBlock = false;
 	
 	$scope.showSimpleToast = function(msg) {
 		var x = document.getElementById("toast");
@@ -11,8 +12,9 @@
 		}, 3000);
 	};
 
-    $scope.categoryId = "";
+	$scope.categoryId = "";
 
+	//get Category
 	$scope.getAllCategories = function() {
 		$.ajax({
 			type : "GET",
@@ -29,6 +31,7 @@
 		});
 	};
 
+	//add category
 	$scope.addCategory = function() {
 		var requestData = {
 			categoryName : $('#cName').val(),
@@ -54,11 +57,14 @@
 		});
 	};
 
+	//get product
 	$scope.getProduct = function(categoryId) {
-		
-		$scope.productBlock=true;
-		
+
 		$scope.categoryId = categoryId;
+		if($scope.categoryId!=0)
+		{
+			$scope.addBtnBlock = true;
+		}
 		var requestData = {
 			'categoryId' : $scope.categoryId
 		};
@@ -71,38 +77,35 @@
 			dataType : "json",
 			success : function(data) {
 				$scope.products = data.data;
+				if ($scope.products.length > 0) {
+					$scope.productBlock = true;
+				} else {
+					$scope.productBlock = false;
+					$scope.showSimpleToast("No product found");
+				}
 				$rootScope.$digest();
 			},
 			error : function(e) {
-
 				console.log("ERROR: ", e);
+				$scope.showSimpleToast(e.message);
 			}
 		});
 	};
 
+	//add product
 	$scope.saveProduct = function() {
-		var status;
-		var tags="";
-		for (var i = 0; i < $scope.add_pTags.length; i++) {
-			tags += $scope.add_pTags[i].text + ",";
-		}
-
-		if ($('.modal-body #add_pStatus').val() == "on") {
-			status = true;
-		} else {
-			status = false;
-		}
+		debugger;
 
 		$scope.productJson = {
-			'productName' : $('.modal-body #add_pName').val(),
-			'description' : $('.modal-body #add_pDescription').val(),
-			'quantityWeight' : $('.modal-body #add_pQuantity').val(),
-			'categoryId' : $scope.categoryId,
-			'productActive' : status,
-			'price' : $('.modal-body #add_pPrice').val(),
-			'productLocation' : $('.modal-body #add_pLocations').val(),
-			'tags' : tags,
-			'addedBy' : 'Sumant'
+			productName : $('.modal-body #add_pName').val(),
+			description : $('.modal-body #add_pDescription').val(),
+			categoryId : $scope.categoryId,
+			price : $('.modal-body #add_pPrice').val(),
+			quantity : $('.modal-body #add_pQuantity').val(),
+			status:$(".modal-body #add_pStatus")[0].checked,
+			productLocation : $('.modal-body #add_pLocations').val(),
+			tags : $('.modal-body #add_pTags').val() ,
+			addedBy : 'sanket'
 		};
 		var formData = new FormData();
 		formData.append("productJson", JSON.stringify($scope.productJson));
@@ -116,6 +119,7 @@
 			url : "addProduct.htm",
 			data : formData,
 			success : function(data) {
+			debugger;	
 				$scope.showSimpleToast(data.message);
 				$scope.getProduct($scope.categoryId);
 				$rootScope.$digest();
@@ -127,23 +131,19 @@
 		});
 	};
 
+	//edit product
 	$scope.editProduct = function() {
-		if ($('.modal-body #edit_pStatus').val() == "on") {
-			status = true;
-		} else {
-			status = false;
-		}
+		debugger;
 		$scope.productJson = {
-			'productId' : $('.modal-body #edit_productId').val(),
-			'productName' : $('.modal-body #edit_pName').val(),
-			'description' : $('.modal-body #edit_pDescription').val(),
-		
-			'productActive' : status,
-			'quantityWeight' : $('.modal-body #edit_pQuantity').val(),
-			'price' : $('.modal-body #edit_pPrice').val(),
-			'productLocation' : $('.modal-body #edit_pLocations').val(),
-			'quantityWeight': $('.modal-body #edit_pQuantityWeight').val()
-			//'tags' : tags
+			productId : $('.modal-body #edit_productId').val(),
+			productName : $('.modal-body #edit_pName').val(),
+			description : $('.modal-body #edit_pDescription').val(),
+			categoryId : $scope.categoryId,
+			productActive : $(".modal-body #edit_pStatus")[0].checked,
+			quantityWeight : $('.modal-body #edit_pQuantity').val(),
+			price : $('.modal-body #edit_pPrice').val(),
+			productLocation : $('.modal-body #edit_pLocations').val(),
+			tags : $('.modal-body #edit_pTags').val(),
 		};
 
 		$.ajax({
@@ -154,20 +154,23 @@
 			data : JSON.stringify($scope.productJson),
 			success : function(data) {
 				$scope.showSimpleToast(data.message);
+				$scope.getProduct($scope.categoryId);
 			},
 			error : function(e) {
 				console.log("ERROR: ", e);
 			}
 		});
-	}
+	};
 	
 	$scope.deleteProduct = function() {
+
+	debugger;
 		var product = $("#delete_productId").val();
 		var productJson = {
 			productId : product,
 			categoryId: $scope.categoryId
 		};
-        alert(JSON.stringify(productJson));
+       
 		$.ajax({
 			type : "POST",
 			contentType : "application/json",
@@ -175,13 +178,15 @@
 			data : JSON.stringify(productJson),
 			dataType : "json",
 			success : function(data) {
-				$scope.getAllUsers();
-				$rootScope.Message = data.message;
-				$rootScope.$digest();
+			debugger;
+				$scope.getProduct( $scope.categoryId);
+				$scope.showSimpleToast(data.message);
 			},
 			error : function(e) {
+			debugger;
 				console.log("ERROR: ", e);
-				alert(e);
+				$scope.showSimpleToast(e.message);
+				
 			}
 		});
 	};

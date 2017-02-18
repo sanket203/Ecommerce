@@ -6,74 +6,28 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<link href="<c:url value="/font/bootstrap-glyphicons.css"/>"
-	rel="stylesheet" type="text/css">
-<link href="<c:url value="/style/bootstrap.min.css"/>" rel="stylesheet"
-	type="text/css">
-<link href="<c:url value="/style/bootstrap-multiselect.css"/>"
-	rel="stylesheet" type="text/css">
-<link href="<c:url value="/style/simple-sidebar.css"/>" rel="stylesheet"
-	type="text/css">
-<link href="<c:url value="/style/ng-tags-input.min.css"/>"
-	rel="stylesheet" type="text/css">
-<link href="<c:url value="/style/ng-tags-input.bootstrap.min.css"/>"
-	rel="stylesheet" type="text/css">
-<link href="<c:url value="/style/bootstrap-toggle.min.css"/>"
-	rel="stylesheet" type="text/css">
-<link href="<c:url value="/style/angular-material.min.css"/>"
-	rel="stylesheet" type="text/css">
+<link href="<c:url value="/font/bootstrap-glyphicons.css"/>" rel="stylesheet" type="text/css">
+<link href="<c:url value="/style/bootstrap.min.css"/>" rel="stylesheet" type="text/css">
+<link href="<c:url value="/style/bootstrap-multiselect.css"/>" rel="stylesheet" type="text/css">
+<link href="<c:url value="/style/simple-sidebar.css"/>" rel="stylesheet" type="text/css">
+<link href="<c:url value="/style/bootstrap-toggle.min.css"/>" rel="stylesheet" type="text/css">
+<link href="<c:url value="/style/bootstrap-tagsinput.css"/>" rel="stylesheet" type="text/css">
 
+<script type="text/javascript" src="<c:url value="/script/utilities/jquery-2.0.3.min.js"/>" defer="true"></script>
+<script type="text/javascript" src="<c:url value="/script/utilities/bootstrap-3.1.1.min.js"/>" defer="true"></script>
+<script type="text/javascript" src="<c:url value="/script/utilities/angular.js"/>" defer="true"></script>
+<script type="text/javascript" src="<c:url value="/script/utilities/angular-ui-router.js"/>" defer="true"></script>
+<script type="text/javascript" src="<c:url value="/script/utilities/ui-bootstrap-tpls-2.4.0.js"/>" defer="true"></script>
+<script type="text/javascript" src="<c:url value="/script/utilities/bootstrap-multiselect.min.js"/>" defer="true"></script>
+<script type="text/javascript" src="<c:url value="/script/utilities/bootstrap-toggle.min.js"/>" defer="true"></script>
+<script type="text/javascript" src="<c:url value="/script/utilities/bootstrap-tagsinput.min.js"/>" defer="true"></script>
 
-<script type="text/javascript"
-	src="<c:url value="/script/utilities/jquery.min.js"/>" defer="true"></script>
-<script type="text/javascript"
-	src="<c:url value="/script/utilities/bootstrap-3.1.1.min.js"/>" defer="true"></script>
-<script type="text/javascript"
-	src="<c:url value="/script/utilities/angular.js"/>" defer="true"></script>
-<script type="text/javascript"
-	src="<c:url value="/script/utilities/angular-route.js"/>" defer="true"></script>
-<script type="text/javascript"
-	src="<c:url value="/script/utilities/angular-ui-router.js"/>"
-	defer="true"></script>
-<script type="text/javascript"
-	src="<c:url value="/script/utilities/ui-bootstrap-tpls-2.4.0.js"/>"
-	defer="true"></script>
-<script type="text/javascript"
-	src="<c:url value="/script/utilities/bootstrap-multiselect.min.js"/>"
-	defer="true"></script>
-<script type="text/javascript"
-	src="<c:url value="/script/utilities/ng-tags-input.min.js"/>"
-	defer="true"></script>
-<script type="text/javascript"
-	src="<c:url value="/script/utilities/bootstrap-toggle.min.js"/>"
-	defer="true"></script>
-<script type="text/javascript"
-	src="<c:url value="/script/utilities/angular-material.min.js"/>"
-	defer="true"></script>
-<script type="text/javascript"
-	src="<c:url value="/script/utilities/angular-animate.min.js"/>"
-	defer="true"></script>
-<script type="text/javascript"
-	src="<c:url value="/script/utilities/angular-aria.min.js"/>"
-	defer="true"></script>
-
-<script type="text/javascript" src="<c:url value="/script/app.js"/>"
-	defer="true"></script>
-<script type="text/javascript"
-	src="<c:url value="/script/controller/adminController.js"/>"
-	defer="true"></script>
-<script type="text/javascript"
-	src="<c:url value="/script/controller/dashboardController.js"/>"
-	defer="true"></script>
-<script type="text/javascript"
-	src="<c:url value="/script/controller/userController.js"/>"
-	defer="true"></script>
-<script type="text/javascript"
-	src="<c:url value="/script/controller/productController.js"/>"
-	defer="true"></script>
-<script type="text/javascript"
-	src="<c:url value="/script/controller/orderController.js"/>"
-	defer="true"></script>
+<script type="text/javascript" src="<c:url value="/script/app.js"/>" defer="true"></script>
+<script type="text/javascript" src="<c:url value="/script/controller/adminController.js"/>"	defer="true"></script>
+<script type="text/javascript" src="<c:url value="/script/controller/dashboardController.js"/>"	defer="true"></script>
+<script type="text/javascript" src="<c:url value="/script/controller/userController.js"/>" defer="true"></script>
+<script type="text/javascript" src="<c:url value="/script/controller/productController.js"/>" defer="true"></script>
+<script type="text/javascript" src="<c:url value="/script/controller/orderController.js"/>" defer="true"></script>
 
 </head>
 

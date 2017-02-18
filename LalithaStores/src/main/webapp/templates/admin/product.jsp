@@ -79,13 +79,21 @@
 			</div>
 		</div>
 
-		<div id="productBlock" ng-show="productBlock">
-			<div>
-				<hr />
+		<div id="productBlock">
+
+			<div class="pull-right col-md-4" ng-show="addBtnBlock">
+				<br />
+				<button type="button"
+					class="btn btn-success btn-block glyphicon glyphicon glyphicon-plus"
+					data-whatever={{product.id}} data-toggle="modal"
+					data-target="#addProduct">
+					<strong>ADD</strong>
+				</button>
+				<br />
 			</div>
 
 			<table id="productList" class="table table-striped table-bordered"
-				cellspacing="0" width="100%">
+				ng-show="productBlock" cellspacing="0" width="100%">
 				<tbody>
 					<tr class="table-header">
 						<th>Id</th>
@@ -95,14 +103,14 @@
 						<th>Added On</th>
 						<th>Action</th>
 					</tr>
-				</thead>
+					</thead>
 				<tbody>
 					<tr ng-repeat="product in products">
 						<td>{{product.productId}}</td>
 						<td>{{product.productName}}</td>
 						<td>{{product.price}}</td>
-						<td>{{product.description}}</td>
-						<td>{{product.creationDate}}</td>
+					<td>{{product.addedBy}}</td>
+					<td>{{product.dateAdded}}</td>
 						<td>
 							<button type="button"
 								class="btn btn-primary btn-sm glyphicon glyphicon-edit"
@@ -116,15 +124,8 @@
 					</tr>
 				</tbody>
 			</table>
-
-			<div class="pull-right">
-				<button type="button"
-					class="btn btn-success btn-md glyphicon glyphicon glyphicon-plus"
-					data-whatever={{product.id}} data-toggle="modal"
-					data-target="#addProduct">Add</button>
-			</div>
-		</div>
-	</div>
+		</div></
+				div>
 
 	<!-- add product popup -->
 	<div class="modal fade" id="addProduct" role="dialog">
@@ -138,57 +139,52 @@
 					<div class="modal-body">
 						<div class="input-group">
 							<span class="input-group-addon">Name</span> <input type="text"
-								id="add_pName" class="form-control" aria-describedby="pName">
+									id="add_pName" class="form-control" aria-describedby="pName">
 						</div>
 						<br />
 						<div class="input-group">
 							<span class="input-group-addon">Description</span> <input
-								type="text" id="add_pDescription" class="form-control"
-								aria-describedby="pdescription">
+									type="text" id="add_pDescription" class="form-control"
+									aria-describedby="pdescription">
 						</div>
 						<br />
 						<div class="input-group">
 							<span class="input-group-addon">Price</span> <input type="text"
-								id="add_pPrice" class="form-control" aria-describedby="pprice">
-						</div>
-						<br />
-						<div class="input-group">
+									id="add_pPrice" class="form-control" aria-describedby="pprice">
 							<span class="input-group-addon">Quantity</span> <input
-								type="text" id="add_pQuantity" class="form-control"
-								placeholder="in weights" aria-describedby="pprice">
-						</div>
-						<br />
-						<div class="input-group">
-							<span>Active&nbsp;</span> <input type="checkbox" checked
-								data-toggle="toggle" id="add_pStatus">
+									type="text" id="add_pQuantity" class="form-control"
+									placeholder="in weights" aria-describedby="pQty">
 						</div>
 						<br />
 						<div class="input-group">
 							<span class="input-group-addon">Location</span> <input
-								type="text" id="add_pLocations" class="form-control"
-								aria-describedby="pLocation">
+									type="text" id="add_pLocations" class="form-control"
+									aria-describedby="pLocation">
 						</div>
 						<br />
 						<div class="input-group">
-							<span class="input-group-addon">Tags</span>
-							<tags-input ng-Model="add_pTags" data-role="tagsinput" />
+							<span>Active&nbsp;</span> <input type="checkbox" checked
+									data-toggle="toggle" id="add_pStatus">
 						</div>
+						<br />
+							<input type="text" id="add_pTags" class="form-control"
+								placeholder="tags" aria-describedby="pTags">
 						<br />
 						<div class="row">
 							<div class="col-lg-12 col-md-6 col-sm-8">
 								<div class="input-group image-preview">
 									<input type="text" class="form-control image-preview-filename"
-										disabled="disabled"> <span class="input-group-btn">
+											disabled="disabled"> <span class="input-group-btn">
 										<button type="button"
-											class="btn btn-default image-preview-clear"
-											style="display: none;">
+												class="btn btn-default image-preview-clear"
+												style="display: none;">
 											<span class="glyphicon glyphicon-remove"></span> Clear
 										</button>
 										<div class="btn btn-default image-preview-input">
 											<span class="glyphicon glyphicon-folder-open"></span> <span
-												class="image-preview-input-title">Browse</span> <input
-												type="file" accept="image/png, image/jpg, image/gif"
-												name="imageFile" id="imageFile" />
+													class="image-preview-input-title">Browse</span> <input
+													type="file" accept="image/png, image/jpg, image/gif"
+													name="imageFile" id="imageFile" />
 										</div>
 									</span>
 								</div>
@@ -197,25 +193,12 @@
 						<br />
 						<div class="modal-footer">
 							<button type="button" class="btn btn-success"
-								data-dismiss="modal" ng-click="saveProduct();">Add</button>
+									data-dismiss="modal" ng-click="saveProduct();">Add</button>
 							<button type="button" class="btn btn-default"
-								data-dismiss="modal">Cancel</button>
+									data-dismiss="modal">Cancel</button>
 						</div>
 					</div>
 				</form>
-			</div>
-		</div>
-	</div>
-
-	<!-- view product popup -->
-	<div class="modal fade" id="viewProduct" role="dialog">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<h4 class="modal-title">View User</h4>
-				</div>
-				<div class="modal-body"></div>
 			</div>
 		</div>
 	</div>
@@ -232,59 +215,55 @@
 					<div class="modal-body">
 						<div class="input-group">
 							<span class="input-group-addon">Name</span> <input type="text"
-								id="edit_pName" class="form-control" aria-describedby="pName">
+									id="edit_pName" class="form-control" aria-describedby="pName">
 							<input type="hidden" id="edit_productId" class="form-control"
-								aria-describedby="pName">
+									aria-describedby="pName">
 						</div>
 						<br />
 						<div class="input-group">
 							<span class="input-group-addon">Description</span> <input
-								type="text" id="edit_pDescription" class="form-control"
-								aria-describedby="pdescription">
+									type="text" id="edit_pDescription" class="form-control"
+									aria-describedby="pdescription">
 						</div>
 						<br />
 						<div class="input-group">
 							<span class="input-group-addon">Price</span> <input type="text"
-								id="edit_pPrice" class="form-control" aria-describedby="pprice">
+									id="edit_pPrice" class="form-control" aria-describedby="pprice">
 						</div>
 						<br />
 						<div class="input-group">
 							<span class="input-group-addon">Quantity</span> <input
-								type="text" id="edit_pQuantity" class="form-control"
-								placeholder="in weights" aria-describedby="pprice">
+									type="text" id="edit_pQuantity" class="form-control"
+									placeholder="in weights" aria-describedby="pprice">
 						</div>
 						<br />
 						<div class="input-group">
 							<span>Active&nbsp;</span> <input type="checkbox" checked
-								data-toggle="toggle" id="edit_pStatus">
+									data-toggle="toggle" id="edit_pStatus">
 						</div>
 						<br />
 						<div class="input-group">
 							<span class="input-group-addon">Location</span> <input
-								type="text" id="edit_pLocations" class="form-control"
-								aria-describedby="pLocation">
+									type="text" id="edit_pLocations" class="form-control"
+									aria-describedby="pLocation">
 						</div>
-						<br />
-						<div class="input-group">
-							<span class="input-group-addon">Tags</span>
-							<tags-input ng-Model="edit_pTags" data-role="tagsinput" />
-						</div>
-						<br />
+						<br /> <input type="text" id="edit_pTags" class="form-control"
+								placeholder="tags" aria-describedby="pTags"> <br />
 						<div class="row">
 							<div class="col-lg-12 col-md-6 col-sm-8">
 								<div class="input-group image-preview">
 									<input type="text" class="form-control image-preview-filename"
-										disabled="disabled"> <span class="input-group-btn">
+											disabled="disabled"> <span class="input-group-btn">
 										<button type="button"
-											class="btn btn-default image-preview-clear"
-											style="display: none;">
+												class="btn btn-default image-preview-clear"
+												style="display: none;">
 											<span class="glyphicon glyphicon-remove"></span> Clear
 										</button>
 										<div class="btn btn-default image-preview-input">
 											<span class="glyphicon glyphicon-folder-open"></span> <span
-												class="image-preview-input-title">Browse</span> <input
-												type="file" accept="image/png, image/jpg, image/gif"
-												name="imageFile" id="edit_imageFile" />
+													class="image-preview-input-title">Browse</span> <input
+													type="file" accept="image/png, image/jpg, image/gif"
+													name="imageFile" id="edit_imageFile" />
 										</div>
 									</span>
 								</div>
@@ -293,9 +272,9 @@
 						<br />
 						<div class="modal-footer">
 							<button type="button" class="btn btn-success"
-								data-dismiss="modal" ng-click="editProduct();">Add</button>
+									data-dismiss="modal" ng-click="editProduct();">Save</button>
 							<button type="button" class="btn btn-default"
-								data-dismiss="modal">Cancel</button>
+									data-dismiss="modal">Cancel</button>
 						</div>
 					</div>
 				</form>
@@ -314,11 +293,11 @@
 				<div class="modal-body">
 					<div class="input-group">
 						<span class="input-group-addon" id="delete_productId">Are you
-							sure you want to delete this product?</span>
+							sure you want to delete the user?</span>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-success" data-dismiss="modal"
-							ng-click="deleteProduct();">Delete</button>
+								ng-click="deleteProduct();">Delete</button>
 						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 					</div>
 				</div>
@@ -337,18 +316,18 @@
 				<div class="modal-body">
 					<div class="input-group">
 						<span class="input-group-addon">Name</span> <input type="text"
-							id="cName" class="form-control" aria-describedby="cName">
+								id="cName" class="form-control" aria-describedby="cName">
 					</div>
 					<br />
 					<div class="input-group">
 						<span class="input-group-addon">Description</span> <input
-							type="text" id="cDescription" class="form-control"
-							aria-describedby="cDescription">
+								type="text" id="cDescription" class="form-control"
+								aria-describedby="cDescription">
 					</div>
 					<br />
 					<div class="modal-footer">
 						<button type="button" class="btn btn-success"
-							ng-click="addCategory();" data-dismiss="modal">Add</button>
+								ng-click="addCategory();" data-dismiss="modal">Add</button>
 						<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
 					</div>
 				</div>
@@ -357,127 +336,159 @@
 	</div>
 
 	<script type="text/javascript">
-		$(document).ready(
-				function() {
+		$(document)
+				.ready(
+						function() {
 
-					$('[data-placement="top"]').tooltip();
+							$('#addCategory, #addProduct')
+									.on(
+											'hidden.bs.modal',
+											function() {
+												debugger;
+												$(this).find("input,textarea,select,.image-preview-filename").val('').end();
+												$(this).find(".tag").text('').end();
+												$('.image-preview').attr("data-content", "").popover('hide');
+												$('.image-preview-filename').val("");
+												$('.image-preview-clear').hide();
+												$('.image-preview-input input:file').val("");
+												$(".image-preview-input-title").text("Browse");
+											});
 
-					$('#add_pStatus,#edit_pStatus').bootstrapToggle({
-						on : 'ON',
-						off : 'OFF',
-						size : 'small'
-					});
+							$('[data-placement="top"]').tooltip();
 
-					$(document).on('click', '#close-preview', function() {
-						$('.image-preview').popover('hide');
-						// Hover befor close the preview
-						$('.image-preview').hover(function() {
-							$('.image-preview').popover('show');
-						}, function() {
-							$('.image-preview').popover('hide');
-						});
-					});
-
-					$(function() {
-						// Create the close button
-						var closebtn = $('<button/>', {
-							type : "button",
-							text : 'x',
-							id : 'close-preview',
-							style : 'font-size: initial;',
-						});
-						closebtn.attr("class", "close pull-right");
-						// Set the popover default content
-						$('.image-preview').popover(
-								{
-									trigger : 'manual',
-									html : true,
-									title : "<strong>Preview</strong>"
-											+ $(closebtn)[0].outerHTML,
-									content : "There's no image",
-									placement : 'bottom'
-								});
-						// Clear event
-						$('.image-preview-clear').click(
-								function() {
-									$('.image-preview')
-											.attr("data-content", "").popover(
-													'hide');
-									$('.image-preview-filename').val("");
-									$('.image-preview-clear').hide();
-									$('.image-preview-input input:file')
-											.val("");
-									$(".image-preview-input-title").text(
-											"Browse");
-								});
-						// Create the preview image
-						$(".image-preview-input input:file").change(
-								function() {
-									var img = $('<img/>', {
-										id : 'dynamic',
-										width : 250,
-										height : 200
-									});
-									var file = this.files[0];
-									var reader = new FileReader();
-									// Set preview image into the popover data-content
-									reader.onload = function(e) {
-										$(".image-preview-input-title").text(
-												"Change");
-										$(".image-preview-clear").show();
-										$(".image-preview-filename").val(
-												file.name);
-										img.attr('src', e.target.result);
-										$(".image-preview").attr(
-												"data-content",
-												$(img)[0].outerHTML).popover(
-												"show");
-									}
-									reader.readAsDataURL(file);
-								});
-					});
-
-					// on view product button click
-					$('#viewProduct').on(
-							'show.bs.modal',
-							function(event) {
-								var button = $(event.relatedTarget)
-								var recipient = button.data('whatever')
-								var modal = $(this)
-								modal.find('.modal-title').text(
-										recipient + "user data")
-								modal.find('.modal-body input').val(recipient)
+							$('#add_pStatus,#edit_pStatus').bootstrapToggle({
+								on : 'ON',
+								off : 'OFF',
+								size : 'small'
 							});
 
-					// on edit product button click
-					$('#editProduct').on(
-							'show.bs.modal',
-							function(event) {
-								var button = $(event.relatedTarget)
-								var recipient = button.data('whatever')
-								var modal = $(this)
-								modal.find('.modal-title').text("Editing " + recipient.productId)
-								modal.find('.modal-body #edit_productId').val(recipient.productId)
-								modal.find('.modal-body #edit_pName').val(recipient.productName)
-								modal.find('.modal-body #edit_pDescription').val(recipient.description)
-								modal.find('.modal-body #edit_pPrice').val(recipient.price)
-								modal.find('.modal-body #edit_pQuantityWeight').val(recipient.quantityWeight)
-								modal.find('.modal-body #edit_pStatus').val(recipient.productActive)
-								modal.find('.modal-body #edit_pLocations').val(recipient.productLocation)
-								modal.find('.modal-body #edit_pTags').val(recipient.tags)
-							});
+							$('#add_pTags').tagsinput({});
 
-					// on delete product button click
-					$('#deleteProduct').on(
+							// on edit product button click
+							$('#editProduct')
+									.on(
+											'show.bs.modal',
+											function(event) {
+												var button = $(event.relatedTarget)
+												var recipient = button
+														.data('whatever')
+												var modal = $(this)
+												debugger;
+												modal.find('.modal-title').text("Editing "+ recipient.productId)
+												modal.find('.modal-body #edit_productId').val(recipient.productId)
+												modal.find('.modal-body #edit_pName').val(recipient.productName)
+												modal.find('.modal-body #edit_pDescription').val(recipient.description)
+												modal.find('.modal-body #edit_pPrice').val(recipient.price)
+												modal.find('.modal-body #edit_pQuantity').val(recipient.quantityWeight)
+												modal.find('.modal-body #edit_pStatus').attr("checked",recipient.productActive)
+												modal.find('.modal-body #edit_pLocations').val(recipient.productLocation)
+												var temp = recipient.tags.split(",");
+												modal.find('.modal-body #edit_pTags').val(temp)
+												modal.find('.modal-body #edit_pTags').tagsinput();
+											});
+
+							// on delete product button click
+							$('#deleteProduct').on(
 							'show.bs.modal',
 							function(event) {
 								var button = $(event.relatedTarget)
 								var recipient = button.data('whatever')
 								var modal = $(this)
+								debugger;
 								modal.find('.modal-title').text(recipient + "product data")
 								modal.find('.modal-body #delete_productId').val(recipient)
 							});
+							$(document).on(
+									'click',
+									'#close-preview',
+									function() {
+										$('.image-preview').popover('hide');
+										// Hover befor close the preview
+										$('.image-preview').hover(
+												function() {
+													$('.image-preview')
+															.popover('show');
+												},
+												function() {
+													$('.image-preview')
+															.popover('hide');
+												});
+									});
 
-				});
+							$(function() {
+								// Create the close button
+								var closebtn = $('<button/>', {
+									type : "button",
+									text : 'x',
+									id : 'close-preview',
+									style : 'font-size: initial;',
+								});
+								closebtn.attr("class", "close pull-right");
+								// Set the popover default content
+								$('.image-preview').popover(
+										{
+											trigger : 'manual',
+											html : true,
+											title : "<strong>Preview</strong>"
+													+ $(closebtn)[0].outerHTML,
+											content : "There's no image",
+											placement : 'bottom'
+										});
+								// Clear event
+								$('.image-preview-clear')
+										.click(
+												function() {
+													$('.image-preview').attr(
+															"data-content", "")
+															.popover('hide');
+													$('.image-preview-filename')
+															.val("");
+													$('.image-preview-clear')
+															.hide();
+													$(
+															'.image-preview-input input:file')
+															.val("");
+													$(
+															".image-preview-input-title")
+															.text("Browse");
+												});
+								// Create the preview image
+								$(".image-preview-input input:file")
+										.change(
+												function() {
+													var img = $('<img/>', {
+														id : 'dynamic',
+														width : 250,
+														height : 200
+													});
+													var file = this.files[0];
+													var reader = new FileReader();
+													// Set preview image into the popover data-content
+													reader.onload = function(e) {
+														$(
+																".image-preview-input-title")
+																.text("Change");
+														$(
+																".image-preview-clear")
+																.show();
+														$(
+																".image-preview-filename")
+																.val(file.name);
+														img
+																.attr(
+																		'src',
+																		e.target.result);
+														$(".image-preview")
+																.attr(
+																		"data-content",
+																		$(img)[0].outerHTML)
+																.popover("show");
+													}
+													reader.readAsDataURL(file);
+												});
+							});
+
+						});
 	</script>
+
 </div>
