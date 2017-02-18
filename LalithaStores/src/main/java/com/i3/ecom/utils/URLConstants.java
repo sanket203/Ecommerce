@@ -50,7 +50,7 @@ public class URLConstants {
 	
 	public static final String FAIL_STATUS = "500";
 	
-	public static final String STATUS = "500";
+	public static final String STATUS_i = "500";
 	
 	
 
