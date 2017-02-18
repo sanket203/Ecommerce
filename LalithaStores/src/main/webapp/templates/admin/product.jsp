@@ -383,8 +383,17 @@
 												modal.find('.modal-body #edit_pStatus').attr("checked",recipient.productActive)
 												modal.find('.modal-body #edit_pLocations').val(recipient.productLocation)
 												var temp = recipient.tags.split(",");
-												modal.find('.modal-body #edit_pTags').val(temp)
-												modal.find('.modal-body #edit_pTags').tagsinput();
+												var tagsToDelete = modal.find('.modal-body #edit_pTags').tagsinput();
+												var oldTags = tagsToDelete[0].itemsArray.length;
+												while(oldTags--)
+												{
+													modal.find('.modal-body #edit_pTags').tagsinput('remove', tagsToDelete[0].itemsArray[oldTags]);
+													if(oldTags==0){break;}
+												}												
+												for(var i=0; i<temp.length-1;i++)
+												{
+													modal.find('.modal-body #edit_pTags').tagsinput('add', temp[i]);	
+												}		
 											});
 
 							// on delete product button click
