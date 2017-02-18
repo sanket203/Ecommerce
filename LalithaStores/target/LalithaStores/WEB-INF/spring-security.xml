@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:security="http://www.springframework.org/schema/security"
+       xmlns:p="http://www.springframework.org/schema/p" 
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/security
+                           http://www.springframework.org/schema/security/spring-security.xsd">
+
+   <security:http auto-config="true" >
+   <security:csrf disabled="true"/>
+  <security:intercept-url pattern="/adminLogin.htm*" access="hasRole('ROLE_ADMIN')" />
+   <security:intercept-url pattern="/addUser.htm*" access="hasRole('ROLE_ADMIN')" />
+  <security:intercept-url  pattern="/font/**" access="permitAll" />
+  <security:intercept-url pattern="/images/**" access="permitAll" />
+  <security:intercept-url pattern="/script/**" access="permitAll" />
+  <security:intercept-url pattern="/style/**" access="permitAll" />
+  <security:intercept-url pattern="/templates/**" access="permitAll" />
+  <security:form-login login-page="/login.htm" default-target-url="/adminLogin.htm"
+   authentication-failure-url="/fail2login.htm" />
+  <security:logout logout-success-url="/logout.htm" invalidate-session="true"
+			delete-cookies="JSESSIONID" />
+			
+			<security:session-management>
+   <security:concurrency-control max-sessions="1" error-if-maximum-exceeded="true" />
+</security:session-management>
+ </security:http>
+
+
+    <security:authentication-manager>
+   <security:authentication-provider>
+     <security:jdbc-user-service data-source-ref="dataSource"  
+      users-by-username-query="select emailId, password,status from users where emailId=?" 
+          authorities-by-username-query="select us.emailId, r.role from users us, roles r 
+        where us.userId = r.userId and us.emailId =?" 
+  />
+   </security:authentication-provider>
+ </security:authentication-manager>
+
+</beans>
