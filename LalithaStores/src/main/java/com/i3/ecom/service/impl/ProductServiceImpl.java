@@ -102,7 +102,7 @@ public class ProductServiceImpl implements ProductService {
 		     FileUtils.copyFile(file, thumbnailImage);
 			 saveThumbnailForImage(thumbnailImage);
 			} catch (Exception e) {
-				throw new Exception("Problem occured ehile copying images");
+				throw new Exception("Problem occured while copying images");
 			}
 			
 	}
