@@ -61,6 +61,6 @@ public class UserConstants {
 	
 	public static final String CATEGORY_ADD = "Category added successfully.";
 	
-	public static final String USER_STATUS = "Category added successfully.";
+	
 
 }
