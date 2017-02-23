@@ -1,6 +1,10 @@
 package com.i3.ecom.service.impl;
 
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,7 +69,7 @@ public class ProductDetailsServiceImpl implements ProductDetailsService {
 			productDto.setPrice(Double.parseDouble(prod.getPrice()));
 			productDto.setCategoryId(prod.getCategoryId());
 			productDto.setProductActive(prod.isProductActive());
-			String imageUrl  = URLConstants.BASE_IMAGE_URL+productDto.getCategoryId()+"/"+productDto.getProductId()+"/"+prod.getImageFileName();
+			String imageUrl  = getLocalIpAddress()+productDto.getCategoryId()+"/"+productDto.getProductId()+"/"+prod.getImageFileName();
 			productDto.setImageUrl(imageUrl);
 			list.add(productDto);
 			
@@ -85,7 +89,7 @@ public class ProductDetailsServiceImpl implements ProductDetailsService {
 			productDto.setPrice(Double.parseDouble(product.getPrice()));
 			productDto.setCategoryId(product.getCategoryId());
 			productDto.setProductActive(product.isProductActive());
-			String imageUrl  = URLConstants.BASE_IMAGE_URL+productDto.getCategoryId()+"/"+productDto.getProductId()+"/"+product.getImageFileName();
+			String imageUrl  = getLocalIpAddress()+productDto.getCategoryId()+"/"+productDto.getProductId()+"/"+product.getImageFileName();
 			productDto.setImageUrl(imageUrl);
 			response = new ResponseMessage(URLConstants.SUCCESS_STATUS, null);
 			response.setData(productDto);
@@ -95,6 +99,27 @@ public class ProductDetailsServiceImpl implements ProductDetailsService {
 		}
 		
 		return response;
+	}
+	
+	private String  getLocalIpAddress(){
+		InetAddress ip = null;
+		  try {
+
+			ip = InetAddress.getLocalHost();
+			System.out.println("Current IP address : " + ip.getHostAddress());
+			
+			String ipAdd = ip.getHostAddress();
+
+		  } catch (UnknownHostException e) {
+
+			e.printStackTrace();
+
+		  }
+		  
+		  return "http://"+ip.getHostAddress()+":8080/files/";
+		  
+		  
+
 	}
 		
 
