@@ -112,9 +112,15 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 						<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 							<ul class="nav navbar-nav">
-								<li ng-repeat="category in categories">
+								<!-- <li ng-repeat="category in categories">
 									<a ng-href="#/productlist" ng-click="navigateWithProductAndCategoryId(category.categoryId, 0)">{{category.categoryName}}</a>
+								</li> -->
+								
+								<li ng-repeat="category in categories" >
+									<a ng-href="#/productlist" ng-click="getAllProducts(category.categoryId, 0)">{{category.categoryName}}</a>
 								</li>
+								
+								
 							</ul>
 						</div>
 					</nav>
