@@ -16,6 +16,33 @@ app.controller("masterController", function($scope, $rootScope, CategoryAndProdu
 			}
 		});
 	};
+	
+	$scope.getAllProducts = function(categoryId) {
+		
+		var requestParam = {
+				categoryId : categoryId
+			};
+		
+		$.ajax({
+			type : "GET",
+			contentType : "application/json",
+			url : "getProducts.htm",
+			data : requestParam,
+			dataType : "json",
+			success : function(data) {
+				debugger;
+				$scope.productlist = data.data;
+				$scope.$digest();
+			},
+			error : function(e) {
+				debugger;
+				console.log("ERROR: ", e);
+			}
+		});
+
+	}
+	
+	;
 		
 	$scope.navigateWithProductAndCategoryId = function(cid, pid) {
 		CategoryAndProductIdService.setCategoryId(cid);
