@@ -41,7 +41,7 @@ app.config([
 			}, productlist = {
 				url : '/productlist',
 				templateUrl : '/LalithaCustomer/templates/customer/productlist.jsp',
-				controller : 'productlistController'
+				controller : 'masterController'
 			}, productshow = {
 				url : '/productshow',
 				templateUrl : '/LalithaCustomer/templates/customer/productshow.jsp',
