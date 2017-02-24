@@ -1,7 +1,7 @@
 <div class="content">
 	<div class="product-model">
 		<div class="container">
-			<h2>Our Products</h2>
+			
 			<div class="product-model-sec single-product-grids">
 				<div class="product-grid single-product" ng-repeat="product in productlist">
 					<a href="#/productshow"
