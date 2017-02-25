@@ -13,7 +13,7 @@
 							<img src="{{product.imageUrl}}" class="img-responsive" alt="">
 							<div class="b-wrapper">
 								<h4 class="b-animate b-from-left  b-delay03">
-									<button>+</button>
+									<button>View</button>
 								</h4>
 							</div>
 						</div>

@@ -100,7 +100,7 @@ public class ProductServiceImpl implements ProductService {
 		     String thumbnailFile = tempFileName[0]+"_thumbnail."+tempFileName[1];
 		     File thumbnailImage = new File(file.getParent()+"/"+thumbnailFile);
 		     FileUtils.copyFile(file, thumbnailImage);
-			 saveThumbnailForImage(thumbnailImage);
+			 //saveThumbnailForImage(thumbnailImage);
 			} catch (Exception e) {
 				throw new Exception("Problem occured while copying images");
 			}

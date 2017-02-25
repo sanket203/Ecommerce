@@ -1,3 +1,9 @@
+<html>
+<head>
+</head>
+
+<body>
+
 
 <div class="content">
 	<div class="single">
@@ -6,23 +12,14 @@
 				<div class="col-md-6 single-grid">
 					<div class="flexslider">
 						<ul class="slides">
-							<li data-thumb={{product.imageUrl}}>
-								<div class="thumb-image">
-									<img src={{product.imageUrl}} data-imagezoom="true"
-										class="img-responsive">
-								</div>
+							<li data-thumb="{{product.imageUrl}}" >
+									<img src="{{product.imageUrl}}" />
 							</li>
-							<li data-thumb={{product.imageUrl}}>
-								<div class="thumb-image">
-									<img src="{{product.imageUrl}}" data-imagezoom="true"
-										class="img-responsive">
-								</div>
+							<li data-thumb="{{product.imageUrl}}" >
+									<img src="{{product.imageUrl}}" >
 							</li>
-							<li data-thumb={{product.imageUrl}}>
-								<div class="thumb-image">
-									<img src={{product.imageUrl}} data-imagezoom="true"
-										class="img-responsive">
-								</div>
+							<li data-thumb="{{product.imageUrl}}" >
+									<img src="{{product.imageUrl}}" >
 							</li>
 						</ul>
 					</div>
@@ -43,14 +40,6 @@
 
 					<div class="btn_form">
 						<a href="#" class="add-cart item_add">ADD TO CART</a>
-					</div>
-					<div class="tag">
-						<p>
-							Category : <a href="#"> {{product.categoryId}} </a>
-						</p>
-						<p>
-							Tag : <a href="#"> {{product.tags}} </a>
-						</p>
 					</div>
 				</div>
 				<div class="clearfix"></div>
@@ -227,3 +216,7 @@
 		</div>
 	</div>
 </div>
+
+
+</body>
+</html>

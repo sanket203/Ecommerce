@@ -102,7 +102,7 @@
 			categoryId : $scope.categoryId,
 			price : $('.modal-body #add_pPrice').val(),
 			quantity : $('.modal-body #add_pQuantity').val(),
-			status:$(".modal-body #add_pStatus")[0].checked,
+			productActive:$(".modal-body #add_pStatus")[0].checked,
 			productLocation : $('.modal-body #add_pLocations').val(),
 			tags : $('.modal-body #add_pTags').val() ,
 			addedBy : 'sanket'

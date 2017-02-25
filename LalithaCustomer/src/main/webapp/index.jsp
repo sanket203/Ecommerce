@@ -88,9 +88,14 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					<ul>
 						<li class="text"><a ng-href="#/login">login</a></li>
 						<li class="text"><a ng-href="#/account">signup</a></li>
+						<li class="text">
+							<a href="checkout.html"> 
+								<img src="images/shopping-cart.png" style="width:20px"/>
+								<span class="badge">0</span>
+							</a>
+						</li>
 					</ul>
 				</div>
-				<div class="clearfix"></div>
 			</div>
 		</div>
 		<div class="header-bottom">
@@ -112,15 +117,25 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 						<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 							<ul class="nav navbar-nav">
-								<!-- <li ng-repeat="category in categories">
-									<a ng-href="#/productlist" ng-click="navigateWithProductAndCategoryId(category.categoryId, 0)">{{category.categoryName}}</a>
-								</li> -->
-								
-								<li ng-repeat="category in categories" >
-									<a ng-href="#/productlist" ng-click="getAllProducts(category.categoryId, 0)">{{category.categoryName}}</a>
+								<li ng-repeat="category in categories | limitTo: 4"><a
+									ng-href="#/productlist"
+									ng-click="getAllProducts(category.categoryId, 0)">{{category.categoryName}}</a>
 								</li>
-								
-								
+
+								<li class="dropdown"><a href="" class="dropdown-toggle"
+									data-toggle="dropdown">more <b class="caret"></b></a>
+									<ul class="dropdown-menu multi-column columns-1">
+										<div class="row">
+											<div class="col-sm-6">
+												<ul class="multi-column-dropdown">
+													<li ng-repeat="category in categories" ng-if="$index >= 4">
+														<a ng-href="#/productlist"
+														ng-click="getAllProducts(category.categoryId, 0)">{{category.categoryName}}</a>
+													</li>
+												</ul>
+											</div>
+										</div>
+									</ul></li>
 							</ul>
 						</div>
 					</nav>
