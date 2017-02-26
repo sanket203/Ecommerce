@@ -2,6 +2,7 @@ package com.i3.ecom.dao;
 
 import java.util.List;
 
+import com.i3.ecom.model.Roles;
 import com.i3.ecom.model.Users;
 
 public interface UserDao {
@@ -15,5 +16,9 @@ public interface UserDao {
 	public List<Users> getAllUsers() throws Exception;
 	
 	public Users getUser(final String userJson) throws Exception;
+	
+	public Roles getUserRoles(final Long userId) throws Exception;
+	
+	public Users getUserById(final Long userId) throws Exception;
 
 }

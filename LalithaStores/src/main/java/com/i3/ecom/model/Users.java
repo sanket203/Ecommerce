@@ -1,5 +1,13 @@
 package com.i3.ecom.model;
 
+import static com.i3.ecom.utils.UserConstants.CONTACT;
+import static com.i3.ecom.utils.UserConstants.EMAIL_ID;
+import static com.i3.ecom.utils.UserConstants.FIRST_NAME;
+import static com.i3.ecom.utils.UserConstants.LAST_NAME;
+import static com.i3.ecom.utils.UserConstants.LOCATION;
+import static com.i3.ecom.utils.UserConstants.PASSWORD;
+import static com.i3.ecom.utils.UserConstants.STATUS;
+
 import java.util.Date;
 import java.util.Iterator;
 
@@ -9,15 +17,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 import org.json.JSONObject;
-
-import static com.i3.ecom.utils.UserConstants.EMAIL_ID;
-import static com.i3.ecom.utils.UserConstants.PASSWORD;
-import static com.i3.ecom.utils.UserConstants.CONTACT;
-import static com.i3.ecom.utils.UserConstants.FIRST_NAME;
-import static com.i3.ecom.utils.UserConstants.LAST_NAME;
-import static com.i3.ecom.utils.UserConstants.LOCATION;
-import static com.i3.ecom.utils.UserConstants.MODIFICATION_DATE;
-import static com.i3.ecom.utils.UserConstants.STATUS;
 
 
 @Entity(name="users")

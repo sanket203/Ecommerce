@@ -10,23 +10,48 @@ import java.security.Principal;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.http.HttpRequest;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.i3.ecom.model.LoggedInUser;
+import com.i3.ecom.utils.UserConstants;
+
 @Controller
 public class LoginController {
 	
 	 @RequestMapping(value=ADMIN_LOGIN, method = RequestMethod.GET)
-	 public String executeSecurity(ModelMap model, Principal principal ) {
-	 
-	  String name = principal.getName();
-	  model.addAttribute("author", name);
-	  model.addAttribute("message", "Welcome To Login Form Based Spring Security Example!!!");
+	 public String executeSecurity(ModelMap model, HttpServletRequest request) {
+		 LoggedInUser loggedInUser = null;
+	        HttpSession session = null;
+	  try{
+		  
+		  session = request.getSession();
+		  Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+          String currentUserName = authentication.getName();
+          
+          session.setAttribute(UserConstants.LOGGEDIN_USERNAME, currentUserName);
+          
+          Object principal = authentication.getPrincipal();
+          if (principal instanceof UserDetails) {
+              loggedInUser = (LoggedInUser) principal;
+          }
+          
+          if(loggedInUser != null){
+        	  session.setAttribute(UserConstants.LOGGED_IN_USER, loggedInUser);
+          }
+		  
+	  }
+	  
+	  catch(Exception e){
+		  
+	  }
 	  return "admin";
 	 
 	 }

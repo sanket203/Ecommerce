@@ -14,6 +14,7 @@ public class ProductValidation {
 			validateData(product.getProductLocation());
 			validateData(product.getPrice());
 			validateData(product.getAddedBy());
+			
 		} catch (Exception e) {
 			throw new Exception("One of the mandatoryfield is empty. Please fill all information");
 		}

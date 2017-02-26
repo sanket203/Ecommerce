@@ -17,6 +17,8 @@ public class UserConstants {
 	
 	public static final String STATUS = "status";
 	
+	public static final String LOGGEDIN_USERNAME = "Logged in User name";
+	
 	//--------------------------- Product Constant ----------------------------------
 	public static final String PRODUCT_ID = "id";
 	    
@@ -60,6 +62,8 @@ public class UserConstants {
     public static final String CATEGORY_DELTE = "Category deleted successfully.";
 	
 	public static final String CATEGORY_ADD = "Category added successfully.";
+
+	public static final String LOGGED_IN_USER = "Logged In User";
 	
 	
 

@@ -5,8 +5,9 @@
 			<div class="banner-grids">
 				<div class="col-md-6 banner-grid">
 					<h2>the latest collections</h2>
-					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-						do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+					<p>Welcome to Lalitha Stores!! A South Indian product shop. Wonder into our great collection of south indian products 
+					and experiance the real flavour of South India
+					</p>
 					<a ng-href="#/productlist" class="button"> shop now </a>
 				</div>
 				<div class="col-md-6 banner-grid1">
@@ -31,51 +32,51 @@
 			</script>
 			<div id="owl-demo" class="owl-carousel text-center">
 				<div class="item">
-					<img class="lazyOwl" data-src="images/b1.png" alt="name">
+					<img class="lazyOwl" data-src="images/samsung.jpg" alt="name">
 					<div class="item-info">
-						<h5>Spices</h5>
+						<h5>View</h5>
 					</div>
 				</div>
 				<div class="item">
-					<img class="lazyOwl" data-src="images/b2.png" alt="name">
+					<img class="lazyOwl" data-src="images/LgTV.jpg" alt="name">
 					<div class="item-info">
-						<h5>Coconut</h5>
+						<h5>View</h5>
 					</div>
 				</div>
 				<div class="item">
-					<img class="lazyOwl" data-src="images/b3.png" alt="name">
+					<img class="lazyOwl" data-src="images/samsung.jpg" alt="name">
 					<div class="item-info">
-						<h5>Banana Chips</h5>
+						<h5>View</h5>
 					</div>
 				</div>
 				<div class="item">
-					<img class="lazyOwl" data-src="images/b4.png" alt="name">
+					<img class="lazyOwl" data-src="images/asus.jpg" alt="name">
 					<div class="item-info">
-						<h5>Lungi</h5>
+						<h5>View</h5>
 					</div>
 				</div>
 				<div class="item">
-					<img class="lazyOwl" data-src="images/b1.png" alt="name">
+					<img class="lazyOwl" data-src="images/nexus.jpg" alt="name">
 					<div class="item-info">
-						<h5>Spices</h5>
+						<h5>View</h5>
 					</div>
 				</div>
 				<div class="item">
-					<img class="lazyOwl" data-src="images/b2.png" alt="name">
+					<img class="lazyOwl" data-src="images/samsung.jpg" alt="name">
 					<div class="item-info">
-						<h5>Coconut</h5>
+						<h5>View</h5>
 					</div>
 				</div>
 				<div class="item">
-					<img class="lazyOwl" data-src="images/b3.png" alt="name">
+					<img class="lazyOwl" data-src="images/nexus.jpg" alt="name">
 					<div class="item-info">
-						<h5>Banana Chips</h5>
+						<h5>View</h5>
 					</div>
 				</div>
 				<div class="item">
-					<img class="lazyOwl" data-src="images/b4.png" alt="name">
+					<img class="lazyOwl" data-src="images/asus.jpg" alt="name">
 					<div class="item-info">
-						<h5>Lungi</h5>
+						<h5>View</h5>
 					</div>
 				</div>
 			</div>
@@ -93,7 +94,7 @@
 							<img src="{{product.Image}}" class="img-responsive" alt="">
 							<div class="b-wrapper">
 								<h4 class="b-animate b-from-left  b-delay03">
-									<button>+</button>
+									<button>View</button>
 								</h4>
 							</div>
 						</div>

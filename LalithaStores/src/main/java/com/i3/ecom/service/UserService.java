@@ -1,9 +1,11 @@
 package com.i3.ecom.service;
 
+import org.springframework.security.core.userdetails.UserDetailsService;
+
 import com.i3.ecom.model.Users;
 import com.i3.ecom.utils.ResponseMessage;
 
-public interface UserService {
+public interface UserService extends UserDetailsService{
 
 	ResponseMessage addUser(final Users userJson);
 	

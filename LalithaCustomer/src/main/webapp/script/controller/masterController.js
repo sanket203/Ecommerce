@@ -48,40 +48,45 @@ app.controller("masterController", function($scope, $rootScope, CategoryAndProdu
 		CategoryAndProductIdService.setCategoryId(cid);
 		CategoryAndProductIdService.setProductId(pid);
 	};
+	
+	"images/asus.jpg"
+	"images/nexus.jpg"
+	"images/samsung.jpg"
+	"images/LgTV.jpg"
 
 	$scope.products = [ {
 		Id : 101,
 		Name : "Bata Shoe",
 		Price : 123.00,
-		Image : "images/nia.png"
+		Image : "images/asus.jpg"
 	}, {
 		Id : 102,
 		Name : "Redtape Shoe",
 		Price : 123.00,
-		Image : "images/nia.png"
+		Image : "images/nexus.jpg"
 
 	}, {
 		Id : 103,
 		Name : "Woodland Shoe",
 		Price : 123.00,
-		Image : "images/nia.png"
+		Image : "images/asus.jpg"
 
 	}, {
 		Id : 104,
 		Name : "Lee Cooper Shoe",
 		Price : 123.00,
-		Image : "images/nia.png"
+		Image : "images/nexus.jpg"
 
 	}, {
 		Id : 101,
 		Name : "Bata Shoe",
 		Price : 123.00,
-		Image : "images/nia.png"
+		Image : "images/asus.jpg"
 	}, {
 		Id : 102,
 		Name : "Redtape Shoe",
 		Price : 123.00,
-		Image : "images/nia.png"
+		Image : "images/samsung.jpg"
 
 	}, {
 		Id : 103,
@@ -93,7 +98,7 @@ app.controller("masterController", function($scope, $rootScope, CategoryAndProdu
 		Id : 104,
 		Name : "Lee Cooper Shoe",
 		Price : 123.00,
-		Image : "images/nia.png"
+		Image : "images/samsung.jpg"
 
 	} ];
 

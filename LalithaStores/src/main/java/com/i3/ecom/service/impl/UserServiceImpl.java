@@ -1,21 +1,27 @@
 package com.i3.ecom.service.impl;
 
+import static com.i3.ecom.utils.URLConstants.FAIL_STATUS;
+import static com.i3.ecom.utils.URLConstants.SUCCESS_STATUS;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.i3.ecom.dao.UserDao;
+import com.i3.ecom.model.LoggedInUser;
+import com.i3.ecom.model.Roles;
 import com.i3.ecom.model.Users;
 import com.i3.ecom.service.UserService;
 import com.i3.ecom.utils.ResponseMessage;
-
-import static com.i3.ecom.utils.URLConstants.SUCCESS_STATUS;
-import static com.i3.ecom.utils.URLConstants.FAIL_STATUS;
 
 @Service(value= UserServiceImpl.SERVICE_NAME)
 @Transactional(propagation=Propagation.SUPPORTS,readOnly=true)
@@ -112,5 +118,41 @@ UserDao userDao;
 		
 		return response;
 	}
+
+@Override
+public UserDetails loadUserByUsername(String email)
+		throws UsernameNotFoundException {
+	LoggedInUser loggedInUser = null;
+try {
+	Users user = userDao.getUser(email);
+	
+	if(user == null){
+		throw new UsernameNotFoundException("Invalid Username");
+	}
+	
+	 
+	
+	Roles roles = userDao.getUserRoles(user.getUserId());
+	 List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+	 
+	 if(roles!=null){
+		 String[] permissionList = roles.getRole().split(",");
+		 for (String permissionName : permissionList) {
+             authorities.add(new SimpleGrantedAuthority(permissionName));
+         }
+		 
+		 loggedInUser = new LoggedInUser(user.getEmailId(), user.getPassword(), authorities);
+		 loggedInUser.setFirstName(user.getFirstName());
+		 loggedInUser.setLastName(user.getLastName());
+		 loggedInUser.setCurrentUserId(user.getUserId());
+
+	 }
+} catch (Exception e) {
+	// TODO Auto-generated catch block
+	e.printStackTrace();
+}
+	
+	return loggedInUser;
+}
 
 }

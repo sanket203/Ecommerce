@@ -70,6 +70,9 @@ public class Product {
 	@Transient
 	private String dateAdded;
 	
+	@Transient
+	private Long addedByUserId;
+	
 	public String getImageFileName() {
 		return imageFileName;
 	}
@@ -217,12 +220,26 @@ public class Product {
 				product.setTags(jsonObject.getString(key));
 				break;
 			case ADDED_BY:
-				product.setAddedBy(jsonObject.getString(key));
+				product.setAddedByUserId(jsonObject.getLong(key));
 				break;
 			default:
 				break;
 			}
 		}
 		return product;
+	}
+
+	/**
+	 * @return the addedByUserId
+	 */
+	public Long getAddedByUserId() {
+		return addedByUserId;
+	}
+
+	/**
+	 * @param addedByUserId the addedByUserId to set
+	 */
+	public void setAddedByUserId(Long addedByUserId) {
+		this.addedByUserId = addedByUserId;
 	}
 }
