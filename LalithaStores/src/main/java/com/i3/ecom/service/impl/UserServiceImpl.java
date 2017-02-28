@@ -22,6 +22,7 @@ import com.i3.ecom.model.Roles;
 import com.i3.ecom.model.Users;
 import com.i3.ecom.service.UserService;
 import com.i3.ecom.utils.ResponseMessage;
+import com.i3.ecom.utils.UserValidation;
 
 @Service(value= UserServiceImpl.SERVICE_NAME)
 @Transactional(propagation=Propagation.SUPPORTS,readOnly=true)
@@ -38,18 +39,38 @@ UserDao userDao;
 		ResponseMessage responseMessage = null;
 		try {
 		//Users user = Users.getUser(userJson);
+			UserValidation.validateuser(userJson);
 			userJson.setCreationDate(new Date());
 			userJson.setModificationDate(new Date());
 			userJson.setPassword("123456");
 			userJson.setStatus(true);
 			message = userDao.addUser(userJson);
+			Users user = userDao.getUser(userJson.getEmailId());
+			userDao.setUserRoles(getUserRoleString(userJson.getRoles()), user.getUserId());
 			responseMessage = new ResponseMessage(SUCCESS_STATUS, message);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			responseMessage = new ResponseMessage(FAIL_STATUS, e.getCause().getMessage());
+			responseMessage = new ResponseMessage(FAIL_STATUS, e.getMessage());
 		}
 		return responseMessage;
 	}
+
+private String getUserRoleString(List<String> roles){
+	StringBuffer roleString = new StringBuffer();
+	
+	if(roles.size()==1){
+		roleString.append(roles.get(0));
+	}
+	else{
+	for (String role : roles) {
+		roleString.append(role+",");
+	}
+	}
+	
+	roleString.deleteCharAt(roleString.lastIndexOf(","));
+	
+	return roleString.toString();
+}
 
 @Transactional
 	@Override
@@ -59,12 +80,16 @@ UserDao userDao;
 		ResponseMessage responseMessage = null;
 		Users user = new Users();
 		try {
+			UserValidation.validateuser(userJson);
 			user = userDao.getUser(userJson.emailId);
 			userJson.setUserId(user.getUserId());
 			userJson.setPassword(user.getPassword());
 			userJson.setModificationDate(new Date());
 			userJson.setStatus(user.getStatus());
 			message = userDao.editUser(userJson);
+			Roles roles = userDao.getUserRoles(user.getUserId());
+			roles.setRole(getUserRoleString(userJson.getRoles()));
+			userDao.updateUserRoles(roles);
 			responseMessage = new ResponseMessage(SUCCESS_STATUS, message);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

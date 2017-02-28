@@ -20,5 +20,9 @@ public interface UserDao {
 	public Roles getUserRoles(final Long userId) throws Exception;
 	
 	public Users getUserById(final Long userId) throws Exception;
+	
+	public void setUserRoles(final String roles,final Long userId) throws Exception;
+	
+	public void updateUserRoles(final Roles roles);
 
 }

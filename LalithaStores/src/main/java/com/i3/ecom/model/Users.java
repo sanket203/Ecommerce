@@ -10,11 +10,13 @@ import static com.i3.ecom.utils.UserConstants.STATUS;
 
 import java.util.Date;
 import java.util.Iterator;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 import org.json.JSONObject;
 
@@ -54,7 +56,8 @@ public class Users {
 	@Column(name="creationDate")
 	public Date creationDate;
 	
-	
+	@Transient
+	public List<String> roles;
 	
 	public Date getCreationDate() {
 		return creationDate;
@@ -175,46 +178,18 @@ public class Users {
 	}
 
 
+	/**
+	 * @return the roles
+	 */
+	public List<String> getRoles() {
+		return roles;
+	}
 
-	public static Users getUser(String userJason){
-		
-		Users users =new Users();
-		JSONObject jsonObject =new JSONObject(userJason);
-		Iterator<?> keys = jsonObject.keys();
-		while (keys.hasNext()) {
-			String key = (String) keys.next();
-			switch (key) {
-			
-			case EMAIL_ID:
-				users.setEmailId(jsonObject.getString(key));
-				break;
-			case PASSWORD:
-				users.setPassword(jsonObject.getString(key));
-				break;
-			case FIRST_NAME:
-				users.setFirstName(jsonObject.getString(key));
-				break;
-			case LAST_NAME:
-				users.setLastName(jsonObject.getString(key));
-				break;
-			case CONTACT:
-				users.setContact(jsonObject.getString(key));
-				break;
-			case LOCATION:
-				users.setLocation(jsonObject.getString(key));
-				break;
-			case STATUS:
-				users.setStatus(jsonObject.getBoolean(key));
-				break;
-			default : 
-				break;
-			}
-			
-			
-			
-		}
-		return users;
-		
+	/**
+	 * @param roles the roles to set
+	 */
+	public void setRoles(List<String> roles) {
+		this.roles = roles;
 	}
 	
 	

@@ -96,6 +96,7 @@ public class UserDaoImpl implements UserDao {
 		Query selectQuery = session.createQuery("select usr from users usr where usr.emailId=:emailId");
 		selectQuery.setString("emailId", emailId);
 		 users = (Users) selectQuery.uniqueResult();
+		 transaction.commit();
 		 }finally{
 			 if(session.isOpen()){
 					session.close();
@@ -114,6 +115,7 @@ public class UserDaoImpl implements UserDao {
 		Query selectQuery = session.createQuery("select r from roles r where r.userId = :userId");
 		selectQuery.setLong("userId", userId);
 		 roles = (Roles) selectQuery.uniqueResult();
+		 transaction.commit();
 		 }finally{
 			 if(session.isOpen()){
 					session.close();
@@ -131,12 +133,51 @@ public class UserDaoImpl implements UserDao {
 		Query selectQuery = session.createQuery("select usr from users usr where usr.userId=:userId");
 		selectQuery.setLong("userId", userId);
 		 users = (Users) selectQuery.uniqueResult();
+		 transaction.commit();
 		 }finally{
 			 if(session.isOpen()){
 					session.close();
 				}
 		 }
 		return users;
+	}
+
+	@Override
+	public void setUserRoles(String roles, Long userId) throws Exception {
+		
+		Session session = sessionFactory.getCurrentSession();
+		Roles userRole = new Roles();
+		try{
+			userRole.setRole(roles);
+			userRole.setUserId(userId);
+		Transaction transaction = session.beginTransaction();
+		session.save(userRole);
+		transaction.commit();
+		 }finally{
+			 if(session.isOpen()){
+					session.close();
+				}
+		 }
+		
+		
+	}
+
+	@Override
+	public void updateUserRoles(Roles roles) {
+		
+
+		Session session = sessionFactory.getCurrentSession();
+		 try{
+			 
+		      Transaction transaction = session.beginTransaction();
+		      session.update(roles);
+		      transaction.commit();
+			 }finally{
+				 if(session.isOpen()){
+						session.close();
+					}
+			 }
+		
 	}
 
 }
