@@ -95,6 +95,7 @@
 		</div>
 	</div>
 
+
 	<!-- edit user popup -->
 	<div class="modal fade" id="editUser" role="dialog">
 		<div class="modal-dialog">
@@ -140,7 +141,8 @@
 					</div>
 					<br />
 					<div class="modal-footer">
-						<button type="button" class="btn btn-success" data-dismiss="modal" ng-click="editUser();">Save</button>
+						<button type="button" class="btn btn-success" data-dismiss="modal"
+							ng-click="editUser();">Save</button>
 						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 					</div>
 				</div>
@@ -178,10 +180,6 @@
 <script type="text/javascript">
 	$(document).ready(
 			function() {
-				
-				$('#addUser,#editUser ').on('hidden.bs.modal', function () {
-				    $(this).find("input,textarea,select").val('').end();
-				});
 
 				$('#permissions').multiselect({
 					includeSelectAllOption : true,
@@ -204,17 +202,16 @@
 							modal.find('.modal-title').text(
 									"Editing " + recipient.firstName + " "
 											+ recipient.lastName)
-							modal.find('.modal-body #edit_fname').val(recipient.firstName)
-							modal.find('.modal-body #edit_lname').val(recipient.lastName)
-							modal.find('.modal-body #edit_email').val(recipient.emailId)
-							modal.find('.modal-body #edit_contact').val(recipient.contact)
-							if(recipient.status==1){
-								modal.find('.modal-body #edit_status').attr("checked", true)
-							}
-							else{
-								modal.find('.modal-body #edit_status').attr("checked", false)
-							}							
-							modal.find('.modal-body #edit_location').val(recipient.location)
+							modal.find('.modal-body #edit_fname').val(
+									recipient.firstName)
+							modal.find('.modal-body #edit_lname').val(
+									recipient.lastName)
+							modal.find('.modal-body #edit_email').val(
+									recipient.emailId)
+							modal.find('.modal-body #edit_contact').val(
+									recipient.contact)
+							modal.find('.modal-body #edit_location').val(
+									recipient.location)
 						});
 
 				// on delete user button click
