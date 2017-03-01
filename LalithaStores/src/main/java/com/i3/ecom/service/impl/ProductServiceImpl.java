@@ -190,13 +190,12 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public ResponseMessage removeCategory(final String categoryId) {
+	public ResponseMessage removeCategory(final long categoryId) {
 		ResponseMessage response = null;
-		long category = Long.parseLong(categoryId);
 		try {
-			productDao.deleteAllProduct(category);
-			ProductUtility.removeCategoryDirectory(category);
-			String deleteCategory = productDao.deleteCategory(category);
+			productDao.deleteAllProduct(categoryId);
+			ProductUtility.removeCategoryDirectory(categoryId);
+			String deleteCategory = productDao.deleteCategory(categoryId);
 			response = new ResponseMessage(SUCCESS_STATUS, deleteCategory);
 		} catch (Exception ex) {
 			response = new ResponseMessage(FAIL_STATUS, ex.getMessage());
