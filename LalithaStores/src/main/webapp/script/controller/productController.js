@@ -1,4 +1,4 @@
-﻿app.controller("productController", function($scope, $rootScope) {
+﻿﻿app.controller("productController", function($scope, $rootScope) {
 
 	$scope.productBlock = false;
 	$scope.addBtnBlock = false;
@@ -104,7 +104,7 @@
 			productActive : $(".modal-body #add_pStatus")[0].checked,
 			productLocation : $('.modal-body #add_pLocations').val(),
 			tags : $('.modal-body #add_pTags').val(),
-			addedBy : $rootScope.currentUserId
+			addedBy : $rootScope.currentUserName
 		};
 		var formData = new FormData();
 		formData.append("productJson", JSON.stringify($scope.productJson));
