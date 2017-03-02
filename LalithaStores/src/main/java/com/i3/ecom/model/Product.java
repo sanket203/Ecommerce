@@ -220,7 +220,7 @@ public class Product {
 				product.setTags(jsonObject.getString(key));
 				break;
 			case ADDED_BY:
-				product.setAddedByUserId(jsonObject.getLong(key));
+				product.setAddedBy(jsonObject.getString(key));
 				break;
 			default:
 				break;

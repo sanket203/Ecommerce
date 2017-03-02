@@ -10,7 +10,7 @@
 
    <security:http auto-config="true" >
    <security:csrf disabled="true"/>
-  <security:intercept-url pattern="/adminLogin.htm*" access="hasRole('ROLE_ADMIN') or hasRole('ROLE_PRODUCT_MANAGEMENT') or hasRole('ROLE_ORDER_MANAGEMENT')" />
+  <security:intercept-url pattern="/adminLogin.htm*" access="hasRole('ROLE_ADMIN') or hasRole('ROLE_PRODUCT_MANAGEMENT') or hasRole('ROLE_ORDER_MANAGEMENT') or hasRole('ROLE_USER_MANAGEMENT')" />
    <security:intercept-url pattern="/addUser.htm*" access="hasRole('ROLE_ADMIN')" />
   <security:intercept-url  pattern="/font/**" access="permitAll" />
   <security:intercept-url pattern="/images/**" access="permitAll" />

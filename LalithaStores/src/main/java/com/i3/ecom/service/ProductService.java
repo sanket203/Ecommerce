@@ -47,7 +47,7 @@ public interface ProductService {
 	 * @param category_id
 	 * @return
 	 */
-	public ResponseMessage removeCategory(final String categoryId);
+	public ResponseMessage removeCategory(final long l);
 	
 	/**
 	 * This method will delete product on the basis of product id
