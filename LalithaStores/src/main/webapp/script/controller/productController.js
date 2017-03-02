@@ -1,5 +1,4 @@
-
-﻿app.controller("productController", function($scope, $rootScope) {
+app.controller("productController", function($scope, $rootScope) {
 
 	$scope.productBlock = false;
 	$scope.addBtnBlock = false;
