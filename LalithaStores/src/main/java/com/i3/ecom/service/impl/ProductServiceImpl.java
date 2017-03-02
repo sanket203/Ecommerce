@@ -51,10 +51,7 @@ public class ProductServiceImpl implements ProductService {
 		Product product = Product.createProductEntity(productJson);
 		
 		try {
-			Users user = userDao.getUserById(product.getAddedByUserId());
-			if(user !=null){
-				product.setAddedBy(user.getFirstName()+" "+user.getLastName());
-			}
+			
 			
 			ProductValidation.validateProduct(product);
 			
