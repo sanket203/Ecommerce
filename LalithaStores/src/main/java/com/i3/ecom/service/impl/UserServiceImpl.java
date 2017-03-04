@@ -65,9 +65,11 @@ private String getUserRoleString(List<String> roles){
 	for (String role : roles) {
 		roleString.append(role+",");
 	}
-	}
 	
 	roleString.deleteCharAt(roleString.lastIndexOf(","));
+	}
+	
+
 	
 	return roleString.toString();
 }
