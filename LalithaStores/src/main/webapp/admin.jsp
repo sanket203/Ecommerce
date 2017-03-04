@@ -14,12 +14,12 @@
 <link href="<c:url value="/style/bootstrap-toggle.min.css"/>" rel="stylesheet" type="text/css">
 <link href="<c:url value="/style/bootstrap-tagsinput.css"/>" rel="stylesheet" type="text/css">
 
-<script type="text/javascript" src="<c:url value="/script/utilities/jquery-2.0.3.min.js"/>" defer="true"></script>
+<script type="text/javascript" src="<c:url value="/script/utilities/jquery.min.js"/>" defer="true"></script>
 <script type="text/javascript" src="<c:url value="/script/utilities/bootstrap-3.1.1.min.js"/>" defer="true"></script>
+<script type="text/javascript" src="<c:url value="/script/utilities/bootstrap-multiselect.min.js"/>" defer="true"></script>
 <script type="text/javascript" src="<c:url value="/script/utilities/angular.js"/>" defer="true"></script>
 <script type="text/javascript" src="<c:url value="/script/utilities/angular-ui-router.js"/>" defer="true"></script>
 <script type="text/javascript" src="<c:url value="/script/utilities/ui-bootstrap-tpls-2.4.0.js"/>" defer="true"></script>
-<script type="text/javascript" src="<c:url value="/script/utilities/bootstrap-multiselect.min.js"/>" defer="true"></script>
 <script type="text/javascript" src="<c:url value="/script/utilities/bootstrap-toggle.min.js"/>" defer="true"></script>
 <script type="text/javascript" src="<c:url value="/script/utilities/bootstrap-tagsinput.min.js"/>" defer="true"></script>
 
@@ -37,7 +37,7 @@
 %>
 </head>
 
-<body ng-app="StoreApp" class="container" ng-controller="adminController" ng-init = "setUserId( <%=currentUserId%>)">
+<body ng-app="StoreApp" class="container" ng-controller="adminController" ng-init="setUserId( '<%=fullname%>',<%=currentUserId%>)">
 	<script type="text/javascript">
 		var redirected = "dashboard";
 		var hashtag = window.location.hash.substr(1);
