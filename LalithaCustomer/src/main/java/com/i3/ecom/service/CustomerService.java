@@ -7,4 +7,5 @@ public interface CustomerService {
 	
 	ResponseMessage addCustomer(final Customer customer);
 
+	ResponseMessage checkUser(final String emailId, final String password);
 }

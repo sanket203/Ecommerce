@@ -36,7 +36,7 @@
 		var requestData = {
 			categoryName : $('#cName').val(),
 			description : $('#cDescription').val(),
-			addedBy : 'admin'
+			addedBy : "admin"
 		};
 
 		$.ajax({

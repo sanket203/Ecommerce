@@ -14,29 +14,50 @@ public class Customer {
 	@Id
 	@GeneratedValue
 	@Column(name="customerId")
-	public long customerId;
+	private long customerId;
 
 	@Column(name="firstName")
-	public String firstName;
+	private String firstName;
 	
 	@Column(name="lastName")
-	public String lastName;
+	private String lastName;
 	
 	@Column(name="emailId")
-	public String emailId;
+	private String emailId;
 	
 	@Column(name="password")
-	public String password;
+	private String password;
 	
 	@Column(name="contact")
-	public String contact;
+	private String contact;
 	
 	@Column(name="gender")
-	public String gender;
+	private String gender;
 	
 	@Column(name="birthDate")
-	public Date birthDate;
+	private Date birthDate;
 	
+	@Column(name="creationDate")
+	private Date creationDate;
+	
+	@Column(name="modificationDate")
+	private Date modificationDate;
+	
+	public Date getCreationDate() {
+		return creationDate;
+	}
+
+	public void setCreationDate(Date creationDate) {
+		this.creationDate = creationDate;
+	}
+
+	public Date getModificationDate() {
+		return modificationDate;
+	}
+
+	public void setModificationDate(Date modificationDate) {
+		this.modificationDate = modificationDate;
+	}
 
 	public long getCustomerId() {
 		return customerId;

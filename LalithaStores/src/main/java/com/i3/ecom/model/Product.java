@@ -8,6 +8,7 @@ import static com.i3.ecom.utils.UserConstants.PRODUCT_ACTIVE;
 import static com.i3.ecom.utils.UserConstants.PRODUCT_ID;
 import static com.i3.ecom.utils.UserConstants.PRODUCT_LOCATION;
 import static com.i3.ecom.utils.UserConstants.PRODUCT_NAME;
+import static com.i3.ecom.utils.UserConstants.QUANTITY_STOCK;
 import static com.i3.ecom.utils.UserConstants.QUANTITY_WEIGHT;
 import static com.i3.ecom.utils.UserConstants.TAGS;
 
@@ -64,6 +65,9 @@ public class Product {
 	@Column(name="imageFileName")
 	private String imageFileName;
 	
+	@Column(name="quantity_stock")
+	private String quantityStock;
+	
 	@Column(name="addedBy")
 	private String addedBy;
 	
@@ -73,6 +77,14 @@ public class Product {
 	@Transient
 	private Long addedByUserId;
 	
+	public String getQuantityStock() {
+		return quantityStock;
+	}
+
+	public void setQuantityStock(String quantityStock) {
+		this.quantityStock = quantityStock;
+	}
+
 	public String getImageFileName() {
 		return imageFileName;
 	}
@@ -220,7 +232,10 @@ public class Product {
 				product.setTags(jsonObject.getString(key));
 				break;
 			case ADDED_BY:
-				product.setAddedByUserId(jsonObject.getLong(key));
+				product.setAddedBy(jsonObject.getString(key));
+				break;
+			case QUANTITY_STOCK:
+				product.setQuantityStock(jsonObject.getString(key));
 				break;
 			default:
 				break;
