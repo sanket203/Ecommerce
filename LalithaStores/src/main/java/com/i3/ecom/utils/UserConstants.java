@@ -46,10 +46,7 @@ public class UserConstants {
 	
 	public static final String ADDED_BY = "addedBy";
 	
-<<<<<<< HEAD
 	
-=======
->>>>>>> refs/remotes/origin/master
 	public static final String DEFAULT_IMAGE="defaultImage";
 	//---------------------------- Response Messages -------------------------------
 	
