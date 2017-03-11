@@ -69,8 +69,8 @@ public class ProductController {
 	}
 	
 	@RequestMapping(value=DELETE_CATEGORY_URL,method=RequestMethod.POST,consumes="application/json")
-	public @ResponseBody ResponseMessage deleteCategory(@RequestParam("categoryId") String categoryId){
-		ResponseMessage response = productService.removeCategory(categoryId);
+	public @ResponseBody ResponseMessage deleteCategory(@RequestBody Category category){
+		ResponseMessage response = productService.removeCategory(category.getCategoryId());
 		return response;
 	}
 }

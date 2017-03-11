@@ -47,20 +47,42 @@
 .toggle.ios .toggle-handle {
 	border-radius: 20px;
 }
+a.categoryBtn.btn.btn-default.btn-block
+{
+	padding-left: 50px;
+}
+
+.modCatBtn {
+    float: right;
+    padding-left: 10px;
+    visibility: hidden;
+    opacity: 0;
+}
+.categoryBtn:hover .modCatBtn{
+	visibility: visible;
+    opacity: 1;
+  	transition: 1s;
+}
+
 </style>
 
 <div class="well col-lg-12" ng-init="getAllCategories();">
 	<div class="category col-md-3">
 		<ul class="sidebar-custom">
 			<li><h2>Categories</h2></li>
-			<li><a
-				class="btn btn-success btn-block glyphicon glyphicon glyphicon-plus"
+			<li>
+				<a class="btn btn-success btn-block glyphicon glyphicon glyphicon-plus"
 				data-toggle="modal" data-target="#addCategory">&nbsp;<strong>ADD</strong></a>
 			</li>
 			<li><br /></li>
-			<li ng-repeat="category in categories"><a href=""
-				class="btn btn-default btn-block"
-				ng-click="getProduct(category.categoryId)">{{category.categoryName}}</a>
+			<li ng-repeat="category in categories">
+				<a href="" class="categoryBtn btn btn-default btn-block" ng-click="getProduct(category.categoryId)">
+					{{category.categoryName}}
+					<span class="modCatBtn glyphicon glyphicon glyphicon-trash" data-whatever={{category.categoryId}}
+					data-toggle="modal" data-target="#deleteCategory"></span>
+					<span class="modCatBtn glyphicon glyphicon glyphicon-edit" data-whatever={{category}}
+					data-toggle="modal" data-target="#editCategory"></span>
+				</a>
 			</li>
 		</ul>
 	</div>
@@ -80,7 +102,6 @@
 		</div>
 
 		<div id="productBlock">
-
 			<div class="pull-right col-md-4" ng-show="addBtnBlock">
 				<br />
 				<button type="button"
@@ -124,8 +145,8 @@
 					</tr>
 				</tbody>
 			</table>
-		</div></
-				div>
+		</div>
+	</div>
 
 	<!-- add product popup -->
 	<div class="modal fade" id="addProduct" role="dialog">
@@ -293,7 +314,7 @@
 				<div class="modal-body">
 					<div class="input-group">
 						<span class="input-group-addon" id="delete_productId">Are you
-							sure you want to delete the user?</span>
+							sure you want to delete the product?</span>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-success" data-dismiss="modal"
@@ -335,94 +356,148 @@
 		</div>
 	</div>
 
+	<!-- edit category popup -->
+	<div class="modal fade" id="editCategory" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Delete category</h4>
+				</div>
+				<div class="modal-body">
+					<div class="input-group">
+						<span class="input-group-addon">Name</span> <input type="text"
+								id="edit_cName" class="form-control" aria-describedby="cName">
+					</div>
+					<br />
+					<div class="input-group">
+						<span class="input-group-addon">Description</span> <input
+								type="text" id="edit_cDescription" class="form-control"
+								aria-describedby="cDescription">
+					</div>
+					<br />
+					<div class="modal-footer">
+						<button type="button" class="btn btn-success"
+								ng-click="editCategory();" data-dismiss="modal">Save</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- delete category popup -->
+	<div class="modal fade" id="deleteCategory" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Delete category</h4>
+				</div>
+				<div class="modal-body">
+					<div class="input-group">
+						<span class="input-group-addon" id="delete_categoryId">Are you
+							sure you want to delete the category?</span>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-success" data-dismiss="modal"
+								ng-click="deleteCategory();">Delete</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
 	<script type="text/javascript">
-		$(document)
-				.ready(
-						function() {
+		$(document).ready(function() {
+			$('#addCategory, #addProduct').on('hidden.bs.modal',function() {
+				$(this).find("input,textarea,select,.image-preview-filename").val('').end();
+				$(this).find(".tag").text('').end();
+				$('.image-preview').attr("data-content", "").popover('hide');
+				$('.image-preview-filename').val("");
+				$('.image-preview-clear').hide();
+				$('.image-preview-input input:file').val("");
+				$(".image-preview-input-title").text("Browse");
+			});
 
-							$('#addCategory, #addProduct')
-									.on(
-											'hidden.bs.modal',
-											function() {
-												debugger;
-												$(this).find("input,textarea,select,.image-preview-filename").val('').end();
-												$(this).find(".tag").text('').end();
-												$('.image-preview').attr("data-content", "").popover('hide');
-												$('.image-preview-filename').val("");
-												$('.image-preview-clear').hide();
-												$('.image-preview-input input:file').val("");
-												$(".image-preview-input-title").text("Browse");
-											});
+		$('[data-placement="top"]').tooltip();
+		
+		$('#add_pStatus,#edit_pStatus').bootstrapToggle({
+			on : 'ON',
+			off : 'OFF',
+			size : 'small'
+		});
 
-							$('[data-placement="top"]').tooltip();
-
-							$('#add_pStatus,#edit_pStatus').bootstrapToggle({
-								on : 'ON',
-								off : 'OFF',
-								size : 'small'
-							});
-
-							$('#add_pTags').tagsinput({});
-
-							// on edit product button click
-							$('#editProduct')
-									.on(
-											'show.bs.modal',
-											function(event) {
-												var button = $(event.relatedTarget)
-												var recipient = button
-														.data('whatever')
-												var modal = $(this)
-												debugger;
-												modal.find('.modal-title').text("Editing "+ recipient.productId)
-												modal.find('.modal-body #edit_productId').val(recipient.productId)
-												modal.find('.modal-body #edit_pName').val(recipient.productName)
-												modal.find('.modal-body #edit_pDescription').val(recipient.description)
-												modal.find('.modal-body #edit_pPrice').val(recipient.price)
-												modal.find('.modal-body #edit_pQuantity').val(recipient.quantityWeight)
-												modal.find('.modal-body #edit_pStatus').attr("checked",recipient.productActive)
-												modal.find('.modal-body #edit_pLocations').val(recipient.productLocation)
-												var temp = recipient.tags.split(",");
-												var tagsToDelete = modal.find('.modal-body #edit_pTags').tagsinput();
-												var oldTags = tagsToDelete[0].itemsArray.length;
-												while(oldTags--)
-												{
-													modal.find('.modal-body #edit_pTags').tagsinput('remove', tagsToDelete[0].itemsArray[oldTags]);
-													if(oldTags==0){break;}
-												}												
-												for(var i=0; i<temp.length-1;i++)
-												{
-													modal.find('.modal-body #edit_pTags').tagsinput('add', temp[i]);	
-												}		
-											});
+		$('#add_pTags').tagsinput({});
+		
+			// on edit product button click
+			$('#editProduct').on('show.bs.modal',function(event) {
+				var button = $(event.relatedTarget)
+				var recipient = button.data('whatever')
+				var modal = $(this)
+				modal.find('.modal-title').text("Editing "+ recipient.productId)
+				modal.find('.modal-body #edit_productId').val(recipient.productId)
+				modal.find('.modal-body #edit_pName').val(recipient.productName)
+				modal.find('.modal-body #edit_pDescription').val(recipient.description)
+				modal.find('.modal-body #edit_pPrice').val(recipient.price)
+				modal.find('.modal-body #edit_pQuantity').val(recipient.quantityWeight)
+				modal.find('.modal-body #edit_pStatus').attr("checked",recipient.productActive)
+				modal.find('.modal-body #edit_pLocations').val(recipient.productLocation)
+				var temp = recipient.tags.split(",");
+				var tagsToDelete = modal.find('.modal-body #edit_pTags').tagsinput();
+				var oldTags = tagsToDelete[0].itemsArray.length;
+				while(oldTags--)
+				{
+					modal.find('.modal-body #edit_pTags').tagsinput('remove', tagsToDelete[0].itemsArray[oldTags]);
+					if(oldTags==0){break;}
+				}												
+				for(var i=0; i<temp.length-1;i++)
+				{
+					modal.find('.modal-body #edit_pTags').tagsinput('add', temp[i]);	
+				}		
+			});
 
 							// on delete product button click
-							$('#deleteProduct').on(
-							'show.bs.modal',
+							$('#deleteProduct').on('show.bs.modal',function(event) {
+								var button = $(event.relatedTarget)
+								var recipient = button.data('whatever')
+								var modal = $(this)
+								modal.find('.modal-title').text("Deleting product")
+								modal.find('.modal-body #delete_productId').val(recipient)
+							});
+							
+							// on edit category button click
+							$('#editCategory').on('show.bs.modal',
 							function(event) {
 								var button = $(event.relatedTarget)
 								var recipient = button.data('whatever')
 								var modal = $(this)
-								debugger;
-								modal.find('.modal-title').text(recipient + "product data")
-								modal.find('.modal-body #delete_productId').val(recipient)
+								modal.find('.modal-title').text("Editing category")
+								modal.find('.modal-body #edit_cName').val(recipient.categoryName)
+								modal.find('.modal-body #edit_cDescription').val(recipient.description)
 							});
-							$(document).on(
-									'click',
-									'#close-preview',
+							
+							// on delete category button click
+							$('#deleteCategory').on('show.bs.modal',function(event) {
+								var button = $(event.relatedTarget)
+								var recipient = button.data('whatever')
+								var modal = $(this)
+								modal.find('.modal-title').text("Deleting category")
+								modal.find('.modal-body #delete_categoryId').val(recipient)
+							});
+
+							$(document).on('click','#close-preview',function() {
+								$('.image-preview').popover('hide');
+								$('.image-preview').hover(
+									function() {
+										$('.image-preview').popover('show');
+									},
 									function() {
 										$('.image-preview').popover('hide');
-										// Hover befor close the preview
-										$('.image-preview').hover(
-												function() {
-													$('.image-preview')
-															.popover('show');
-												},
-												function() {
-													$('.image-preview')
-															.popover('hide');
-												});
-									});
+									}
+								);
+							});
 
 							$(function() {
 								// Create the close button

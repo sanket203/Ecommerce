@@ -233,9 +233,12 @@ public class Product {
 				break;
 			case ADDED_BY:
 				product.setAddedBy(jsonObject.getString(key));
+<<<<<<< HEAD
 				break;
 			case QUANTITY_STOCK:
 				product.setQuantityStock(jsonObject.getString(key));
+=======
+>>>>>>> refs/remotes/origin/master
 				break;
 			default:
 				break;

@@ -1,7 +1,6 @@
-﻿app.controller("userController", function($scope, $http, $mdToast, $rootScope) {
+﻿app.controller("userController", function($scope, $http, $rootScope) {
 
 	$scope.showSimpleToast = function(msg) {
-		debugger;
 		var x = document.getElementById("toast");
 		x.className = "show";
 		x.innerText = msg;
@@ -9,7 +8,6 @@
 			x.className = x.className.replace("show", "");
 		}, 3000);
 	};
-	$scope.showSimpleToast("Tamma Tamma");
 	
 	$scope.getAllUsers = function() {
 		$.ajax({
@@ -18,33 +16,26 @@
 			url : "getAllUsers.htm",
 			dataType : "json",
 			success : function(data) {
+				debugger;
 				$scope.users = data.data;
 				$scope.$digest();
 			},
 			error : function(e) {
-				console.log("ERROR: ", e);
+				$scope.showSimpleToast(e);
 			}
 		});
-		console.log(JSON.stringify($scope.users));
 	};
 
 	$scope.addUser = function() {
 		debugger;
-		var fname = $("#fname").val();
-		var lname = $("#lname").val();
-		var email = $("#email").val();
-		var contact = $("#contact").val();
-		var location = $("#location").val();
-		var permissions = $("#permissions").val();
-
 		var requestData = {
-			firstName : fname,
-			lastName : lname,
-			emailId : email,
-			contact : contact,
-			location : location,
+			firstName : $(".modal-body #fname").val(),
+			lastName : $(".modal-body #lname").val(),
+			emailId : $(".modal-body #email").val(),
+			contact : $(".modal-body #contact").val(),
+			location : $(".modal-body #location").val(),
 			password : "123456",
-		// Permissions : permissions
+			//permissions : $("#permissions").val()
 		};
 
 		$.ajax({
@@ -60,28 +51,20 @@
 				$rootScope.$digest();
 			},
 			error : function(e) {
-				console.log("ERROR: ", e);
-				// display(e);
+				$scope.showSimpleToast(e.message);
 			}
 		});
 	};
 
 	$scope.editUser = function() {
-		debugger;
-		var fname = $("#edit_fname").val();
-		var lname = $("#edit_lname").val();
-		var email = $("#edit_email").val();
-		var contact = $("#edit_contact").val();
-		var location = $("#edit_location").val();
-		// var permissions = $("#edit_permissions").val();
-
 		var requestData = {
-			firstName : fname,
-			lastName : lname,
-			emailId : email,
-			contact : contact,
-			location : location,
-		// Permissions : permissions
+			firstName : $(".modal-body #edit_fname").val(),
+			lastName : $(".modal-body #edit_lname").val(),
+			emailId : $(".modal-body #edit_email").val(),
+			contact : $(".modal-body #edit_contact").val(),
+			status : $(".modal-body #edit_user")[0].checked ? 1 : 0,
+			location : $(".modal-body #edit_location").val(),
+			password : "123456",
 		};
 
 		$.ajax({
@@ -91,13 +74,14 @@
 			data : JSON.stringify(requestData),
 			dataType : "json",
 			success : function(data) {
+				
 				$scope.getAllUsers();
 				$scope.showSimpleToast(data.message);
 				$rootScope.$digest();
 			},
 			error : function(e) {
 				console.log("ERROR: ", e);
-				alert(e);
+				$scope.showSimpleToast(e.message);
 			}
 		});
 	};

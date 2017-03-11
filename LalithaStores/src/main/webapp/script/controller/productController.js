@@ -1,8 +1,8 @@
-﻿app.controller("productController", function($scope, $rootScope) {
+app.controller("productController", function($scope, $rootScope) {
 
 	$scope.productBlock = false;
 	$scope.addBtnBlock = false;
-	
+
 	$scope.showSimpleToast = function(msg) {
 		var x = document.getElementById("toast");
 		x.className = "show";
@@ -14,7 +14,7 @@
 
 	$scope.categoryId = "";
 
-	//get Category
+	// get Category
 	$scope.getAllCategories = function() {
 		$.ajax({
 			type : "GET",
@@ -31,12 +31,12 @@
 		});
 	};
 
-	//add category
+	// add category
 	$scope.addCategory = function() {
 		var requestData = {
 			categoryName : $('#cName').val(),
 			description : $('#cDescription').val(),
-			addedBy : "admin"
+			addedBy : 'admin'
 		};
 
 		$.ajax({
@@ -57,12 +57,11 @@
 		});
 	};
 
-	//get product
+	// get product
 	$scope.getProduct = function(categoryId) {
 
 		$scope.categoryId = categoryId;
-		if($scope.categoryId!=0)
-		{
+		if ($scope.categoryId != 0) {
 			$scope.addBtnBlock = true;
 		}
 		var requestData = {
@@ -92,7 +91,7 @@
 		});
 	};
 
-	//add product
+	// add product
 	$scope.saveProduct = function() {
 		debugger;
 
@@ -102,10 +101,10 @@
 			categoryId : $scope.categoryId,
 			price : $('.modal-body #add_pPrice').val(),
 			quantity : $('.modal-body #add_pQuantity').val(),
-			productActive:$(".modal-body #add_pStatus")[0].checked,
+			productActive : $(".modal-body #add_pStatus")[0].checked,
 			productLocation : $('.modal-body #add_pLocations').val(),
-			tags : $('.modal-body #add_pTags').val() ,
-			addedBy : $rootScope.currentUserId
+			tags : $('.modal-body #add_pTags').val(),
+			addedBy : $rootScope.currentUserName
 		};
 		var formData = new FormData();
 		formData.append("productJson", JSON.stringify($scope.productJson));
@@ -119,7 +118,7 @@
 			url : "addProduct.htm",
 			data : formData,
 			success : function(data) {
-			debugger;	
+				debugger;
 				$scope.showSimpleToast(data.message);
 				$scope.getProduct($scope.categoryId);
 				$rootScope.$digest();
@@ -131,7 +130,7 @@
 		});
 	};
 
-	//edit product
+	// edit product
 	$scope.editProduct = function() {
 		debugger;
 		$scope.productJson = {
@@ -161,16 +160,14 @@
 			}
 		});
 	};
-	
-	$scope.deleteProduct = function() {
 
-	debugger;
+	$scope.deleteProduct = function() {
 		var product = $("#delete_productId").val();
 		var productJson = {
 			productId : product,
-			categoryId: $scope.categoryId
+			categoryId : $scope.categoryId
 		};
-       
+
 		$.ajax({
 			type : "POST",
 			contentType : "application/json",
@@ -178,17 +175,48 @@
 			data : JSON.stringify(productJson),
 			dataType : "json",
 			success : function(data) {
-			debugger;
-				$scope.getProduct( $scope.categoryId);
+				debugger;
+				$scope.getProduct($scope.categoryId);
 				$scope.showSimpleToast(data.message);
 			},
 			error : function(e) {
-			debugger;
+				debugger;
 				console.log("ERROR: ", e);
 				$scope.showSimpleToast(e.message);
-				
+
 			}
 		});
 	};
+
+	$scope.deleteCategory=function(){
+		debugger;
+		var categoryId = $("#delete_categoryId").val();
+		var productJson = {
+			categoryId : categoryId
+		};
+
+		$.ajax({
+			type : "POST",
+			contentType : "application/json",
+			url : "deleteCategory.htm",
+			data : productJson,
+			dataType : "json",
+			success : function(data) {
+				debugger;
+				$scope.getAllCategories();
+				$scope.showSimpleToast(data.message);
+			},
+			error : function(e) {
+				debugger;
+				console.log("ERROR: ", e);
+				$scope.showSimpleToast(e.message);
+
+			}
+		});
+	};
+	$scope.editCategory=function(){
+		
+	};
+
 
 });

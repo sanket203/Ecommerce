@@ -38,7 +38,6 @@
 		</tbody>
 	</table>
 
-
 	<!-- add user popup -->
 	<div class="modal fade" id="addUser" role="dialog">
 		<div class="modal-dialog">
@@ -76,15 +75,16 @@
 							id="location" class="form-control" aria-describedby="location">
 					</div>
 					<br />
-					<div class="well">
-						<h4 class="modal-title">Permission</h4>
+					<div class="input-group">
+						<span class="input-group-addon">Permissions</span>
 						<select id="permissions" multiple="multiple">
-							<option value="admin">Administrator</option>
-							<option value="user">User Management</option>
-							<option value="product">Product Management</option>
-							<option value="order">Order Management</option>
+							<option value="ROLE_ADMIN">Administrator</option>
+							<option value="ROLE_USER_MANAGEMENT">User Management</option>
+							<option value="ROLE_PRODUCT_MANAGEMENT">Product Management</option>
+							<option value="ROLE_ORDER_MANAGEMENT">Order Management</option>
 						</select>
 					</div>
+					<br />
 					<div class="modal-footer">
 						<button type="button" class="btn btn-success" data-dismiss="modal"
 							ng-click="addUser();">Save</button>
@@ -139,12 +139,22 @@
 							data-toggle="toggle" id="edit_user" data-style="ios">
 					</div>
 					<br />
+					<div class="input-group">
+						<span class="input-group-addon">Permissions</span>
+						<select id="edit_permissions" multiple="multiple">
+							<option value="ROLE_ADMIN">Administrator</option>
+							<option value="ROLE_USER_MANAGEMENT">User Management</option>
+							<option value="ROLE_PRODUCT_MANAGEMENT">Product Management</option>
+							<option value="ROLE_ORDER_MANAGEMENT">Order Management</option>
+						</select>
+					</div>
+					<br />
 					<div class="modal-footer">
-						<button type="button" class="btn btn-success" data-dismiss="modal" ng-click="editUser();">Save</button>
+						<button type="button" class="btn btn-success" data-dismiss="modal"
+							ng-click="editUser();">Save</button>
 						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 					</div>
 				</div>
-
 			</div>
 		</div>
 	</div>
@@ -176,17 +186,7 @@
 </div>
 
 <script type="text/javascript">
-	$(document).ready(
-			function() {
-				
-				$('#addUser,#editUser ').on('hidden.bs.modal', function () {
-				    $(this).find("input,textarea,select").val('').end();
-				});
-
-				$('#permissions').multiselect({
-					includeSelectAllOption : true,
-					selectAllValue : 'select-all-value'
-				});
+	$(document).ready(function() {
 				
 				$('#edit_user').bootstrapToggle({
 					on : 'ON',
@@ -194,9 +194,20 @@
 					size : 'small'
 				});
 
+				$('#permissions').multiselect({});
+				
+				$('#addUser,#editUser ').on('hidden.bs.modal', function () {
+				    $(this).find("input,textarea,select").val('').end();
+				    $('#permissions').multiselect('destroy');
+				    $('#edit_permissions').multiselect('destroy');
+				});
+								
+				$('#addUser').on('show.bs.modal',function(event) {
+				    $('#permissions').multiselect({});
+				});
+				
 				// on edit user button click
-				$('#editUser').on(
-						'show.bs.modal',
+				$('#editUser').on('show.bs.modal',
 						function(event) {
 							var button = $(event.relatedTarget)
 							var recipient = button.data('whatever')
@@ -204,17 +215,20 @@
 							modal.find('.modal-title').text(
 									"Editing " + recipient.firstName + " "
 											+ recipient.lastName)
-							modal.find('.modal-body #edit_fname').val(recipient.firstName)
-							modal.find('.modal-body #edit_lname').val(recipient.lastName)
-							modal.find('.modal-body #edit_email').val(recipient.emailId)
-							modal.find('.modal-body #edit_contact').val(recipient.contact)
-							if(recipient.status==1){
-								modal.find('.modal-body #edit_status').attr("checked", true)
-							}
-							else{
-								modal.find('.modal-body #edit_status').attr("checked", false)
-							}							
-							modal.find('.modal-body #edit_location').val(recipient.location)
+							modal.find('.modal-body #edit_fname').val(
+									recipient.firstName)
+							modal.find('.modal-body #edit_lname').val(
+									recipient.lastName)
+							modal.find('.modal-body #edit_email').val(
+									recipient.emailId)
+							modal.find('.modal-body #edit_contact').val(
+									recipient.contact)
+							modal.find('.modal-body #edit_location').val(
+									recipient.location)
+							$('#edit_permissions').multiselect();
+						    var roles = ['ROLE_PRODUCT_MANAGEMENT','ROLE_ORDER_MANAGEMENT'];
+						    $('#edit_permissions').multiselect('select', roles);		
+									
 						});
 
 				// on delete user button click

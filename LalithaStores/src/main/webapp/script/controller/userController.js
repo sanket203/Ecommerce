@@ -1,4 +1,4 @@
-﻿app.controller("userController", function($scope, $http, $rootScope) {
+﻿﻿app.controller("userController", function($scope, $http, $rootScope) {
 
 	$scope.showSimpleToast = function(msg) {
 		var x = document.getElementById("toast");
@@ -16,7 +16,6 @@
 			url : "getAllUsers.htm",
 			dataType : "json",
 			success : function(data) {
-				debugger;
 				$scope.users = data.data;
 				$scope.$digest();
 			},
@@ -34,8 +33,7 @@
 			emailId : $(".modal-body #email").val(),
 			contact : $(".modal-body #contact").val(),
 			location : $(".modal-body #location").val(),
-			password : "123456",
-			//permissions : $("#permissions").val()
+			roles : $("#permissions").val()
 		};
 
 		$.ajax({
@@ -45,7 +43,6 @@
 			data : JSON.stringify(requestData),
 			dataType : "json",
 			success : function(data) {
-				debugger;
 				$scope.getAllUsers();
 				$scope.showSimpleToast(data.message);
 				$rootScope.$digest();
@@ -57,6 +54,7 @@
 	};
 
 	$scope.editUser = function() {
+		debugger;
 		var requestData = {
 			firstName : $(".modal-body #edit_fname").val(),
 			lastName : $(".modal-body #edit_lname").val(),
@@ -64,7 +62,7 @@
 			contact : $(".modal-body #edit_contact").val(),
 			status : $(".modal-body #edit_user")[0].checked ? 1 : 0,
 			location : $(".modal-body #edit_location").val(),
-			password : "123456",
+			roles : $("#edit_permissions").val()
 		};
 
 		$.ajax({

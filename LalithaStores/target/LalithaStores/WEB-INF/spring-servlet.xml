@@ -30,6 +30,7 @@
 				<value>com.i3.ecom.model.Users</value>
 				<value>com.i3.ecom.model.Product</value>
 				<value>com.i3.ecom.model.Category</value>
+				<value>com.i3.ecom.model.Roles</value>
 				
 			</list>
 		</property>

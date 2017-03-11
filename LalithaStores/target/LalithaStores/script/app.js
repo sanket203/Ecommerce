@@ -1,4 +1,4 @@
-﻿var app = angular.module('StoreApp', ['ui.router', 'ui.bootstrap', 'ngTagsInput', 'ngMaterial']);
+﻿var app = angular.module('StoreApp', ['ui.router', 'ui.bootstrap']);
 
 app.directive("addbuttonsbutton", function(){
 	return {
