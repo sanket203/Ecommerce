@@ -238,6 +238,9 @@ public class Product {
 			case QUANTITY_STOCK:
 				product.setQuantityStock(jsonObject.getString(key));
 				break;
+			case DEFAULT_IMAGE:
+				product.setAddedBy(jsonObject.getString(key));
+				break;
 			default:
 				break;
 			}
