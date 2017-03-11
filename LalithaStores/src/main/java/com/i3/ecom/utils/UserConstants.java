@@ -45,6 +45,8 @@ public class UserConstants {
 	public static final String MODIFICATION_DATE = "modificationDate";
 	
 	public static final String ADDED_BY = "addedBy";
+	
+	public static final String DEFAULT_IMAGE="defaultImage";
 	//---------------------------- Response Messages -------------------------------
 	
 	public static final String USER_ADDED = "Users Added Successfully.";
