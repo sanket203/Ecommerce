@@ -39,5 +39,9 @@ public class URLConstants {
 	public static final String FAIL_STATUS = "500";
 	
 	public static final String BASE_IMAGE_URL = "http://192.168.100.102:8080/files/";
+	
+	public static final String USER_EXIST = "User with this mail id already exist.";
+	
+	public static final String INVALID_CREDENTIAL = "user name and password does not match.";
 
 }
