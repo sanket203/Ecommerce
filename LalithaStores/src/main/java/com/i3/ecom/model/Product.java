@@ -11,6 +11,7 @@ import static com.i3.ecom.utils.UserConstants.PRODUCT_NAME;
 import static com.i3.ecom.utils.UserConstants.QUANTITY_STOCK;
 import static com.i3.ecom.utils.UserConstants.QUANTITY_WEIGHT;
 import static com.i3.ecom.utils.UserConstants.TAGS;
+import static com.i3.ecom.utils.UserConstants.DEFAULT_IMAGE;
 
 import java.util.Date;
 import java.util.Iterator;
@@ -233,12 +234,9 @@ public class Product {
 				break;
 			case ADDED_BY:
 				product.setAddedBy(jsonObject.getString(key));
-<<<<<<< HEAD
 				break;
 			case QUANTITY_STOCK:
 				product.setQuantityStock(jsonObject.getString(key));
-=======
->>>>>>> refs/remotes/origin/master
 				break;
 			default:
 				break;
