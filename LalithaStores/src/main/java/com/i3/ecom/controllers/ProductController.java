@@ -32,7 +32,7 @@ public class ProductController {
 	
 	@RequestMapping(value=ADD_PRODUCT_URL,method=RequestMethod.POST, consumes={"multipart/form-data"})
 	public @ResponseBody ResponseMessage addProduct(@RequestParam("productJson") String productJson, 
-			                               @RequestParam("imageFile") MultipartFile imageFile,
+			                               @RequestParam("imageFile") MultipartFile[] imageFile,
 			                               Model model){
 		ResponseMessage message = productService.addProduct(productJson,imageFile);
 		return message;

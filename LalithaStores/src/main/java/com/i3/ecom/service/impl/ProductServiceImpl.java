@@ -3,7 +3,7 @@ package com.i3.ecom.service.impl;
 import static com.i3.ecom.utils.URLConstants.FAIL_STATUS;
 import static com.i3.ecom.utils.URLConstants.SUCCESS_STATUS;
 
-import java.awt.Image;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -25,7 +25,6 @@ import com.i3.ecom.dao.ProductsDao;
 import com.i3.ecom.dao.UserDao;
 import com.i3.ecom.model.Category;
 import com.i3.ecom.model.Product;
-import com.i3.ecom.model.Users;
 import com.i3.ecom.service.ProductService;
 import com.i3.ecom.utils.ProductUtility;
 import com.i3.ecom.utils.ProductValidation;
@@ -45,19 +44,18 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	@Transactional
-	public ResponseMessage addProduct(String productJson, final MultipartFile imageFile) {
+	public ResponseMessage addProduct(String productJson, final MultipartFile[] imageFile) {
 		String message = null;
 		ResponseMessage responseMessage = null;
 		Product product = Product.createProductEntity(productJson);
 		
 		try {
 			
-			
 			ProductValidation.validateProduct(product);
 			
-			if(imageFile != null){
+			/*if(imageFile != null){
 				product.setImageFileName(imageFile.getOriginalFilename());
-			}
+			}*/
 			product.setCreationDate(new Date());
 			product.setModificationDate(new Date());
 			message = productDao.addProduct(product);
@@ -65,7 +63,7 @@ public class ProductServiceImpl implements ProductService {
 			long pId = product.getProductId();
 			long cId = product.getCategoryId();
 			if(imageFile != null){
-				saveProductImage(imageFile,pId,cId);
+				saveProductImage(imageFile,pId,cId,product.getImageFileName());
 			}
 			responseMessage = new ResponseMessage(SUCCESS_STATUS, message);		
 		} catch (Exception e) {
@@ -95,20 +93,28 @@ public class ProductServiceImpl implements ProductService {
 		return response;
 	}
 
-	private void saveProductImage(final MultipartFile imageFiles,final long pId, final long cId) throws Exception {
+	private void saveProductImage(final MultipartFile[] imageFiles,final long pId, final long cId,String defaultImageFileName) throws Exception {
 		try {
 			  String basePath = null;
-		     String fileName = imageFiles.getOriginalFilename();
-		     basePath = ProductUtility.createProductDirectory(cId,pId);
-		     File file = new File(basePath,fileName);
-		     imageFiles.transferTo(file);
-		     BufferedImage image = ImageIO.read(file); 												
-		     ImageIO.write(image, "jpg", new File(file.getAbsolutePath()));
-		     String[] tempFileName = file.getName().split("\\.");
-		     String thumbnailFile = tempFileName[0]+"_thumbnail."+tempFileName[1];
-		     File thumbnailImage = new File(file.getParent()+"/"+thumbnailFile);
-		     FileUtils.copyFile(file, thumbnailImage);
-			 //saveThumbnailForImage(thumbnailImage);
+			  basePath = ProductUtility.createProductDirectory(cId,pId);
+			   for (MultipartFile multipartFile : imageFiles) {
+				   String fileName = multipartFile.getOriginalFilename();
+				   File file = new File(basePath,fileName);
+				     multipartFile.transferTo(file);
+				   if(fileName.equals(defaultImageFileName)){
+					   BufferedImage image = ImageIO.read(file); 												
+					     ImageIO.write(image, "jpg", new File(file.getAbsolutePath()));
+					     String[] tempFileName = file.getName().split("\\.");
+					     String thumbnailFile = tempFileName[0]+"_thumbnail."+tempFileName[1];
+					     File thumbnailImage = new File(file.getParent()+"/"+thumbnailFile);
+					     FileUtils.copyFile(file, thumbnailImage);
+						 saveThumbnailForImage(thumbnailImage);
+				   }
+				    
+			}
+		    
+		   
+		    
 			} catch (Exception e) {
 				throw new Exception("Problem occured while copying images");
 			}
@@ -121,29 +127,14 @@ public class ProductServiceImpl implements ProductService {
 			int width = sourceImage.getWidth();
 			int height = sourceImage.getHeight();
 			
-	        if(width>height){
-	            float extraSize=    height-100;
-	            float percentHight = (extraSize/height)*100;
-	            float percentWidth = width - ((width/100)*percentHight);
-	            BufferedImage img = new BufferedImage((int)percentWidth, 100, BufferedImage.TYPE_INT_RGB);
-	            Image scaledImage = sourceImage.getScaledInstance((int)percentWidth, 100, Image.SCALE_SMOOTH);
-	            img.createGraphics().drawImage(scaledImage, 0, 0, null);
-	            BufferedImage img2 = new BufferedImage(100, 100 ,BufferedImage.TYPE_INT_RGB);
-	            img2 = img.getSubimage((int)((percentWidth-100)/2), 0, 100, 100);
-
-	            ImageIO.write(img2, "jpg", new File(file.getAbsolutePath()));    
-	        }else{
-	            float extraSize=    width-100;
-	            float percentWidth = (extraSize/width)*100;
-	            float  percentHight = height - ((height/100)*percentWidth);
-	            BufferedImage img = new BufferedImage(100, (int)percentHight, BufferedImage.TYPE_INT_RGB);
-	            Image scaledImage = sourceImage.getScaledInstance(100,(int)percentHight, Image.SCALE_SMOOTH);
-	            img.createGraphics().drawImage(scaledImage, 0, 0, null);
-	            BufferedImage img2 = new BufferedImage(100, 100 ,BufferedImage.TYPE_INT_RGB);
-	            img2 = img.getSubimage(0, (int)((percentHight-100)/2), 100, 100);
-
-	            ImageIO.write(img2, "jpg", new File(file.getAbsolutePath()));
-	        }
+			 BufferedImage outputImage = new BufferedImage(300,
+		                300, sourceImage.getType());
+			 
+			 Graphics2D g2d = outputImage.createGraphics();
+		        g2d.drawImage(sourceImage, 0, 0, 188, 250, null);
+		        g2d.dispose();
+		        
+		        ImageIO.write(outputImage, "jpg", new File(file.getAbsolutePath()));
 			
 		} catch (IOException e) {
 			throw new Exception("Problem Occured while saving image");

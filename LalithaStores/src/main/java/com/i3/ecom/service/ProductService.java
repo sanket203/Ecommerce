@@ -16,10 +16,10 @@ public interface ProductService {
 	/**
 	 * This method is used to add product and product images.
 	 * @param productJson
-	 * @param imageFiles
+	 * @param imageFile
 	 * @return
 	 */
-	public ResponseMessage addProduct(String productJson, final MultipartFile imageFiles);
+	public ResponseMessage addProduct(String productJson, final MultipartFile[] imageFile);
 	
 	/**
 	 * This method is used to save category.
