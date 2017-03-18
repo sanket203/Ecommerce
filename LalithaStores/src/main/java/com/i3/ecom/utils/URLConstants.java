@@ -44,6 +44,14 @@ public class URLConstants {
 	
 	public static final String DELETE_CATEGORY_URL = "/deleteCategory.htm";
 	
+	//---------------------- Order URL ------------------------
+	
+	public static final String GET_LATEST_ORDER = "/getLatestOrders.htm";
+	
+	public static final String ORDERS_BY_STATUS = "/ordersByStatus.htm";
+	
+	public static final String ORDER_BY_ID = "/getOrderById";
+	
 	//---------------------- Status Codes ---------------------//
 	
 	public static final  String SUCCESS_STATUS = "200";

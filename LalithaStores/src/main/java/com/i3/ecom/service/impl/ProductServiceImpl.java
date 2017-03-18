@@ -22,7 +22,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.i3.ecom.dao.ProductsDao;
-import com.i3.ecom.dao.UserDao;
 import com.i3.ecom.model.Category;
 import com.i3.ecom.model.Product;
 import com.i3.ecom.service.ProductService;
@@ -39,23 +38,14 @@ public class ProductServiceImpl implements ProductService {
 	@Autowired
 	private ProductsDao productDao;
 	
-	@Autowired
-	private UserDao userDao;
-
 	@Override
 	@Transactional
 	public ResponseMessage addProduct(String productJson, final MultipartFile[] imageFile) {
 		String message = null;
 		ResponseMessage responseMessage = null;
 		Product product = Product.createProductEntity(productJson);
-		
 		try {
-			
 			ProductValidation.validateProduct(product);
-			
-			/*if(imageFile != null){
-				product.setImageFileName(imageFile.getOriginalFilename());
-			}*/
 			product.setCreationDate(new Date());
 			product.setModificationDate(new Date());
 			message = productDao.addProduct(product);
