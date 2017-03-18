@@ -64,6 +64,25 @@ a.categoryBtn.btn.btn-default.btn-block
   	transition: 1s;
 }
 
+table {
+    width: 100%;
+    display:block;
+}
+thead {
+    display: inline-block;
+    width: 100%;
+}
+tbody {
+    height: 200px;
+    display: inline-block;
+    width: 100%;
+    overflow: auto;
+}
+.selectedImages{
+	width:100px;
+	height:100px;
+}
+
 </style>
 
 <div class="well col-lg-12" ng-init="getAllCategories();">
@@ -117,22 +136,21 @@ a.categoryBtn.btn.btn-default.btn-block
 				ng-show="productBlock" cellspacing="0" width="100%">
 				<tbody>
 					<tr class="table-header">
-						<th>Id</th>
-						<th>Name</th>
-						<th>Price</th>
-						<th>Added By</th>
-						<th>Added On</th>
-						<th>Action</th>
+						<th width=5%>Id</th>
+						<th width=20%>Name</th>
+						<th width=20%>Price</th>
+						<th width=20%>Added By</th>
+						<th width=20%>Added On</th>
+						<th width=15%>Action</th>
 					</tr>
-					</thead>
-				<tbody>
+				
 					<tr ng-repeat="product in products">
-						<td>{{product.productId}}</td>
-						<td>{{product.productName}}</td>
-						<td>{{product.price}}</td>
-					<td>{{product.addedBy}}</td>
-					<td>{{product.dateAdded}}</td>
-						<td>
+						<td width=5%>{{product.productId}}</td>
+						<td width=20%>{{product.productName}}</td>
+						<td width=20%>{{product.price}}</td>
+						<td width=20%>{{product.addedBy}}</td>
+						<td width=20%>{{product.dateAdded}}</td>
+						<td width=15%>
 							<button type="button"
 								class="btn btn-primary btn-sm glyphicon glyphicon-edit"
 								data-whatever={{product}} data-toggle="modal"
@@ -147,7 +165,7 @@ a.categoryBtn.btn.btn-default.btn-block
 			</table>
 		</div>
 	</div>
-
+	<input type="hidden" id="errorFlag">
 	<!-- add product popup -->
 	<div class="modal fade" id="addProduct" role="dialog">
 		<div class="modal-dialog">
@@ -191,35 +209,45 @@ a.categoryBtn.btn.btn-default.btn-block
 							<input type="text" id="add_pTags" class="form-control"
 								placeholder="tags" aria-describedby="pTags">
 						<br />
-						<div class="row">
-							<div class="col-lg-12 col-md-6 col-sm-8">
-								<div class="input-group image-preview">
-									<input type="text" class="form-control image-preview-filename"
-											disabled="disabled"> <span class="input-group-btn">
-										<button type="button"
-												class="btn btn-default image-preview-clear"
-												style="display: none;">
-											<span class="glyphicon glyphicon-remove"></span> Clear
-										</button>
-										<div class="btn btn-default image-preview-input">
-											<span class="glyphicon glyphicon-folder-open"></span> <span
-													class="image-preview-input-title">Browse</span> <input
-													type="file" accept="image/png, image/jpg, image/gif"
-													name="imageFile" id="imageFile" />
-										</div>
-									</span>
-								</div>
-							</div>
-						</div>
-						<br />
 						<div class="modal-footer">
-							<button type="button" class="btn btn-success"
-									data-dismiss="modal" ng-click="saveProduct();">Add</button>
+							<button type="button" class="btn btn-success" data-target="#deleteProduct"
+									data-dismiss="modal" ng-click="storeProductData()">Save and continue</button>
 							<button type="button" class="btn btn-default"
 									data-dismiss="modal">Cancel</button>
 						</div>
 					</div>
 				</form>
+			</div>
+		</div>
+	</div>
+
+	<!-- add image popup -->
+	<div class="modal fade" id="addImage" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Add Image</h4>
+				</div>
+				<div class="modal-body">
+					<div class="input-group col-md-12">
+						<form enctype="multipart/form-data">
+							<div class="col-md-12">
+								<input type="file" class="form-control" id="images" name="images[]" multiple />
+							</div>
+						</form>
+						<div id="image_preview"></div>
+					</div>
+				</div>
+				<br />
+				<div class="modal-footer">
+					<div style="color:darkgray; font-family:-webkit-body; float:left;">*select an image to make it default.</div>
+					<div style="float:right;">
+						<button type="button" class="btn btn-success" data-dismiss="modal"
+							ng-click="saveProduct();">Save</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -348,7 +376,7 @@ a.categoryBtn.btn.btn-default.btn-block
 					<br />
 					<div class="modal-footer">
 						<button type="button" class="btn btn-success"
-								ng-click="addCategory();" data-dismiss="modal">Add</button>
+								data-dismiss="modal" ng-click="addCategory();">Add</button>
 						<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
 					</div>
 				</div>
@@ -411,25 +439,113 @@ a.categoryBtn.btn.btn-default.btn-block
 	
 	<script type="text/javascript">
 		$(document).ready(function() {
-			$('#addCategory, #addProduct').on('hidden.bs.modal',function() {
-				$(this).find("input,textarea,select,.image-preview-filename").val('').end();
+			
+			function convertToBool(x) {
+				switch(x.toLowerCase().trim())
+				{
+			        case "true": case "yes": case "1": return true;
+			        case "false": case "no": case "0": case null: return false;
+			        default: return false;
+		    	}
+			}
+			
+			$("#images").change(function(){
+				var total_file=document.getElementById("images").files.length;
+				 for(var i=0;i<total_file;i++)
+				 {
+					var fileName=document.getElementById("images").files[i].name
+				  	$('#image_preview').append("<div class='col-md-3'>"+
+						  "<input type='radio' name='defaultImage' id='defaultImage_"+i+"_"+fileName+"'>&nbsp;&nbsp;"+fileName+
+						  "<img class='selectedImages img-responsive' src='"+URL.createObjectURL(event.target.files[i])+"'></div>");
+				 }
+		    });
+			
+			$('#addCategory').on('hidden.bs.modal',function() {
+				$('#addCategory').find("input").val('').end();
+			});
+			
+			$('#addProduct').on('hidden.bs.modal',function() {
+				$(this).find("input,textarea,select").val('').end();
 				$(this).find(".tag").text('').end();
-				$('.image-preview').attr("data-content", "").popover('hide');
-				$('.image-preview-filename').val("");
-				$('.image-preview-clear').hide();
-				$('.image-preview-input input:file').val("");
-				$(".image-preview-input-title").text("Browse");
+				$("#addImage").modal('show')				
 			});
 
-		$('[data-placement="top"]').tooltip();
-		
-		$('#add_pStatus,#edit_pStatus').bootstrapToggle({
-			on : 'ON',
-			off : 'OFF',
-			size : 'small'
-		});
+			$('#addImage').on('hidden.bs.modal',function() {
+				$("#image_preview").find("div").remove();
+				$("#images").val("");
+			});
 
-		$('#add_pTags').tagsinput({});
+			$('[data-placement="top"]').tooltip();
+		
+			$('#add_pStatus,#edit_pStatus').bootstrapToggle({
+				on : 'ON',
+				off : 'OFF',
+				size : 'small'
+			});
+	
+			$('#add_pTags').tagsinput({});
+
+			
+			$('#add_more').click(function() {
+		          "use strict";
+		          $(this).before($("<div/>", {
+		            id: 'filediv'
+		          }).fadeIn('slow').append(
+		            $("<input/>", {
+		              name: 'file[]',
+		              type: 'file',
+		              id: 'file',
+		              multiple: 'multiple',
+		              accept: 'image/*'
+		            })
+		          ));
+		        });
+
+		        deletePreview = function (ele, i) {
+		          "use strict";
+		          try {
+		            $(ele).parent().remove();
+		            window.filesToUpload.splice(i, 1);
+		          } catch (e) {
+		            console.log(e.message);
+		          }
+		        }
+
+		        $("#file").on('change', function() {
+		          "use strict";
+
+		          // create an empty array for the files to reside.
+		          window.filesToUpload = [];
+
+		          if (this.files.length >= 1) {
+		            $("[id^=previewImg]").remove();
+		            $.each(this.files, function(i, img) {
+		              var reader = new FileReader(),
+		                newElement = $("<div id='previewImg" + i + "' class='previewBox'><img /></div>"),
+		                deleteBtn = $("<span class='delete' onClick='deletePreview(this, " + i + ")'>X</span>").prependTo(newElement),
+		                preview = newElement.find("img");
+
+		              reader.onloadend = function() {
+		                preview.attr("src", reader.result);
+		                preview.attr("alt", img.name);
+		              };
+
+		              try {
+		                window.filesToUpload.push(document.getElementById("file").files[i]);
+		              } catch (e) {
+		                console.log(e.message);
+		              }
+
+		              if (img) {
+		                reader.readAsDataURL(img);
+		              } else {
+		                preview.src = "";
+		              }
+
+		              newElement.appendTo("#filediv");
+		            });
+		          }
+		        });
 		
 			// on edit product button click
 			$('#editProduct').on('show.bs.modal',function(event) {
@@ -486,92 +602,6 @@ a.categoryBtn.btn.btn-default.btn-block
 								modal.find('.modal-title').text("Deleting category")
 								modal.find('.modal-body #delete_categoryId').val(recipient)
 							});
-
-							$(document).on('click','#close-preview',function() {
-								$('.image-preview').popover('hide');
-								$('.image-preview').hover(
-									function() {
-										$('.image-preview').popover('show');
-									},
-									function() {
-										$('.image-preview').popover('hide');
-									}
-								);
-							});
-
-							$(function() {
-								// Create the close button
-								var closebtn = $('<button/>', {
-									type : "button",
-									text : 'x',
-									id : 'close-preview',
-									style : 'font-size: initial;',
-								});
-								closebtn.attr("class", "close pull-right");
-								// Set the popover default content
-								$('.image-preview').popover(
-										{
-											trigger : 'manual',
-											html : true,
-											title : "<strong>Preview</strong>"
-													+ $(closebtn)[0].outerHTML,
-											content : "There's no image",
-											placement : 'bottom'
-										});
-								// Clear event
-								$('.image-preview-clear')
-										.click(
-												function() {
-													$('.image-preview').attr(
-															"data-content", "")
-															.popover('hide');
-													$('.image-preview-filename')
-															.val("");
-													$('.image-preview-clear')
-															.hide();
-													$(
-															'.image-preview-input input:file')
-															.val("");
-													$(
-															".image-preview-input-title")
-															.text("Browse");
-												});
-								// Create the preview image
-								$(".image-preview-input input:file")
-										.change(
-												function() {
-													var img = $('<img/>', {
-														id : 'dynamic',
-														width : 250,
-														height : 200
-													});
-													var file = this.files[0];
-													var reader = new FileReader();
-													// Set preview image into the popover data-content
-													reader.onload = function(e) {
-														$(
-																".image-preview-input-title")
-																.text("Change");
-														$(
-																".image-preview-clear")
-																.show();
-														$(
-																".image-preview-filename")
-																.val(file.name);
-														img
-																.attr(
-																		'src',
-																		e.target.result);
-														$(".image-preview")
-																.attr(
-																		"data-content",
-																		$(img)[0].outerHTML)
-																.popover("show");
-													}
-													reader.readAsDataURL(file);
-												});
-							});
-
 						});
 	</script>
 
