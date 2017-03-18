@@ -2,7 +2,8 @@ app.controller("productController", function($scope, $rootScope) {
 
 	$scope.productBlock = false;
 	$scope.addBtnBlock = false;
-
+	$scope.ProductDetail={};
+	
 	$scope.showSimpleToast = function(msg) {
 		var x = document.getElementById("toast");
 		x.className = "show";
@@ -36,7 +37,7 @@ app.controller("productController", function($scope, $rootScope) {
 		var requestData = {
 			categoryName : $('#cName').val(),
 			description : $('#cDescription').val(),
-			addedBy : 'admin'
+			addedBy :  $rootScope.currentUserName
 		};
 
 		$.ajax({
@@ -46,6 +47,9 @@ app.controller("productController", function($scope, $rootScope) {
 			dataType : "json",
 			data : JSON.stringify(requestData),
 			success : function(data) {
+				if(data.status=="500"){$("#errorFlag").val(true);}
+				else{$("#errorFlag").val(false);}
+				debugger;
 				$scope.getAllCategories();
 				$scope.showSimpleToast(data.message);
 				$rootScope.$digest();
@@ -91,24 +95,30 @@ app.controller("productController", function($scope, $rootScope) {
 		});
 	};
 
+	
+	$scope.storeProductData = function(){
+		$scope.ProductDetail = {
+				productName : $('.modal-body #add_pName').val(),
+				description : $('.modal-body #add_pDescription').val(),
+				categoryId : $scope.categoryId,
+				price : $('.modal-body #add_pPrice').val(),
+				quantity : $('.modal-body #add_pQuantity').val(),
+				productActive : $(".modal-body #add_pStatus")[0].checked,
+				productLocation : $('.modal-body #add_pLocations').val(),
+				tags : $('.modal-body #add_pTags').val(),
+				addedBy : $rootScope.currentUserName,
+				defaultImage:""
+			};
+	};
+	
 	// add product
 	$scope.saveProduct = function() {
 		debugger;
-
-		$scope.productJson = {
-			productName : $('.modal-body #add_pName').val(),
-			description : $('.modal-body #add_pDescription').val(),
-			categoryId : $scope.categoryId,
-			price : $('.modal-body #add_pPrice').val(),
-			quantity : $('.modal-body #add_pQuantity').val(),
-			productActive : $(".modal-body #add_pStatus")[0].checked,
-			productLocation : $('.modal-body #add_pLocations').val(),
-			tags : $('.modal-body #add_pTags').val(),
-			addedBy : $rootScope.currentUserName
-		};
+		$scope.productJson = $scope.ProductDetail;
+		$scope.productJson.defaultImage=$("input[name='defaultImage']:checked")[0].id.split("_")[2];
 		var formData = new FormData();
 		formData.append("productJson", JSON.stringify($scope.productJson));
-		formData.append("imageFile", imageFile.files[0]);
+		formData.append("imageFile", images.files);
 
 		$.ajax({
 			type : "POST",
@@ -124,8 +134,8 @@ app.controller("productController", function($scope, $rootScope) {
 				$rootScope.$digest();
 			},
 			error : function(e) {
-
 				console.log("ERROR: ", e);
+				$("#errorFlag").val(true);
 			}
 		});
 	};
@@ -157,6 +167,7 @@ app.controller("productController", function($scope, $rootScope) {
 			},
 			error : function(e) {
 				console.log("ERROR: ", e);
+				$("#errorFlag").val(true);
 			}
 		});
 	};
@@ -183,7 +194,6 @@ app.controller("productController", function($scope, $rootScope) {
 				debugger;
 				console.log("ERROR: ", e);
 				$scope.showSimpleToast(e.message);
-
 			}
 		});
 	};
