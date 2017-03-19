@@ -1,6 +1,7 @@
 package com.i3.ecom.dao.impl;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.hibernate.Query;
@@ -12,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.i3.ecom.dao.OrderDao;
 import com.i3.ecom.model.Customer;
 import com.i3.ecom.model.Order;
+import com.i3.ecom.model.Product;
+import com.i3.ecom.pojo.Address;
 
 public class OrderDaoImpl implements OrderDao{
 
@@ -97,6 +100,44 @@ public class OrderDaoImpl implements OrderDao{
 			  }
 	      }
 	      return customer;
+	}
+
+	@Override
+	public List<Product> getOrderedProducts(List<Long> productsIds) {
+		Session session = sessionFactory.getCurrentSession();
+		 List<Product> orderedProducts = new LinkedList<Product>();
+	      try{
+	    	  Transaction transaction = session.beginTransaction();
+	    	  String selectQuery = "SELECT * FROM Product p WHERE p.productId IN :productsIds"; 
+	    	  Query query = session.createQuery(selectQuery);
+	    	  query.setParameter("productsId", productsIds);
+	    	  orderedProducts = query.list();
+	          transaction.commit();
+	      } finally {
+	    	  if(session.isOpen()){
+				session.close();
+			  }
+	      }
+	      return orderedProducts;
+	}
+
+	@Override
+	public Address getOrderAddress(long addressId) {
+		Session session = sessionFactory.getCurrentSession();
+		Address address = new Address();
+	      try{
+	    	  Transaction transaction = session.beginTransaction();
+	    	  String selectQuery = "SELECT * FROM Address a WHERE a.addressId= :addressId"; 
+	    	  Query query = session.createQuery(selectQuery);
+	    	  query.setLong("addressId", addressId);
+	    	  address = (Address)query.uniqueResult();
+	          transaction.commit();
+	      } finally {
+	    	  if(session.isOpen()){
+				session.close();
+			  }
+	      }
+	      return address;
 	}
 
 }

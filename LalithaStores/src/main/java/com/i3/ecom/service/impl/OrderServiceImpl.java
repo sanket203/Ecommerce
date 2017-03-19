@@ -1,8 +1,10 @@
 package com.i3.ecom.service.impl;
 
-import static com.i3.ecom.utils.URLConstants.*;
+import static com.i3.ecom.utils.URLConstants.FAIL_STATUS;
+import static com.i3.ecom.utils.URLConstants.SUCCESS_STATUS;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -15,7 +17,10 @@ import com.i3.ecom.dao.OrderDetailsDao;
 import com.i3.ecom.dao.ProductsDao;
 import com.i3.ecom.model.Customer;
 import com.i3.ecom.model.Order;
+import com.i3.ecom.model.OrderDetails;
+import com.i3.ecom.model.Product;
 import com.i3.ecom.pojo.OrdersPojo;
+import com.i3.ecom.pojo.ProductPojo;
 import com.i3.ecom.service.OrderService;
 import com.i3.ecom.utils.ResponseMessage;
 
@@ -55,6 +60,11 @@ public class OrderServiceImpl implements OrderService {
 		return response;
 	}
 
+	/**
+	 * This method will return the list of all latest orders by customers.
+	 * @param orderList
+	 * @param orders
+	 */
 	private void ordersToView(List<Order>orderList, List<OrdersPojo> orders) {
 		for (Order order : orderList) {
 			OrdersPojo orderPojo = new OrdersPojo();
@@ -78,8 +88,11 @@ public class OrderServiceImpl implements OrderService {
 		try {
 			 Order orderById = orderDao.getOrderByOrderDetailId(orderDetailId);
 			 if(orderById != null){
-				 
 				 ordersToOrderPojo(orderById, order);
+				 List<OrderDetails> productsOrdered = orderDetailsDao.getOrderDetailsById(orderById.getOrderDetailsId());
+				 List<ProductPojo> products = getProductsInOrder(productsOrdered);
+				 order.setProducts(products);
+				 order.setAddress(orderDao.getOrderAddress(orderById.getAddressId()));
 				 response = new ResponseMessage(SUCCESS_STATUS, order, message);
 			 } else {
 				 message = "No orders yet.";
@@ -92,6 +105,29 @@ public class OrderServiceImpl implements OrderService {
 		return response;
 	}
 
+	/**
+	 * This method create single order based on order detail id.
+	 * @param productsOrdered
+	 * @return
+	 */
+	private List<ProductPojo> getProductsInOrder(List<OrderDetails> productsOrdered) {
+		List<Long>prodIds = new LinkedList<Long>();
+		for (OrderDetails orderDetails : productsOrdered) {
+			prodIds.add(orderDetails.getProductId());
+		}
+		List<Product> orderedProducts = orderDao.getOrderedProducts(prodIds);
+		List<ProductPojo> productsInOrder = new LinkedList<ProductPojo>();
+		for(int i=0;i<=orderedProducts.size();i++){
+			ProductPojo product = new ProductPojo();
+			product.setAmount(productsOrdered.get(i).getProductAmount());
+			product.setQuantity(productsOrdered.get(i).getProductQuantity());
+			int location = orderedProducts.indexOf(productsOrdered.get(i).getProductId());
+			product.setProductName(orderedProducts.get(location).getProductName());
+			productsInOrder.add(product);
+		}
+		return productsInOrder;
+	}
+
 	private void ordersToOrderPojo(Order orderById, OrdersPojo order) {
 		order.setExpectedDelivery(orderById.getExpectedDelivery());
 		order.setOrderDate(orderById.getOrderDate());
@@ -101,7 +137,6 @@ public class OrderServiceImpl implements OrderService {
 		order.setOrderId(orderById.getOrderId());
 		Customer customerById = orderDao.getCustomerById(orderById.getCustomerId());
 		order.setCustomer(customerById.getFirstName() + " " + customerById.getLastName());
-		
 	}
 
 	@Override
