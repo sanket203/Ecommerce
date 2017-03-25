@@ -8,10 +8,11 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.i3.ecom.dao.OrderDetailsDao;
 import com.i3.ecom.model.OrderDetails;
-
+@Component
 public class OrderDetailsDaoImpl implements OrderDetailsDao {
 
 	@Autowired

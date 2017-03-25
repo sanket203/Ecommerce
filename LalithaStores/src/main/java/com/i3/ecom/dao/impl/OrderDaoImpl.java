@@ -9,13 +9,14 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.i3.ecom.dao.OrderDao;
 import com.i3.ecom.model.Customer;
 import com.i3.ecom.model.Order;
 import com.i3.ecom.model.Product;
 import com.i3.ecom.pojo.Address;
-
+@Component
 public class OrderDaoImpl implements OrderDao{
 
 	@Autowired

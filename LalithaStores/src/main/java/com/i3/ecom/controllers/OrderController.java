@@ -24,7 +24,8 @@ public class OrderController {
 	}
 	
 	public ResponseMessage getOrderByStatus(@RequestParam("orderStatus") final String status){
-		ResponseMessage message = orderService.
+		ResponseMessage message = orderService.getOrderByStatus(status);
+		return message;
 	}
 	
 }
