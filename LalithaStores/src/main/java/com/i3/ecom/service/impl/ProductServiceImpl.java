@@ -44,7 +44,7 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	@Transactional
-	public ResponseMessage addProduct(String productJson, final MultipartFile[] imageFile) {
+	public ResponseMessage addProduct(String productJson, final List<MultipartFile> imageFile) {
 		String message = null;
 		ResponseMessage responseMessage = null;
 		Product product = Product.createProductEntity(productJson);
@@ -52,10 +52,7 @@ public class ProductServiceImpl implements ProductService {
 		try {
 			
 			ProductValidation.validateProduct(product);
-			
-			/*if(imageFile != null){
-				product.setImageFileName(imageFile.getOriginalFilename());
-			}*/
+			product.setCorosalImages(setCouroselImages(imageFile));
 			product.setCreationDate(new Date());
 			product.setModificationDate(new Date());
 			message = productDao.addProduct(product);
@@ -71,6 +68,25 @@ public class ProductServiceImpl implements ProductService {
 			responseMessage = new ResponseMessage(FAIL_STATUS, message);
 		}
 		return responseMessage;
+	}
+
+	private String setCouroselImages(List<MultipartFile> imageFile) {
+		StringBuffer string = new StringBuffer();
+		if(imageFile!=null){
+		if(imageFile.size()==1){
+			string.append(imageFile.get(0).getOriginalFilename());
+		}
+		else{
+		for (MultipartFile multiPartFile : imageFile) {
+			string.append(multiPartFile.getOriginalFilename()+",");
+		}
+		
+		string.deleteCharAt(string.lastIndexOf(","));
+		}
+	}
+		
+		
+	return string.toString();	
 	}
 
 	@Override
@@ -93,7 +109,7 @@ public class ProductServiceImpl implements ProductService {
 		return response;
 	}
 
-	private void saveProductImage(final MultipartFile[] imageFiles,final long pId, final long cId,String defaultImageFileName) throws Exception {
+	private void saveProductImage(final List<MultipartFile> imageFiles,final long pId, final long cId,String defaultImageFileName) throws Exception {
 		try {
 			  String basePath = null;
 			  basePath = ProductUtility.createProductDirectory(cId,pId);
@@ -126,8 +142,8 @@ public class ProductServiceImpl implements ProductService {
 			int width = sourceImage.getWidth();
 			int height = sourceImage.getHeight();
 			
-			 BufferedImage outputImage = new BufferedImage(300,
-		                300, sourceImage.getType());
+			 BufferedImage outputImage = new BufferedImage(188,
+					 250, sourceImage.getType());
 			 
 			 Graphics2D g2d = outputImage.createGraphics();
 		        g2d.drawImage(sourceImage, 0, 0, 188, 250, null);
