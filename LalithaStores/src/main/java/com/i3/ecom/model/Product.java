@@ -72,6 +72,9 @@ public class Product {
 	@Column(name="addedBy")
 	private String addedBy;
 	
+	@Column(name="corosal_images")
+	private String corosalImages;
+	
 	@Transient
 	private String dateAdded;
 	
@@ -260,5 +263,19 @@ public class Product {
 	 */
 	public void setAddedByUserId(Long addedByUserId) {
 		this.addedByUserId = addedByUserId;
+	}
+
+	/**
+	 * @return the corosalImages
+	 */
+	public String getCorosalImages() {
+		return corosalImages;
+	}
+
+	/**
+	 * @param corosalImages the corosalImages to set
+	 */
+	public void setCorosalImages(String corosalImages) {
+		this.corosalImages = corosalImages;
 	}
 }

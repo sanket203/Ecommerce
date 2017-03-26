@@ -9,6 +9,8 @@ import static com.i3.ecom.utils.URLConstants.GET_CATEGORIES_URL;
 import static com.i3.ecom.utils.URLConstants.GET_PRODUCTS_URL;
 import static com.i3.ecom.utils.URLConstants.UPDATE_PRODUCTS_URL;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,7 +34,7 @@ public class ProductController {
 	
 	@RequestMapping(value=ADD_PRODUCT_URL,method=RequestMethod.POST, consumes={"multipart/form-data"})
 	public @ResponseBody ResponseMessage addProduct(@RequestParam("productJson") String productJson, 
-			                               @RequestParam("imageFile") MultipartFile[] imageFile,
+			                               @RequestParam List< MultipartFile> imageFile,
 			                               Model model){
 		ResponseMessage message = productService.addProduct(productJson,imageFile);
 		return message;

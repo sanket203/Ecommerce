@@ -1,5 +1,7 @@
 package com.i3.ecom.service;
 
+import java.util.List;
+
 import org.springframework.web.multipart.MultipartFile;
 
 import com.i3.ecom.model.Category;
@@ -19,7 +21,7 @@ public interface ProductService {
 	 * @param imageFile
 	 * @return
 	 */
-	public ResponseMessage addProduct(String productJson, final MultipartFile[] imageFile);
+	public ResponseMessage addProduct(String productJson, final List<MultipartFile> imageFile);
 	
 	/**
 	 * This method is used to save category.
