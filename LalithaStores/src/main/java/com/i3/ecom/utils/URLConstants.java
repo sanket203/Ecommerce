@@ -50,7 +50,7 @@ public class URLConstants {
 	
 	public static final String ORDERS_BY_STATUS = "/ordersByStatus.htm";
 	
-	public static final String ORDER_BY_ID = "/getOrderById";
+	public static final String ORDER_BY_ID = "/getOrderById.htm";
 	
 	//---------------------- Status Codes ---------------------//
 	

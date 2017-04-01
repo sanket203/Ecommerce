@@ -13,7 +13,7 @@ public interface OrderDao {
 	
 	public List<Order> getOrderByStatus(final String status);
 	
-	public Order getOrderByOrderDetailId(final String orderDetailId);
+	public Order getOrderByOrderDetailId(final String orderDetailsId);
 	
 	public void updateOrder(final Order order);
 	

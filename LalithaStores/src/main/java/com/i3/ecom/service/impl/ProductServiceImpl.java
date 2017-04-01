@@ -50,7 +50,6 @@ public class ProductServiceImpl implements ProductService {
 		Product product = Product.createProductEntity(productJson);
 		
 		try {
-			
 			ProductValidation.validateProduct(product);
 			product.setCorosalImages(setCouroselImages(imageFile));
 			product.setCreationDate(new Date());

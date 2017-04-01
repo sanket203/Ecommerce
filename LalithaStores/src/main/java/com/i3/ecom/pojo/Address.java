@@ -8,6 +8,7 @@ public class Address {
 	private String country;
 	private String zipcode;
 	private String landmark;
+												
 	public String getStreetAddress() {
 		return streetAddress;
 	}

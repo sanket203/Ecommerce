@@ -19,14 +19,14 @@ public class OrderDetailsDaoImpl implements OrderDetailsDao {
 	SessionFactory sessionFactory;
 
 	@Override
-	public List<OrderDetails> getOrderDetailsById(String orderDetailId) {
+	public List<OrderDetails> getOrderDetailsById(String orderDetailsId) {
 		Session session = sessionFactory.getCurrentSession();
 		 List<OrderDetails> orderDetailList = new ArrayList<OrderDetails>();
 	      try{
 	    	  Transaction transaction = session.beginTransaction();
-	    	  String selectQuery = "SELECT * FROM OrderDetails od WHERE od.orderDetailsId= :orderDetailsId"; 
+	    	  String selectQuery = "from OrderDetails where orderDetailsId= :orderDetailsId"; 
 	    	  Query query = session.createQuery(selectQuery);
-	    	  query.setString("orderDetailsId", orderDetailId);
+	    	  query.setString("orderDetailsId", orderDetailsId);
 	          orderDetailList = query.list();
 	          transaction.commit();
 	      } finally {

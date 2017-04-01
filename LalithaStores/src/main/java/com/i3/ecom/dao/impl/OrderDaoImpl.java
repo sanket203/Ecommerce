@@ -22,15 +22,16 @@ public class OrderDaoImpl implements OrderDao{
 	@Autowired
 	SessionFactory sessionFactory;
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Order> getOrdersByDate() {
 	 Session session = sessionFactory.getCurrentSession();
 	 List<Order> orderList = new ArrayList<Order>();
       try{
     	  Transaction transaction = session.beginTransaction();
-    	  String selectQuery = " SELECT * FROM Orders o where o.orderDate BETWEEN  DATE_SUB(current_date(), INTERVAL 7 DAY) AND current_date()"; 
-    	  Query query = session.createSQLQuery(selectQuery);
-          orderList = query.list();
+    	  String selectQuery = "SELECT * FROM `order` WHERE `orderDate` >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)"; 
+    	  Query query = session.createSQLQuery(selectQuery).addEntity(Order.class);
+    	  orderList = query.list();
           transaction.commit();
       } finally {
     	  if(session.isOpen()){
@@ -46,10 +47,9 @@ public class OrderDaoImpl implements OrderDao{
 	 List<Order> orderList = new ArrayList<Order>();
       try{
     	  Transaction transaction = session.beginTransaction();
-    	  String selectQuery = "from Orders where status= :status";
-    	  Query query = session.createQuery(selectQuery);
-    	  query.setString("status", status);
-          orderList = query.list();
+    	  String selectQuery = "SELECT * FROM `order` WHERE `status` = '"+ status+"'"; 
+    	  Query query = session.createSQLQuery(selectQuery).addEntity(Order.class);
+    	  orderList = query.list();
           transaction.commit();
       } finally {
     	  if(session.isOpen()){
@@ -60,14 +60,13 @@ public class OrderDaoImpl implements OrderDao{
 	}
 
 	@Override
-	public Order getOrderByOrderDetailId(String orderDetailId) {
+	public Order getOrderByOrderDetailId(String orderDetailsId) {
 	 Session session = sessionFactory.getCurrentSession();
 	 Order order = new Order();
       try{
     	  Transaction transaction = session.beginTransaction();
-    	  String selectQuery = "from Orders where orderDetailsId= :orderDetailsId";
-    	  Query query = session.createQuery(selectQuery);
-    	  query.setString("orderDetailsId", orderDetailId);
+    	  String selectQuery = "SELECT * FROM `order` WHERE `orderDetailsId` = '"+ orderDetailsId+"'"; 
+    	  Query query = session.createSQLQuery(selectQuery).addEntity(Order.class);
           order = (Order)query.uniqueResult();
           transaction.commit();
       } finally {
@@ -104,14 +103,14 @@ public class OrderDaoImpl implements OrderDao{
 	}
 
 	@Override
-	public List<Product> getOrderedProducts(List<Long> productsIds) {
+	public List<Product> getOrderedProducts(List<Long> productId) {
 		Session session = sessionFactory.getCurrentSession();
 		 List<Product> orderedProducts = new LinkedList<Product>();
 	      try{
 	    	  Transaction transaction = session.beginTransaction();
-	    	  String selectQuery = "SELECT * FROM Product p WHERE p.productId IN :productsIds"; 
-	    	  Query query = session.createQuery(selectQuery);
-	    	  query.setParameter("productsId", productsIds);
+	    	  String selectQuery = "SELECT * FROM Product p WHERE p.productId IN (:productId)"; 
+	    	  Query query = session.createSQLQuery(selectQuery).addEntity(Product.class);
+	    	  query.setParameterList("productId", productId);
 	    	  orderedProducts = query.list();
 	          transaction.commit();
 	      } finally {
@@ -128,7 +127,7 @@ public class OrderDaoImpl implements OrderDao{
 		Address address = new Address();
 	      try{
 	    	  Transaction transaction = session.beginTransaction();
-	    	  String selectQuery = "SELECT * FROM Address a WHERE a.addressId= :addressId"; 
+	    	  String selectQuery = "from Address where addressId= :addressId"; 
 	    	  Query query = session.createQuery(selectQuery);
 	    	  query.setLong("addressId", addressId);
 	    	  address = (Address)query.uniqueResult();

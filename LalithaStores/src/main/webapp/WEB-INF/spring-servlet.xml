@@ -28,11 +28,13 @@
 		<property name="annotatedClasses">
 			<list>
 				<value>com.i3.ecom.model.Users</value>
+				<value>com.i3.ecom.model.Customer</value>
 				<value>com.i3.ecom.model.Product</value>
 				<value>com.i3.ecom.model.Category</value>
 				<value>com.i3.ecom.model.Roles</value>
 				<value>com.i3.ecom.model.Order</value>
 				<value>com.i3.ecom.model.OrderDetails</value>
+				<value>com.i3.ecom.model.Address</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">

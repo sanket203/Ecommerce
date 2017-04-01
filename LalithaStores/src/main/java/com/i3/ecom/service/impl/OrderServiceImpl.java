@@ -66,7 +66,8 @@ public class OrderServiceImpl implements OrderService {
 	 * @param orders
 	 */
 	private void ordersToView(List<Order>orderList, List<OrdersPojo> orders) {
-		for (Order order : orderList) {
+		for (Object object : orderList) {
+			Order order = (Order)object;
 			OrdersPojo orderPojo = new OrdersPojo();
 			orderPojo.setExpectedDelivery(order.getExpectedDelivery());
 			orderPojo.setOrderDate(order.getOrderDate());
@@ -77,6 +78,7 @@ public class OrderServiceImpl implements OrderService {
 			Customer customerById = orderDao.getCustomerById(order.getCustomerId());
 			orderPojo.setCustomer(customerById.getFirstName() + " " + customerById.getLastName());
 			orders.add(orderPojo);
+			
 		}
 	}
 
@@ -117,11 +119,16 @@ public class OrderServiceImpl implements OrderService {
 		}
 		List<Product> orderedProducts = orderDao.getOrderedProducts(prodIds);
 		List<ProductPojo> productsInOrder = new LinkedList<ProductPojo>();
-		for(int i=0;i<=orderedProducts.size();i++){
+		for(int i=0;i<orderedProducts.size();i++){
 			ProductPojo product = new ProductPojo();
 			product.setAmount(productsOrdered.get(i).getProductAmount());
 			product.setQuantity(productsOrdered.get(i).getProductQuantity());
-			int location = orderedProducts.indexOf(productsOrdered.get(i).getProductId());
+			int location = 0;
+			for(int j=0;j<orderedProducts.size();j++){
+				if(productsOrdered.get(i).getProductId() == orderedProducts.get(j).getProductId()){
+					location = j;
+				}
+			}
 			product.setProductName(orderedProducts.get(location).getProductName());
 			productsInOrder.add(product);
 		}
@@ -159,6 +166,5 @@ public class OrderServiceImpl implements OrderService {
 		}
 		return response;
 	}
-	
 	
 }

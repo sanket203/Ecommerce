@@ -1,6 +1,6 @@
 package com.i3.ecom.controllers;
 
-import static com.i3.ecom.utils.URLConstants.GET_LATEST_ORDER;
+import static com.i3.ecom.utils.URLConstants.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,8 +23,15 @@ public class OrderController {
 		return message;
 	}
 	
+	@RequestMapping(value=ORDERS_BY_STATUS, method=RequestMethod.GET)
 	public ResponseMessage getOrderByStatus(@RequestParam("orderStatus") final String status){
 		ResponseMessage message = orderService.getOrderByStatus(status);
+		return message;
+	}
+	
+	@RequestMapping(value=ORDER_BY_ID, method=RequestMethod.GET)
+	public ResponseMessage getOrderById(@RequestParam("orderId") final String orderId){
+		ResponseMessage message = orderService.getOrderByDetailId(orderId);
 		return message;
 	}
 	
