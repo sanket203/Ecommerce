@@ -222,7 +222,7 @@ app.controller("productController", function($scope, $rootScope, FormValidationS
 			type : "POST",
 			contentType : "application/json",
 			url : "deleteCategory.htm",
-			data : productJson,
+			data :JSON.stringify(productJson),
 			dataType : "json",
 			success : function(data) {
 				$scope.getAllCategories();
