@@ -1,4 +1,4 @@
-﻿﻿app.controller("userController", function($scope, $http, $rootScope) {
+﻿﻿app.controller("userController", function($scope, $http, $rootScope, FormValidationService) {
 
 	$scope.showSimpleToast = function(msg) {
 		var x = document.getElementById("toast");
@@ -8,6 +8,10 @@
 			x.className = x.className.replace("show", "");
 		}, 3000);
 	};
+	
+	$scope.formValidation = function(formId){
+		return FormValidationService.validateForm(formId);
+	}
 	
 	$scope.getAllUsers = function() {
 		$.ajax({
@@ -25,63 +29,68 @@
 		});
 	};
 
-	$scope.addUser = function() {
-		debugger;
-		var requestData = {
-			firstName : $(".modal-body #fname").val(),
-			lastName : $(".modal-body #lname").val(),
-			emailId : $(".modal-body #email").val(),
-			contact : $(".modal-body #contact").val(),
-			location : $(".modal-body #location").val(),
-			roles : $("#permissions").val()
-		};
-
-		$.ajax({
-			type : "POST",
-			contentType : "application/json",
-			url : "addUser.htm",
-			data : JSON.stringify(requestData),
-			dataType : "json",
-			success : function(data) {
-				$scope.getAllUsers();
-				$scope.showSimpleToast(data.message);
-				$rootScope.$digest();
-			},
-			error : function(e) {
-				$scope.showSimpleToast(e.message);
-			}
-		});
+	$scope.addUser = function(userModal) {
+		if($scope.formValidation(userModal))
+		{
+			var requestData = {
+				firstName : $(".modal-body #fname").val(),
+				lastName : $(".modal-body #lname").val(),
+				emailId : $(".modal-body #email").val(),
+				contact : $(".modal-body #contact").val(),
+				location : $(".modal-body #location").val(),
+				roles : $("#permissions").val()
+			};
+	
+			$.ajax({
+				type : "POST",
+				contentType : "application/json",
+				url : "addUser.htm",
+				data : JSON.stringify(requestData),
+				dataType : "json",
+				success : function(data) {
+					$scope.getAllUsers();
+					$scope.showSimpleToast(data.message);
+					$(userModal).modal('hide');
+					$rootScope.$digest();
+				},
+				error : function(e) {
+					$scope.showSimpleToast(e.message);
+				}
+			});
+		}
 	};
 
-	$scope.editUser = function() {
-		debugger;
-		var requestData = {
-			firstName : $(".modal-body #edit_fname").val(),
-			lastName : $(".modal-body #edit_lname").val(),
-			emailId : $(".modal-body #edit_email").val(),
-			contact : $(".modal-body #edit_contact").val(),
-			status : $(".modal-body #edit_user")[0].checked ? 1 : 0,
-			location : $(".modal-body #edit_location").val(),
-			roles : $("#edit_permissions").val()
-		};
-
-		$.ajax({
-			type : "POST",
-			contentType : "application/json",
-			url : "updateUser.htm",
-			data : JSON.stringify(requestData),
-			dataType : "json",
-			success : function(data) {
-				
-				$scope.getAllUsers();
-				$scope.showSimpleToast(data.message);
-				$rootScope.$digest();
-			},
-			error : function(e) {
-				console.log("ERROR: ", e);
-				$scope.showSimpleToast(e.message);
-			}
-		});
+	$scope.editUser = function(userModal) {
+		if($scope.formValidation(userModal))
+		{
+			var requestData = {
+				firstName : $(".modal-body #edit_fname").val(),
+				lastName : $(".modal-body #edit_lname").val(),
+				emailId : $(".modal-body #edit_email").val(),
+				contact : $(".modal-body #edit_contact").val(),
+				status : $(".modal-body #edit_user")[0].checked ? 1 : 0,
+				location : $(".modal-body #edit_location").val(),
+				roles : $("#edit_permissions").val()
+			};
+	
+			$.ajax({
+				type : "POST",
+				contentType : "application/json",
+				url : "updateUser.htm",
+				data : JSON.stringify(requestData),
+				dataType : "json",
+				success : function(data) {
+					$scope.getAllUsers();
+					$scope.showSimpleToast(data.message);
+					$(userModal).modal('hide');
+					$rootScope.$digest();
+				},
+				error : function(e) {
+					console.log("ERROR: ", e);
+					$scope.showSimpleToast(e.message);
+				}
+			});
+		}
 	};
 
 	$scope.deleteUser = function() {

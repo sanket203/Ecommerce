@@ -49,7 +49,7 @@
 				<div class="modal-body">
 					<div class="input-group">
 						<span class="input-group-addon">First Name</span> <input
-							type="text" id="fname" class="form-control"
+							type="text" id="fname" required class="form-control"
 							aria-describedby="fname">
 					</div>
 					<br />
@@ -61,12 +61,12 @@
 					<br />
 					<div class="input-group">
 						<span class="input-group-addon">Email Id</span> <input type="text"
-							id="email" class="form-control" aria-describedby="email">
+							id="email" class="form-control" required aria-describedby="email">
 					</div>
 					<br />
 					<div class="input-group">
 						<span class="input-group-addon">Contact Number</span> <input
-							type="text" id="contact" class="form-control"
+							type="text" id="contact" class="form-control" required
 							aria-describedby="contact">
 					</div>
 					<br />
@@ -86,8 +86,7 @@
 					</div>
 					<br />
 					<div class="modal-footer">
-						<button type="button" class="btn btn-success" data-dismiss="modal"
-							ng-click="addUser();">Save</button>
+						<button type="submit" class="btn btn-success" ng-click="addUser('#addUser');">Save</button>
 						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 					</div>
 				</div>
@@ -106,7 +105,7 @@
 				<div class="modal-body">
 					<div class="input-group">
 						<span class="input-group-addon">First Name</span> <input
-							type="text" id="edit_fname" class="form-control"
+							type="text" id="edit_fname" class="form-control" required
 							value={{user.userId}} aria-describedby="fname">
 					</div>
 					<br />
@@ -118,13 +117,13 @@
 					<br />
 					<div class="input-group">
 						<span class="input-group-addon">Email Id</span> <input type="text"
-							id="edit_email" class="form-control" aria-describedby="email"
+							id="edit_email" class="form-control" aria-describedby="email" required
 							disabled>
 					</div>
 					<br />
 					<div class="input-group">
 						<span class="input-group-addon">Contact Number</span> <input
-							type="text" id="edit_contact" class="form-control"
+							type="text" id="edit_contact" class="form-control" required
 							aria-describedby="contact">
 					</div>
 					<br />
@@ -135,7 +134,7 @@
 					</div>
 					<br />
 					<div class="input-group">
-						<span>Active&nbsp;</span> <input type="checkbox" checked
+						<span class="input-group-addon">Active&nbsp;</span> <input type="checkbox" checked
 							data-toggle="toggle" id="edit_user" data-style="ios">
 					</div>
 					<br />
@@ -150,8 +149,8 @@
 					</div>
 					<br />
 					<div class="modal-footer">
-						<button type="button" class="btn btn-success" data-dismiss="modal"
-							ng-click="editUser();">Save</button>
+						<button type="button" class="btn btn-success"
+							ng-click="editUser('#editUser');">Save</button>
 						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 					</div>
 				</div>
@@ -198,6 +197,11 @@
 				
 				$('#addUser,#editUser ').on('hidden.bs.modal', function () {
 				    $(this).find("input,textarea,select").val('').end();
+				    var textBoxList = $(this).find("input");
+				    for(var i=0;i<textBoxList.length;i++){
+				    	textBoxList[i].placeholder="";
+				    }
+				    $(this).find("input,textarea,select,.multiselect").css('border-color','#ccc').end();
 				    $('#permissions').multiselect('destroy');
 				    $('#edit_permissions').multiselect('destroy');
 				});

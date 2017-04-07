@@ -165,7 +165,9 @@ tbody {
 			</table>
 		</div>
 	</div>
+
 	<input type="hidden" id="errorFlag">
+
 	<!-- add product popup -->
 	<div class="modal fade" id="addProduct" role="dialog">
 		<div class="modal-dialog">
@@ -174,78 +176,69 @@ tbody {
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 					<h4 class="modal-title">Add new product</h4>
 				</div>
-				<form enctype="multipart/form-data">
+				<div id="addProductScreen1">
 					<div class="modal-body">
 						<div class="input-group">
-							<span class="input-group-addon">Name</span> <input type="text"
-									id="add_pName" class="form-control" aria-describedby="pName">
+							<span class="input-group-addon">Name</span> <input type="text" required
+									id="add_pName" class="form-control">
 						</div>
 						<br />
 						<div class="input-group">
-							<span class="input-group-addon">Description</span> <input
-									type="text" id="add_pDescription" class="form-control"
-									aria-describedby="pdescription">
-						</div>
-						<br />
+							<span class="input-group-addon">Description</span> 
+							<textarea rows="4" id="add_pDescription" class="form-control"
+									aria-describedby="longDescription"></textarea>
+						</div>						<br />
 						<div class="input-group">
-							<span class="input-group-addon">Price</span> <input type="text"
+							<span class="input-group-addon">Price</span> <input type="text" required
 									id="add_pPrice" class="form-control" aria-describedby="pprice">
-							<span class="input-group-addon">Quantity</span> <input
-									type="text" id="add_pQuantity" class="form-control"
-									placeholder="in weights" aria-describedby="pQty">
-						</div>
-						<br />
-						<div class="input-group">
 							<span class="input-group-addon">Location</span> <input
 									type="text" id="add_pLocations" class="form-control"
 									aria-describedby="pLocation">
 						</div>
 						<br />
 						<div class="input-group">
-							<span>Active&nbsp;</span> <input type="checkbox" checked
+							<span class="input-group-addon">Quantity (in weight)</span> <input
+									type="text" id="add_pQuantity" class="form-control"
+									aria-describedby="pQty">
+							<span class="input-group-addon">Quantity (in stock)</span> <input
+									type="text" required id="add_pQuantityStock" class="form-control"
+									aria-describedby="pQtyStock">		
+						</div>
+						<br />
+						<div class="input-group">
+							<span class="input-group-addon">Active</span> <input type="checkbox" checked
 									data-toggle="toggle" id="add_pStatus">
 						</div>
 						<br />
 							<input type="text" id="add_pTags" class="form-control"
-								placeholder="tags" aria-describedby="pTags">
+							placeholder="Tags" aria-describedby="pTags">
 						<br />
-						<div class="modal-footer">
-							<button type="button" class="btn btn-success" data-target="#deleteProduct"
-									data-dismiss="modal" ng-click="storeProductData()">Save and continue</button>
-							<button type="button" class="btn btn-default"
-									data-dismiss="modal">Cancel</button>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-success"
+								ng-click="storeProductData('#addProductScreen1')">Save and continue</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+					</div>
+				</div>
+				<div id="addProductScreen2">
+					<div class="modal-body">
+						<div class="input-group col-md-12">
+							<form enctype="multipart/form-data">
+								<div class="col-md-12">
+									<input type="file" class="form-control" id="images" name="images[]" multiple />
+								</div>
+							</form>
+							<div id="image_preview"></div>
 						</div>
 					</div>
-				</form>
-			</div>
-		</div>
-	</div>
-
-	<!-- add image popup -->
-	<div class="modal fade" id="addImage" role="dialog">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<h4 class="modal-title">Add Image</h4>
-				</div>
-				<div class="modal-body">
-					<div class="input-group col-md-12">
-						<form enctype="multipart/form-data">
-							<div class="col-md-12">
-								<input type="file" class="form-control" id="images" name="images[]" multiple />
-							</div>
-						</form>
-						<div id="image_preview"></div>
-					</div>
-				</div>
-				<br />
-				<div class="modal-footer">
-					<div style="color:darkgray; font-family:-webkit-body; float:left;">*select an image to make it default.</div>
-					<div style="float:right;">
-						<button type="button" class="btn btn-success" data-dismiss="modal"
-							ng-click="saveProduct();">Save</button>
-						<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+					<br />
+					<div class="modal-footer">
+						<div id="warn" style="color:darkgray; font-family:-webkit-body; float:left;">*select an image to make it default.</div>
+						<div style="float:right;">
+							<button type="button" class="btn btn-success"
+								ng-click="saveProduct('#addProductScreen2');">Save</button>
+							<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -270,54 +263,36 @@ tbody {
 						</div>
 						<br />
 						<div class="input-group">
-							<span class="input-group-addon">Description</span> <input
-									type="text" id="edit_pDescription" class="form-control"
-									aria-describedby="pdescription">
+							<span class="input-group-addon">Description</span> 
+							<textarea rows="4" id="edit_pDescription" class="form-control"
+									aria-describedby="longDescription"></textarea>
 						</div>
 						<br />
 						<div class="input-group">
 							<span class="input-group-addon">Price</span> <input type="text"
 									id="edit_pPrice" class="form-control" aria-describedby="pprice">
-						</div>
-						<br />
-						<div class="input-group">
-							<span class="input-group-addon">Quantity</span> <input
-									type="text" id="edit_pQuantity" class="form-control"
-									placeholder="in weights" aria-describedby="pprice">
-						</div>
-						<br />
-						<div class="input-group">
-							<span>Active&nbsp;</span> <input type="checkbox" checked
-									data-toggle="toggle" id="edit_pStatus">
-						</div>
-						<br />
-						<div class="input-group">
 							<span class="input-group-addon">Location</span> <input
 									type="text" id="edit_pLocations" class="form-control"
 									aria-describedby="pLocation">
+									
+						</div>
+						<br />
+						<div class="input-group">
+							<span class="input-group-addon">Quantity (in weight)</span> <input
+									type="text" id="edit_pQuantity" class="form-control"
+									placeholder="in weights" aria-describedby="pprice">
+							<span class="input-group-addon">Quantity (in stock)</span> <input
+									type="text" id="edit_pQuantityStock" class="form-control"
+									aria-describedby="pQtyStock">		
+									
+						</div>
+						<br />
+						<div class="input-group">
+						<span class="input-group-addon">Active</span> <input type="checkbox" checked
+									data-toggle="toggle" id="edit_pStatus">
 						</div>
 						<br /> <input type="text" id="edit_pTags" class="form-control"
 								placeholder="tags" aria-describedby="pTags"> <br />
-						<div class="row">
-							<div class="col-lg-12 col-md-6 col-sm-8">
-								<div class="input-group image-preview">
-									<input type="text" class="form-control image-preview-filename"
-											disabled="disabled"> <span class="input-group-btn">
-										<button type="button"
-												class="btn btn-default image-preview-clear"
-												style="display: none;">
-											<span class="glyphicon glyphicon-remove"></span> Clear
-										</button>
-										<div class="btn btn-default image-preview-input">
-											<span class="glyphicon glyphicon-folder-open"></span> <span
-													class="image-preview-input-title">Browse</span> <input
-													type="file" accept="image/png, image/jpg, image/gif"
-													name="imageFile" id="edit_imageFile" />
-										</div>
-									</span>
-								</div>
-							</div>
-						</div>
 						<br />
 						<div class="modal-footer">
 							<button type="button" class="btn btn-success"
@@ -460,14 +435,25 @@ tbody {
 				 }
 		    });
 			
+			$("#addProduct").on("shown.bs.modal", function () { 
+				$("#addProductScreen1").show();
+				$("#addProductScreen2").hide();
+			});
+			
 			$('#addCategory').on('hidden.bs.modal',function() {
 				$('#addCategory').find("input").val('').end();
 			});
 			
 			$('#addProduct').on('hidden.bs.modal',function() {
+				debugger;
 				$(this).find("input,textarea,select").val('').end();
 				$(this).find(".tag").text('').end();
-				$("#addImage").modal('show')				
+			    var textBoxList = $(this).find("input");
+			    for(var i=0;i<textBoxList.length;i++){
+			    	textBoxList[i].placeholder="";
+			    }
+				$("#add_pTags").parent().find(".bootstrap-tagsinput input")[0].placeholder="tags"
+			    $(this).find("input,textarea,select,.tag").css('border-color','#ccc').end();
 			});
 
 			$('#addImage').on('hidden.bs.modal',function() {
@@ -549,6 +535,7 @@ tbody {
 		
 			// on edit product button click
 			$('#editProduct').on('show.bs.modal',function(event) {
+				debugger;
 				var button = $(event.relatedTarget)
 				var recipient = button.data('whatever')
 				var modal = $(this)
@@ -558,6 +545,7 @@ tbody {
 				modal.find('.modal-body #edit_pDescription').val(recipient.description)
 				modal.find('.modal-body #edit_pPrice').val(recipient.price)
 				modal.find('.modal-body #edit_pQuantity').val(recipient.quantityWeight)
+				modal.find('.modal-body #edit_pQuantityStock').val(recipient.quantityStock)
 				modal.find('.modal-body #edit_pStatus').attr("checked",recipient.productActive)
 				modal.find('.modal-body #edit_pLocations').val(recipient.productLocation)
 				var temp = recipient.tags.split(",");
