@@ -48,10 +48,12 @@
 				data : JSON.stringify(requestData),
 				dataType : "json",
 				success : function(data) {
-					$scope.getAllUsers();
 					$scope.showSimpleToast(data.message);
-					$(userModal).modal('hide');
-					$rootScope.$digest();
+					if(data.status=="200"){
+						$scope.getAllUsers();					
+						$(userModal).modal('hide');
+						$rootScope.$digest();
+					}
 				},
 				error : function(e) {
 					$scope.showSimpleToast(e.message);
@@ -80,10 +82,12 @@
 				data : JSON.stringify(requestData),
 				dataType : "json",
 				success : function(data) {
-					$scope.getAllUsers();
 					$scope.showSimpleToast(data.message);
-					$(userModal).modal('hide');
-					$rootScope.$digest();
+					if(data.status=="200"){
+						$scope.getAllUsers();
+						$(userModal).modal('hide');
+						$rootScope.$digest();
+					}
 				},
 				error : function(e) {
 					console.log("ERROR: ", e);

@@ -82,6 +82,13 @@ tbody {
 	width:100px;
 	height:100px;
 }
+#categoryName
+{
+	font-size: 150%;
+	font-weight: 400;
+    line-height: 1;
+    color: #777;
+}
 
 </style>
 
@@ -90,12 +97,12 @@ tbody {
 		<ul class="sidebar-custom">
 			<li><h2>Categories</h2></li>
 			<li>
-				<a class="btn btn-success btn-block glyphicon glyphicon glyphicon-plus"
-				data-toggle="modal" data-target="#addCategory">&nbsp;<strong>ADD</strong></a>
+				<a class="btn btn-success btn-block glyphicon glyphicon glyphicon-plus" data-toggle="modal"
+				data-target="#addCategory">&nbsp;<strong>ADD</strong></a>
 			</li>
 			<li><br /></li>
 			<li ng-repeat="category in categories">
-				<a href="" class="categoryBtn btn btn-default btn-block" ng-click="getProduct(category.categoryId)">
+				<a href="" class="categoryBtn btn btn-default btn-block" ng-click="getProduct(category.categoryId,category.categoryName)">
 					{{category.categoryName}}
 					<span class="modCatBtn glyphicon glyphicon glyphicon-trash" data-whatever={{category.categoryId}}
 					data-toggle="modal" data-target="#deleteCategory"></span>
@@ -121,17 +128,23 @@ tbody {
 		</div>
 
 		<div id="productBlock">
-			<div class="pull-right col-md-4" ng-show="addBtnBlock">
-				<br />
-				<button type="button"
-					class="btn btn-success btn-block glyphicon glyphicon glyphicon-plus"
-					data-whatever={{product.id}} data-toggle="modal"
-					data-target="#addProduct">
-					<strong>ADD</strong>
-				</button>
-				<br />
+			<div class="col-md-12" ng-show="addBtnBlock">
+			<br />
+				<div class="col-md-4">
+					<span id="categoryName"></span>
+				</div>
+				<div class="col-md-4"></div>
+				<div class="col-md-4">
+					<button type="button"
+						class="btn btn-success btn-block glyphicon glyphicon glyphicon-plus"
+						data-whatever={{product.id}} data-toggle="modal"
+						data-target="#addProduct">
+						<strong>ADD</strong>
+					</button>
+				</div>
+				<br /><br /><br />
 			</div>
-
+			
 			<table id="productList" class="table table-striped table-bordered"
 				ng-show="productBlock" cellspacing="0" width="100%">
 				<tbody>
@@ -186,7 +199,7 @@ tbody {
 						<div class="input-group">
 							<span class="input-group-addon">Description</span> 
 							<textarea rows="4" id="add_pDescription" class="form-control"
-									aria-describedby="longDescription"></textarea>
+									style="max-width: 471px;"></textarea>
 						</div>						<br />
 						<div class="input-group">
 							<span class="input-group-addon">Price</span> <input type="text" required
@@ -256,7 +269,7 @@ tbody {
 				<form enctype="multipart/form-data">
 					<div class="modal-body">
 						<div class="input-group">
-							<span class="input-group-addon">Name</span> <input type="text"
+							<span class="input-group-addon">Name</span> <input type="text" required
 									id="edit_pName" class="form-control" aria-describedby="pName">
 							<input type="hidden" id="edit_productId" class="form-control"
 									aria-describedby="pName">
@@ -265,11 +278,11 @@ tbody {
 						<div class="input-group">
 							<span class="input-group-addon">Description</span> 
 							<textarea rows="4" id="edit_pDescription" class="form-control"
-									aria-describedby="longDescription"></textarea>
+									style="max-width: 471px;"></textarea>
 						</div>
 						<br />
 						<div class="input-group">
-							<span class="input-group-addon">Price</span> <input type="text"
+							<span class="input-group-addon">Price</span> <input type="text" required
 									id="edit_pPrice" class="form-control" aria-describedby="pprice">
 							<span class="input-group-addon">Location</span> <input
 									type="text" id="edit_pLocations" class="form-control"
@@ -278,12 +291,13 @@ tbody {
 						</div>
 						<br />
 						<div class="input-group">
-							<span class="input-group-addon">Quantity (in weight)</span> <input
+							<span class="input-group-addon">Qty (in weight)</span> <input
 									type="text" id="edit_pQuantity" class="form-control"
 									placeholder="in weights" aria-describedby="pprice">
-							<span class="input-group-addon">Quantity (in stock)</span> <input
-									type="text" id="edit_pQuantityStock" class="form-control"
-									aria-describedby="pQtyStock">		
+									
+							<span class="input-group-addon">Qty (in stock)</span> 
+							<span class="input-group-addon" id="edit_pQuantityStock"></span>
+							<input type="text" id="edit_ptempQty" class="form-control">		
 									
 						</div>
 						<br />
@@ -292,11 +306,11 @@ tbody {
 									data-toggle="toggle" id="edit_pStatus">
 						</div>
 						<br /> <input type="text" id="edit_pTags" class="form-control"
-								placeholder="tags" aria-describedby="pTags"> <br />
+								placeholder="Tags" aria-describedby="pTags"> <br />
 						<br />
 						<div class="modal-footer">
 							<button type="button" class="btn btn-success"
-									data-dismiss="modal" ng-click="editProduct();">Save</button>
+									ng-click="editProduct('#editProduct');">Save</button>
 							<button type="button" class="btn btn-default"
 									data-dismiss="modal">Cancel</button>
 						</div>
@@ -339,19 +353,19 @@ tbody {
 				</div>
 				<div class="modal-body">
 					<div class="input-group">
-						<span class="input-group-addon">Name</span> <input type="text"
+						<span class="input-group-addon">Name</span> <input type="text" required
 								id="cName" class="form-control" aria-describedby="cName">
 					</div>
 					<br />
 					<div class="input-group">
 						<span class="input-group-addon">Description</span> <input
 								type="text" id="cDescription" class="form-control"
-								aria-describedby="cDescription">
+								aria-describedby="cDescription" required>
 					</div>
 					<br />
 					<div class="modal-footer">
 						<button type="button" class="btn btn-success"
-								data-dismiss="modal" ng-click="addCategory();">Add</button>
+								ng-click="addCategory('#addCategory');">Add</button>
 						<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
 					</div>
 				</div>
@@ -369,19 +383,19 @@ tbody {
 				</div>
 				<div class="modal-body">
 					<div class="input-group">
-						<span class="input-group-addon">Name</span> <input type="text"
+						<span class="input-group-addon">Name</span> <input type="text" required
 								id="edit_cName" class="form-control" aria-describedby="cName">
 					</div>
 					<br />
 					<div class="input-group">
 						<span class="input-group-addon">Description</span> <input
 								type="text" id="edit_cDescription" class="form-control"
-								aria-describedby="cDescription">
+								aria-describedby="cDescription" required>
 					</div>
 					<br />
 					<div class="modal-footer">
 						<button type="button" class="btn btn-success"
-								ng-click="editCategory();" data-dismiss="modal">Save</button>
+								ng-click="editCategory('#editCategory');">Save</button>
 						<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
 					</div>
 				</div>
@@ -443,17 +457,23 @@ tbody {
 			$('#addCategory').on('hidden.bs.modal',function() {
 				$('#addCategory').find("input").val('').end();
 			});
+			$('#editProduct').on('hidden.bs.modal',function() {
+				$('#editProduct').find("input").val('').end();
+			});
 			
 			$('#addProduct').on('hidden.bs.modal',function() {
-				debugger;
+				$("#addProductScreen2").hide();
 				$(this).find("input,textarea,select").val('').end();
 				$(this).find(".tag").text('').end();
+				$('#image_preview').find("div").remove();
+				$("#warn").css("color","darkgrey");
 			    var textBoxList = $(this).find("input");
 			    for(var i=0;i<textBoxList.length;i++){
 			    	textBoxList[i].placeholder="";
 			    }
-				$("#add_pTags").parent().find(".bootstrap-tagsinput input")[0].placeholder="tags"
-			    $(this).find("input,textarea,select,.tag").css('border-color','#ccc').end();
+				$("#add_pTags").parent().find(".bootstrap-tagsinput input")[0].placeholder="Tags";
+				modal.find('.modal-body #add_pTags').tagsinput('removeAll');
+			    $(this).find("input,textarea,select").css('border-color','#ccc').end();
 			});
 
 			$('#addImage').on('hidden.bs.modal',function() {
@@ -535,28 +555,21 @@ tbody {
 		
 			// on edit product button click
 			$('#editProduct').on('show.bs.modal',function(event) {
-				debugger;
 				var button = $(event.relatedTarget)
 				var recipient = button.data('whatever')
 				var modal = $(this)
-				modal.find('.modal-title').text("Editing "+ recipient.productId)
+				modal.find('.modal-title').text("Editing "+ recipient.productName)
 				modal.find('.modal-body #edit_productId').val(recipient.productId)
 				modal.find('.modal-body #edit_pName').val(recipient.productName)
 				modal.find('.modal-body #edit_pDescription').val(recipient.description)
 				modal.find('.modal-body #edit_pPrice').val(recipient.price)
 				modal.find('.modal-body #edit_pQuantity').val(recipient.quantityWeight)
-				modal.find('.modal-body #edit_pQuantityStock').val(recipient.quantityStock)
+				$('.modal-body #edit_pQuantityStock')[0].innerHTML=recipient.quantityStock
 				modal.find('.modal-body #edit_pStatus').attr("checked",recipient.productActive)
 				modal.find('.modal-body #edit_pLocations').val(recipient.productLocation)
-				var temp = recipient.tags.split(",");
-				var tagsToDelete = modal.find('.modal-body #edit_pTags').tagsinput();
-				var oldTags = tagsToDelete[0].itemsArray.length;
-				while(oldTags--)
-				{
-					modal.find('.modal-body #edit_pTags').tagsinput('remove', tagsToDelete[0].itemsArray[oldTags]);
-					if(oldTags==0){break;}
-				}												
-				for(var i=0; i<temp.length-1;i++)
+				modal.find('.modal-body #edit_pTags').tagsinput('removeAll');
+				var temp = recipient.tags.split(",");					
+				for(var i=0; i<temp.length;i++)
 				{
 					modal.find('.modal-body #edit_pTags').tagsinput('add', temp[i]);	
 				}		
@@ -592,5 +605,4 @@ tbody {
 							});
 						});
 	</script>
-
 </div>

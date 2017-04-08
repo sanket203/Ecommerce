@@ -230,7 +230,7 @@
 							modal.find('.modal-body #edit_location').val(
 									recipient.location)
 							$('#edit_permissions').multiselect();
-						    var roles = ['ROLE_PRODUCT_MANAGEMENT','ROLE_ORDER_MANAGEMENT'];
+						    var roles = recipient.roles;
 						    $('#edit_permissions').multiselect('select', roles);		
 									
 						});

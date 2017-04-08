@@ -15,6 +15,8 @@ app.service("FormValidationService",function(){
 			break;
 		case "#addProductScreen1" :
 		case "#editProduct" :
+		case "#addCategory" :
+		case "#editCategory" :
 			textBoxValidation = this.validateTextboxes(formId);
 			checkBoxValidation = true;
 			radioBtnValidation = true;
@@ -51,7 +53,6 @@ app.service("FormValidationService",function(){
 	}
 
 	this.validateTextboxes = function(formId) {
-		debugger;
 		var valdationFlag = 0;
 		var fieldList = $(formId).find('input[type=text]');
 		for (var i = 0; i < fieldList.length; i++) {
