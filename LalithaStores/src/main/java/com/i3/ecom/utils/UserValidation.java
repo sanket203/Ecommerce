@@ -13,6 +13,7 @@ public class UserValidation {
 		
 		try {
 			validateData(user.emailId);
+			validateData(user.contact);
 			validateData(user.firstName);
 			validateRoles(user.roles);
 			validateData(user.lastName);

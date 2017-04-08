@@ -11,9 +11,10 @@ public class ProductValidation {
 	public static void validateProduct(Product product) throws Exception {
 		try {
 			validateData(product.getProductName());
-			validateData(product.getProductLocation());
 			validateData(product.getPrice());
 			validateData(product.getAddedBy());
+			validateData(product.getQuantityStock());
+			
 			
 		} catch (Exception e) {
 			throw new Exception("One of the mandatoryfield is empty. Please fill all information");

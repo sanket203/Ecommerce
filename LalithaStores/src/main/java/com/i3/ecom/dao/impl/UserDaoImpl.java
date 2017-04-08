@@ -178,4 +178,23 @@ public class UserDaoImpl implements UserDao {
 		
 	}
 
+	@Override
+	public List<Roles> getAllUserRoles() throws Exception {
+		Session session = sessionFactory.getCurrentSession();
+		List<Roles> roles;
+		try{
+		Transaction transaction = session.beginTransaction();
+		Query selectQuery = session.createQuery("from roles");
+		 roles = selectQuery.list();
+		 transaction.commit();
+	 }finally{
+		 if(session.isOpen()){
+				session.close();
+			}
+	 }
+		return roles;
+	}
+	
+	
+
 }

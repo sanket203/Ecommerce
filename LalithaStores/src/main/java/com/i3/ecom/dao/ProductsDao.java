@@ -98,5 +98,12 @@ public interface ProductsDao {
 	 * @return
 	 */
 	public String updateProduct(final Product product) throws Exception;
+/**
+ * 
+ * @param categoryToEdit
+ * @return
+ * @throws Exception 
+ */
+	public String updateCategory(Category categoryToEdit) throws Exception;
 	
 }

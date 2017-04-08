@@ -66,5 +66,12 @@ public interface ProductService {
 	public ResponseMessage removeAllProduct(final String categoryId); */
 	
 	public ResponseMessage updateProduct(final Product product);
+
+	/**
+	 * Tjis method will update the category details
+	 * @param category
+	 * @return
+	 */
+	public ResponseMessage updateCategory(Category category);
 	
 }

@@ -217,4 +217,19 @@ public class ProductsDaoImpl implements ProductsDao {
 		}
 		return PRODUCT_UPDATE;
 	}
+
+	@Override
+	public String updateCategory(Category categoryToEdit) throws Exception {
+		Session session = sessionFactory.getCurrentSession();
+		try{
+			Transaction transaction = session.beginTransaction();
+			session.update(categoryToEdit);
+			transaction.commit();
+		} finally {
+			if(session.isOpen()){
+				session.close();
+			}
+		}
+		return CATEGORY_UPDATE;
+	}
 }

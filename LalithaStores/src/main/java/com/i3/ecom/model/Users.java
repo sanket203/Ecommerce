@@ -20,163 +20,123 @@ import javax.persistence.Transient;
 
 import org.json.JSONObject;
 
-
-@Entity(name="users")
+@Entity(name = "users")
 public class Users {
-	
+
 	@Id
 	@GeneratedValue
-	@Column(name="userId")
+	@Column(name = "userId")
 	public Long userId;
-	
-	@Column(name="status")
+
+	@Column(name = "status")
 	public boolean status;
-	
-	@Column(name="firstName")
+
+	@Column(name = "firstName")
 	public String firstName;
-	
-	@Column(name="lastName")
+
+	@Column(name = "lastName")
 	public String lastName;
-	
-	@Column(name="emailId")
+
+	@Column(name = "emailId")
 	public String emailId;
-	
-	@Column(name="password")
+
+	@Column(name = "password")
 	public String password;
-	
-	@Column(name="contact")
+
+	@Column(name = "contact")
 	public String contact;
-	
-	@Column(name="location")
+
+	@Column(name = "location")
 	public String location;
-	
-	@Column(name="modificationDate")
+
+	@Column(name = "modificationDate")
 	public Date modificationDate;
-	
-	@Column(name="creationDate")
+
+	@Column(name = "creationDate")
 	public Date creationDate;
-	
+
 	@Transient
 	public List<String> roles;
-	
+
 	public Date getCreationDate() {
 		return creationDate;
 	}
-
-
 
 	public void setCreationDate(Date creationDate) {
 		this.creationDate = creationDate;
 	}
 
-
-
 	public Long getUserId() {
 		return userId;
 	}
-
-
 
 	public void setUserId(Long userId) {
 		this.userId = userId;
 	}
 
-
-
 	public boolean getStatus() {
 		return status;
 	}
-
-
 
 	public void setStatus(boolean status) {
 		this.status = status;
 	}
 
-
-
 	public String getFirstName() {
 		return firstName;
 	}
-
-
 
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
 
-
-
 	public String getLastName() {
 		return lastName;
 	}
-
-
 
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
 
-
-
 	public String getEmailId() {
 		return emailId;
 	}
-
-
 
 	public void setEmailId(String emailId) {
 		this.emailId = emailId;
 	}
 
-
-
 	public String getPassword() {
 		return password;
 	}
-
-
 
 	public void setPassword(String password) {
 		this.password = password;
 	}
 
-
-
 	public String getContact() {
 		return contact;
 	}
-
-
 
 	public void setContact(String contact) {
 		this.contact = contact;
 	}
 
-
-
 	public String getLocation() {
 		return location;
 	}
-
-
 
 	public void setLocation(String location) {
 		this.location = location;
 	}
 
-
-
 	public Date getModificationDate() {
 		return modificationDate;
 	}
 
-
-
 	public void setModificationDate(Date modificationDate) {
 		this.modificationDate = modificationDate;
 	}
-
 
 	/**
 	 * @return the roles
@@ -186,13 +146,11 @@ public class Users {
 	}
 
 	/**
-	 * @param roles the roles to set
+	 * @param roles
+	 *            the roles to set
 	 */
 	public void setRoles(List<String> roles) {
 		this.roles = roles;
 	}
-	
-	
-	
-	
+
 }

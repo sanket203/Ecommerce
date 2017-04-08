@@ -21,40 +21,44 @@ import com.i3.ecom.utils.ResponseMessage;
 
 @Controller
 public class UserController {
-	
+
 	@Autowired
 	private UserService userService;
-	
-	@RequestMapping(value=ADD_USER,method=RequestMethod.POST, consumes="application/json")
-	public @ResponseBody ResponseMessage addUser(@RequestBody final Users userJson){
-		
+
+	@RequestMapping(value = ADD_USER, method = RequestMethod.POST, consumes = "application/json")
+	public @ResponseBody ResponseMessage addUser(
+			@RequestBody final Users userJson) {
+
 		ResponseMessage message = userService.addUser(userJson);
 		return message;
 	}
-	
-	@RequestMapping(value=UPDATE_USER,method=RequestMethod.POST,consumes="application/json")
-	public @ResponseBody ResponseMessage editUser(@RequestBody final Users userJson){
-		
+
+	@RequestMapping(value = UPDATE_USER, method = RequestMethod.POST, consumes = "application/json")
+	public @ResponseBody ResponseMessage editUser(
+			@RequestBody final Users userJson) {
+
 		ResponseMessage message = userService.editUser(userJson);
 		return message;
 	}
-	
-	@RequestMapping(value=DELETE_USER,method=RequestMethod.POST,consumes="application/json")
-	public @ResponseBody ResponseMessage deleteUser(@RequestBody final Users userJson){
-		
+
+	@RequestMapping(value = DELETE_USER, method = RequestMethod.POST, consumes = "application/json")
+	public @ResponseBody ResponseMessage deleteUser(
+			@RequestBody final Users userJson) {
+
 		ResponseMessage message = userService.deleteUser(userJson.emailId);
 		return message;
 	}
-	
-	@RequestMapping(value=GET_ALL_USERS,method=RequestMethod.GET)
-	public @ResponseBody ResponseMessage getAllUsers(){
-		
+
+	@RequestMapping(value = GET_ALL_USERS, method = RequestMethod.GET)
+	public @ResponseBody ResponseMessage getAllUsers() {
+
 		ResponseMessage message = userService.getAllUsers();
 		return message;
 	}
-	
-	@RequestMapping(value=GET_USER,method=RequestMethod.GET,consumes="application/json")
-	public @ResponseBody ResponseMessage getUser(@RequestParam("emailId") final String emailId){
+
+	@RequestMapping(value = GET_USER, method = RequestMethod.GET, consumes = "application/json")
+	public @ResponseBody ResponseMessage getUser(
+			@RequestParam("emailId") final String emailId) {
 		ResponseMessage message = userService.getUser(emailId);
 		return message;
 	}

@@ -8,6 +8,8 @@ import static com.i3.ecom.utils.URLConstants.DELETE_PRODUCT;
 import static com.i3.ecom.utils.URLConstants.GET_CATEGORIES_URL;
 import static com.i3.ecom.utils.URLConstants.GET_PRODUCTS_URL;
 import static com.i3.ecom.utils.URLConstants.UPDATE_PRODUCTS_URL;
+import static com.i3.ecom.utils.URLConstants.UPDATE_CATEGORY_URL;
+
 
 import java.util.List;
 
@@ -73,6 +75,12 @@ public class ProductController {
 	@RequestMapping(value=DELETE_CATEGORY_URL,method=RequestMethod.POST,consumes="application/json")
 	public @ResponseBody ResponseMessage deleteCategory(@RequestBody Category category){
 		ResponseMessage response = productService.removeCategory(category.getCategoryId());
+		return response;
+	}
+	
+	@RequestMapping(value=UPDATE_CATEGORY_URL,method=RequestMethod.POST,consumes="application/json")
+	public @ResponseBody ResponseMessage updateCategory(@RequestBody Category category){
+		ResponseMessage response = productService.updateCategory(category);
 		return response;
 	}
 }

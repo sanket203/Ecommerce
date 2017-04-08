@@ -65,6 +65,8 @@ public class UserConstants {
     public static final String CATEGORY_DELTE = "Category deleted successfully.";
 	
 	public static final String CATEGORY_ADD = "Category added successfully.";
+	
+	public static final String CATEGORY_UPDATE = "Category updated successfully.";
 
 	public static final String LOGGED_IN_USER = "Logged In User";
 	
