@@ -73,6 +73,7 @@ public class OrderServiceImpl implements OrderService {
 			orderPojo.setOrderDate(order.getOrderDate());
 			orderPojo.setTotalAmount(order.getTotalAmount());
 			orderPojo.setStatus(order.getStatus());
+			orderPojo.setPaymentMode(order.getPaymentMode());
 			orderPojo.setOrderDetailsId(order.getOrderDetailsId());
 			orderPojo.setOrderId(order.getOrderId());
 			Customer customerById = orderDao.getCustomerById(order.getCustomerId());
@@ -160,6 +161,41 @@ public class OrderServiceImpl implements OrderService {
 				 message = "No orders yet.";
 				 response = new ResponseMessage(FAIL_STATUS, message);
 			 }
+		} catch(Exception ex) {
+			message = ex.getCause().getMessage();
+			response = new ResponseMessage(FAIL_STATUS, message);
+		}
+		return response;
+	}
+
+	@Override
+	public ResponseMessage getAllOrders() {
+		ResponseMessage response = null;
+		String message = null;
+		List<OrdersPojo> orders = new ArrayList<OrdersPojo>();
+		try {
+			 List<Order> orderList = orderDao.getOrders();
+			 if(orderList.size()>0){
+				 ordersToView(orderList, orders);
+				 response = new ResponseMessage(SUCCESS_STATUS, orders, message);
+			 } else {
+				 message = "No orders yet.";
+				 response = new ResponseMessage(FAIL_STATUS, message);
+			 }
+		} catch(Exception ex) {
+			message = ex.getCause().getMessage();
+			response = new ResponseMessage(FAIL_STATUS, message);
+		}
+		return response;
+	}
+
+	@Override
+	public ResponseMessage updateOrderStatus(final String orderDetailsId, final String status) {
+		ResponseMessage response = null;
+		String message = null;
+		try {
+			 message = orderDao.updateOrder(orderDetailsId,status);
+			 response = new ResponseMessage(SUCCESS_STATUS, message);
 		} catch(Exception ex) {
 			message = ex.getCause().getMessage();
 			response = new ResponseMessage(FAIL_STATUS, message);

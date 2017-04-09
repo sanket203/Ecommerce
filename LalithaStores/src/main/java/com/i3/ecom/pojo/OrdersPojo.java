@@ -10,7 +10,7 @@ public class OrdersPojo {
 	private String customer;
 	private String totalAmount;
 	private String paymentMode;
-	private Address address;
+	private AddressPojo address;
 	private String status;
 	private Date orderDate;
 	private Date expectedDelivery;
@@ -53,10 +53,10 @@ public class OrdersPojo {
 	public void setPaymentMode(String paymentMode) {
 		this.paymentMode = paymentMode;
 	}
-	public Address getAddress() {
+	public AddressPojo getAddress() {
 		return address;
 	}
-	public void setAddress(Address address) {
+	public void setAddress(AddressPojo address) {
 		this.address = address;
 	}
 	public String getStatus() {

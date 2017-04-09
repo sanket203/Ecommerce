@@ -1,5 +1,7 @@
 package com.i3.ecom.dao.impl;
 
+import static com.i3.ecom.utils.UserConstants.ORDER_UPDATE;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -12,10 +14,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.i3.ecom.dao.OrderDao;
+import com.i3.ecom.model.Address;
 import com.i3.ecom.model.Customer;
 import com.i3.ecom.model.Order;
 import com.i3.ecom.model.Product;
-import com.i3.ecom.pojo.Address;
+import com.i3.ecom.pojo.AddressPojo;
+
 @Component
 public class OrderDaoImpl implements OrderDao{
 
@@ -78,9 +82,20 @@ public class OrderDaoImpl implements OrderDao{
 	}
 
 	@Override
-	public void updateOrder(Order order) {
-		// TODO Auto-generated method stub
-		
+	public String updateOrder(final String orderDetailsId, final String status) {
+		Session session = sessionFactory.getCurrentSession();
+	      try{
+	    	  Transaction transaction = session.beginTransaction();
+	    	  String selectQuery = "UPDATE `order` SET `status` = '"+status+"' WHERE `orderDetailsId` = '"+ orderDetailsId+"'"; 
+	    	  Query query = session.createSQLQuery(selectQuery).addEntity(Order.class);
+	    	  query.executeUpdate();
+	          transaction.commit();
+	      } finally {
+			  if(session.isOpen()){
+				session.close();
+			  }
+	      }
+	      return ORDER_UPDATE;
 	}
 
 	@Override
@@ -122,8 +137,9 @@ public class OrderDaoImpl implements OrderDao{
 	}
 
 	@Override
-	public Address getOrderAddress(long addressId) {
+	public AddressPojo getOrderAddress(long addressId) {
 		Session session = sessionFactory.getCurrentSession();
+		AddressPojo addressPojo = new AddressPojo();
 		Address address = new Address();
 	      try{
 	    	  Transaction transaction = session.beginTransaction();
@@ -132,12 +148,42 @@ public class OrderDaoImpl implements OrderDao{
 	    	  query.setLong("addressId", addressId);
 	    	  address = (Address)query.uniqueResult();
 	          transaction.commit();
+	          addressToPojo(address,addressPojo);
 	      } finally {
 	    	  if(session.isOpen()){
 				session.close();
 			  }
 	      }
-	      return address;
+	      return addressPojo;
+	}
+
+	private void addressToPojo(Address address, AddressPojo addressPojo) {
+		addressPojo.setCity(address.getCity());
+		addressPojo.setCountry(address.getCountry());
+		addressPojo.setState(address.getState());
+		addressPojo.setStreetAddress(address.getStreetAddress());
+		if(address.getLandmark() != null){
+			addressPojo.setLandmark(address.getLandmark());
+		}
+		addressPojo.setZipcode(address.getZipcode());
+	}
+
+	@Override
+	public List<Order> getOrders() {
+		 Session session = sessionFactory.getCurrentSession();
+		 List<Order> orderList = new ArrayList<Order>();
+	      try{
+	    	  Transaction transaction = session.beginTransaction();
+	    	  String selectQuery = "SELECT * FROM `order`"; 
+	    	  Query query = session.createSQLQuery(selectQuery).addEntity(Order.class);
+	    	  orderList = query.list();
+	          transaction.commit();
+	      } finally {
+	    	  if(session.isOpen()){
+				session.close();
+			  }
+	      }
+	      return orderList;
 	}
 
 }

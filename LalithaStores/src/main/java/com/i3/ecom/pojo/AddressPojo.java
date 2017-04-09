@@ -1,6 +1,6 @@
 package com.i3.ecom.pojo;
 
-public class Address {
+public class AddressPojo {
 
 	private String streetAddress;
 	private String city;

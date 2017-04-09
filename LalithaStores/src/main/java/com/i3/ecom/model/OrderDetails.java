@@ -10,8 +10,8 @@ public class OrderDetails {
 
 	@Id
 	@GeneratedValue
-	@Column(name="orderId")
-	private long orderId;
+	@Column(name="id")
+	private long id;
 	
 	@Column(name="orderDetailsId")
 	private String orderDetailsId;
@@ -25,12 +25,12 @@ public class OrderDetails {
 	@Column(name="productAmount")
 	private String productAmount;
 
-	public long getOrderId() {
-		return orderId;
+	public long getId() {
+		return id;
 	}
 
-	public void setOrderId(long orderId) {
-		this.orderId = orderId;
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	public String getOrderDetailsId() {

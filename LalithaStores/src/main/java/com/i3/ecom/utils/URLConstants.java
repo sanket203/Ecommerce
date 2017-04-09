@@ -48,9 +48,13 @@ public class URLConstants {
 	
 	public static final String GET_LATEST_ORDER = "/getLatestOrders.htm";
 	
+	public static final String GET_ALL_ORDER = "/getAllOrders.htm";
+	
 	public static final String ORDERS_BY_STATUS = "/ordersByStatus.htm";
 	
 	public static final String ORDER_BY_ID = "/getOrderById.htm";
+	
+	public static final String UPDATE_STATUS = "/updateStatus.htm";
 	
 	//---------------------- Status Codes ---------------------//
 	

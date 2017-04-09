@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import com.i3.ecom.dao.OrderDetailsDao;
 import com.i3.ecom.model.OrderDetails;
+
 @Component
 public class OrderDetailsDaoImpl implements OrderDetailsDao {
 
@@ -24,10 +25,9 @@ public class OrderDetailsDaoImpl implements OrderDetailsDao {
 		 List<OrderDetails> orderDetailList = new ArrayList<OrderDetails>();
 	      try{
 	    	  Transaction transaction = session.beginTransaction();
-	    	  String selectQuery = "from OrderDetails where orderDetailsId= :orderDetailsId"; 
-	    	  Query query = session.createQuery(selectQuery);
-	    	  query.setString("orderDetailsId", orderDetailsId);
-	          orderDetailList = query.list();
+	    	  String selectQuery = "SELECT * FROM `OrderDetails` WHERE `orderDetailsId` = '"+ orderDetailsId+"'"; 
+	    	  Query query = session.createSQLQuery(selectQuery).addEntity(OrderDetails.class);
+	    	  orderDetailList = query.list();
 	          transaction.commit();
 	      } finally {
 	    	  if(session.isOpen()){

@@ -9,4 +9,8 @@ public interface OrderService {
 	public ResponseMessage getOrderByDetailId(final String orderDetailId);
 	
 	public ResponseMessage getOrderByStatus(final String status);
+
+	public ResponseMessage getAllOrders();
+
+	public ResponseMessage updateOrderStatus(final String orderDetailsId, final String status);
 }
