@@ -86,6 +86,7 @@ public class UserServiceImpl implements UserService {
 			user = userDao.getUser(userJson.emailId);
 			userJson.setUserId(user.getUserId());
 			userJson.setPassword(user.getPassword());
+			userJson.setCreationDate(user.getCreationDate());
 			userJson.setModificationDate(new Date());
 			userJson.setStatus(user.getStatus());
 			message = userDao.editUser(userJson);
