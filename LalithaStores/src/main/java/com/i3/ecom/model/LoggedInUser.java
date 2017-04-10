@@ -8,20 +8,17 @@ import org.springframework.security.core.userdetails.User;
 public class LoggedInUser extends User {
 	
 	 	private Long currentUserId;
+	 	private String currentUserRole;
+		private String firstName;
+		private String lastName;
+		private String emailId;
+		    
 	    public Long getCurrentUserId() {
 			return currentUserId;
 		}
 
 		public void setCurrentUserId(Long currentUserId) {
 			this.currentUserId = currentUserId;
-		}
-
-		public Long getCurrentCompanyId() {
-			return currentCompanyId;
-		}
-
-		public void setCurrentCompanyId(Long currentCompanyId) {
-			this.currentCompanyId = currentCompanyId;
 		}
 
 		public String getCurrentUserRole() {
@@ -48,10 +45,7 @@ public class LoggedInUser extends User {
 			this.lastName = lastName;
 		}
 
-		private Long currentCompanyId;
-	    private String currentUserRole;
-	    private String firstName;
-	    private String lastName;
+	  
 
 	public LoggedInUser(String username, String password,
 			Collection<? extends GrantedAuthority> authorities) {
@@ -68,7 +62,7 @@ public class LoggedInUser extends User {
 		builder.append("LoggedInUser [currentUserId=");
 		builder.append(currentUserId);
 		builder.append(", currentCompanyId=");
-		builder.append(currentCompanyId);
+		builder.append(emailId);
 		builder.append(", currentUserRole=");
 		builder.append(currentUserRole);
 		builder.append(", firstName=");
@@ -77,6 +71,20 @@ public class LoggedInUser extends User {
 		builder.append(lastName);
 		builder.append("]");
 		return builder.toString();
+	}
+
+	/**
+	 * @return the emailId
+	 */
+	public String getEmailId() {
+		return emailId;
+	}
+
+	/**
+	 * @param emailId the emailId to set
+	 */
+	public void setEmailId(String emailId) {
+		this.emailId = emailId;
 	}
 
 }
