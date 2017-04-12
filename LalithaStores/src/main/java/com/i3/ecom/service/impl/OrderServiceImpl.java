@@ -157,6 +157,7 @@ public class OrderServiceImpl implements OrderService {
 		order.setCustomer(customerById.getFirstName() + " " + customerById.getLastName());
 		order.setContact(customerById.getContact());
 		order.setEmailId(customerById.getEmailId());
+		order.setPaymentMode(orderById.getPaymentMode());
 	}
 
 	@Override
