@@ -3,7 +3,9 @@ package com.i3.ecom.service.impl;
 import static com.i3.ecom.utils.URLConstants.FAIL_STATUS;
 import static com.i3.ecom.utils.URLConstants.SUCCESS_STATUS;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -69,8 +71,8 @@ public class OrderServiceImpl implements OrderService {
 		for (Object object : orderList) {
 			Order order = (Order)object;
 			OrdersPojo orderPojo = new OrdersPojo();
-			orderPojo.setExpectedDelivery(order.getExpectedDelivery());
-			orderPojo.setOrderDate(order.getOrderDate());
+			orderPojo.setExpectedDelivery(createDate(order.getExpectedDelivery()));
+			orderPojo.setOrderDate(createDate(order.getOrderDate()));
 			orderPojo.setTotalAmount(order.getTotalAmount());
 			orderPojo.setStatus(order.getStatus());
 			orderPojo.setPaymentMode(order.getPaymentMode());
@@ -78,9 +80,17 @@ public class OrderServiceImpl implements OrderService {
 			orderPojo.setOrderId(order.getOrderId());
 			Customer customerById = orderDao.getCustomerById(order.getCustomerId());
 			orderPojo.setCustomer(customerById.getFirstName() + " " + customerById.getLastName());
+			orderPojo.setContact(customerById.getContact());
+			orderPojo.setEmailId(customerById.getEmailId());
 			orders.add(orderPojo);
 			
 		}
+	}
+	
+	private String createDate(Date date){
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		String format = formatter.format(date.getTime());
+		return format;
 	}
 
 	@Override
@@ -137,14 +147,16 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	private void ordersToOrderPojo(Order orderById, OrdersPojo order) {
-		order.setExpectedDelivery(orderById.getExpectedDelivery());
-		order.setOrderDate(orderById.getOrderDate());
+		order.setExpectedDelivery(createDate(orderById.getExpectedDelivery()));
+		order.setOrderDate(createDate(orderById.getOrderDate()));
 		order.setTotalAmount(orderById.getTotalAmount());
 		order.setStatus(orderById.getStatus());
 		order.setOrderDetailsId(orderById.getOrderDetailsId());
 		order.setOrderId(orderById.getOrderId());
 		Customer customerById = orderDao.getCustomerById(orderById.getCustomerId());
 		order.setCustomer(customerById.getFirstName() + " " + customerById.getLastName());
+		order.setContact(customerById.getContact());
+		order.setEmailId(customerById.getEmailId());
 	}
 
 	@Override

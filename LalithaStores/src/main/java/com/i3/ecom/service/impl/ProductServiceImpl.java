@@ -184,8 +184,7 @@ public class ProductServiceImpl implements ProductService {
 			products = productDao.getAllProductsByCategory(category);
 			for (Product product : products) {
 				SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-				String format = formatter.format(product.getCreationDate()
-						.getTime());
+				String format = formatter.format(product.getCreationDate().getTime());
 				product.setDateAdded(format);
 			}
 			response = new ResponseMessage(SUCCESS_STATUS, null);
