@@ -2,7 +2,6 @@
 
 app.service("FormValidationService",function(){
 	this.validateForm = function(formId) {
-		debugger;
 		var textBoxValidation = false;
 		var checkBoxValidation = false;
 		var radioBtnValidation = false;

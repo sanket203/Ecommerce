@@ -450,6 +450,7 @@ tbody {
 		    });
 			
 			$("#addProduct").on("shown.bs.modal", function () { 
+				debugger;
 				$("#addProductScreen1").show();
 				$("#addProductScreen2").hide();
 			});
@@ -471,8 +472,8 @@ tbody {
 			    for(var i=0;i<textBoxList.length;i++){
 			    	textBoxList[i].placeholder="";
 			    }
+			    debugger;
 				$("#add_pTags").parent().find(".bootstrap-tagsinput input")[0].placeholder="Tags";
-				modal.find('.modal-body #add_pTags').tagsinput('removeAll');
 			    $(this).find("input,textarea,select").css('border-color','#ccc').end();
 			});
 

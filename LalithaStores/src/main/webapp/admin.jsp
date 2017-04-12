@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@page import="java.util.*,com.i3.ecom.model.*,com.i3.ecom.utils.*"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <title>Admin</title>
@@ -34,10 +35,11 @@
 	LoggedInUser loggedInUser = (LoggedInUser) session.getAttribute(UserConstants.LOGGED_IN_USER);
 	String fullname=loggedInUser.getFirstName()+" "+loggedInUser.getLastName();
 	String currentUserId = loggedInUser.getCurrentUserId().toString();
+	String emailId = loggedInUser.getEmailId();
 %>
 </head>
 
-<body ng-app="StoreApp" class="container" ng-controller="adminController" ng-init="setUserId( '<%=fullname%>',<%=currentUserId%>)">
+<body ng-app="StoreApp" class="container" ng-controller="adminController" ng-init="setUserId( '<%=fullname%>',<%=currentUserId%>,'<%=emailId%>')">
 	<script type="text/javascript">
 		var redirected = "dashboard";
 		var hashtag = window.location.hash.substr(1);
@@ -67,11 +69,17 @@
 	</nav>
 
 	<div class="well  nav nav-justified" role="group">
-		<div style="text-align: -webkit-center;">
+		<div style="text-align: -webkit-left;">
 			<a type="button" class="btn btn-lg btn-default" ng-href="#/dashboard">DASHBOARD</a>
+			<sec:authorize access="hasRole('ROLE_ADMIN')||hasRole('ROLE_USER_MANAGEMENT')">
 			<a type="button" class="btn btn-lg btn-default" ng-href="#/user">USER MANAGEMENT</a> 
+			</sec:authorize>
+			<sec:authorize access="hasRole('ROLE_ADMIN')||hasRole('ROLE_PRODUCT_MANAGEMENT')">
 			<a type="button" class="btn btn-lg btn-default" ng-href="#/product">PRODUCT MANAGEMENT</a> 
+			</sec:authorize>
+			<sec:authorize access="hasRole('ROLE_ADMIN')||hasRole('ROLE_ORDER_MANAGEMENT')">
 			<a type="button" class="btn btn-lg btn-default" ng-href="#/order">ORDER MANAGEMENT</a>
+			</sec:authorize>
 		</div>
 		<div>
 			<div id="toast"></div>

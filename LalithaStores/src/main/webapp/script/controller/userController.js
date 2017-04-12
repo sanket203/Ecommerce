@@ -20,6 +20,7 @@
 			url : "getAllUsers.htm",
 			dataType : "json",
 			success : function(data) {
+				$scope.currentUser = $rootScope.currentUserEmail;
 				$scope.users = data.data;
 				$scope.$digest();
 			},

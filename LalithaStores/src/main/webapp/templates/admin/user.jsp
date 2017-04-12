@@ -19,7 +19,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr ng-repeat="user in users">
+			<tr ng-repeat="user in users" ng-if="user.emailId != currentUser">
 				<td>{{user.userId}}</td>
 				<td>{{user.firstName}}&nbsp;{{user.lastName}}</td>
 				<td>{{user.emailId}}</td>

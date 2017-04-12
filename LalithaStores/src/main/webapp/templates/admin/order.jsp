@@ -1,4 +1,10 @@
-<div class="well col-lg-12">
+<style>
+#orderViewEdit .form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
+    background-color: white;
+    opacity: 1;
+</style>
+
+<div class="well col-lg-12" ng-init="getAllOrders();">
 	<div class="panel panel-default col-lg-12">
 		<div class="panel-heading">Order List</div>
 		<table class="table">
@@ -13,16 +19,15 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr>
-					<th scope="row">1123</th>
-					<td>Alok Sharma</td>
-					<td>22-Feb-2017</td>
-					<td>Rs. 12300.00</td>
-					<td>New</td>
+				<tr ng-repeat="order in orders">
+					<th scope="row">{{order.orderId}}</th>
+					<td>{{order.customer}}</td>
+					<td>{{order.orderDate}}</td>
+					<td>{{order.totalAmount}}</td>
+					<td>{{order.status}}</td>
 					<td>
-						<button type="button"
-							class="btn btn-primary btn-sm glyphicon glyphicon-edit"
-							data-whatever={{order}} data-toggle="modal" data-placement="top"
+						<button type="button" class="btn btn-primary btn-sm glyphicon glyphicon-edit"
+							ng-click="getOrderById(order.orderDetailsId)" data-whatever={{selectedOrder}}
 							title="Edit" data-target="#orderViewEdit"></button>
 					</td>
 				</tr>
@@ -58,17 +63,28 @@
 									<div class="panel-body">
 										<div class="row">
 											<div class="col-md-12">
-												<div class="form-group">
+												<div class="input-group">
+													<span class="input-group-addon">Name</span> 
 													<input type="text" id=ocdName class="form-control"
 														placeholder="Name" disabled />
 												</div>
-												<div class="form-group">
+												<br/>
+												<div class="input-group">
+												<span class="input-group-addon">Contact</span> 
 													<input type="text" id=ocdContact class="form-control"
 														placeholder="Contact" disabled />
 												</div>
-												<div class="form-group">
+												<br/>
+												<div class="input-group">
+												<span class="input-group-addon">Email</span> 
+													<input type="text" id=ocdEmail class="form-control"
+														placeholder="Contact" disabled />
+												</div>
+												<br/>
+												<div class="input-group">
+													<span class="input-group-addon">Address</span> 
 													<textarea class="form-control" id=ocdAddress
-														placeholder="Address" rows="5" disabled></textarea>
+														placeholder="Address" rows="3" disabled></textarea>
 												</div>
 											</div>
 										</div>
@@ -95,20 +111,17 @@
 													<thead>
 														<tr>
 															<th>Name</th>
-															<th>Description</th>
 															<th>Qty</th>
 															<th>Unit Price</th>
 															<th>Total Price</th>
 														</tr>
 													</thead>
 													<tbody>
-														<tr>
-															<td>Shoe
-															</th>
-															<td>Black Running</td>
-															<td>1</td>
-															<td>2500.00</td>
-															<td>2500.00</td>
+														<tr ng-repeat="p in products">
+															<td>{{p.productName}}</td>
+															<td>{{p.quantity}}</td>
+															<td>{{p.amount}}</td>
+															<td>{{p.quantity * p.amount}}</td>
 														</tr>
 													</tbody>
 												</table>
@@ -125,7 +138,7 @@
 									<h4 class="panel-title">
 										<a data-toggle="collapse" data-parent="#accordion"
 											href="#shippingDetail"><span
-											class="glyphicon glyphicon-road"></span>&nbsp;Shipping
+											class="glyphicon glyphicon-road"></span>&nbsp;Payment
 											Details</a>
 									</h4>
 								</div>
@@ -133,16 +146,21 @@
 									<div class="panel-body">
 										<div class="row">
 											<div class="col-md-12">
-												<div class="form-group">
-													<input type="text" id=osdReferenceNo class="form-control"
+												<div class="input-group">
+												<span class="input-group-addon">ReferenceNo</span>
+													<input type="text" id=opdReferenceNo class="form-control"
 														placeholder="Referece Number" disabled />
 												</div>
-												<div class="form-group">
-													<input type="text" id=osdMode class="form-control"
+												<br/>
+												<div class="input-group">
+													<span class="input-group-addon">Mode</span>
+													<input type="text" id=opdMode class="form-control"
 														placeholder="Mode" disabled />
 												</div>
-												<div class="form-group">
-													<input type="text" id=ocdAmount class="form-control"
+												<br />
+												<div class="input-group">
+													<span class="input-group-addon">Amount</span>
+													<input type="text" id=opdAmount class="form-control"
 														placeholder="Amount" disabled />
 												</div>
 											</div>
@@ -184,6 +202,6 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
-    $('#orderStatus').multiselect();
+    $('#orderStatus').multiselect();    
 });
 </script>

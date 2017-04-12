@@ -28,20 +28,20 @@ $(function(){
 	                    "opacity":"0"
 	                    });
 	                    //change button text 
-	                    $('button[type="submit"]').html("continue")
+	                    $('button[type="submit"]')
+	                    .html("continue")
 	                    .removeClass("btn-info")
-	                    .addClass("btn-default").click(function(){
-	                    $("input").css({
-	                    "height":"auto",
-	                    "padding":"10px",
-	                    "opacity":"1"
-	                    }).val("");
-	                    });	                    
+	                    .addClass("btn-default")
+	                    .click(function(){
+	                    	$("input").css({"height":"auto","padding":"10px","opacity":"1"}).val("");  
+	                    	}
+	                    );
 	                } else {
 	                    //remove success mesage replaced with error message
 	                    $("#output").removeClass(' alert alert-success');
 	                    $("#output").addClass("alert alert-danger animated fadeInUp").html("sorry enter a username ");
 	                }
+	            });		
 	                //console.log(textfield.val());
 
 </script>

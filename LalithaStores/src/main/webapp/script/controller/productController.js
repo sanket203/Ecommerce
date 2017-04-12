@@ -156,6 +156,7 @@ app.controller("productController", function($scope, $rootScope, FormValidationS
 					addedBy : $rootScope.currentUserName,
 					defaultImage:""
 				};
+			$('.modal-body #add_pTags').tagsinput('removeAll');
 			$("#addProductScreen1").hide(1000);
 			$("#addProductScreen2").show(1000);
 		}
@@ -211,7 +212,6 @@ app.controller("productController", function($scope, $rootScope, FormValidationS
 			{
 				$('.modal-body #edit_ptempQty').val("0");	
 			}
-			debugger;
 			$scope.productJson = {
 				productId : $('.modal-body #edit_productId').val(),
 				productName : $('.modal-body #edit_pName').val(),
